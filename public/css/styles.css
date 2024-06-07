@@ -1,0 +1,106 @@
+body{
+        background-size: cover; /* Hace que la imagen cubra todo el fondo */
+        background-repeat: no-repeat; /* Evita que la imagen se repita */
+        background-position: center center; /* Centra la imagen */
+        height: 100vh; /* Asegura que el body ocupe toda la altura de la ventana */
+        margin: 0; /* Elimina márgenes */
+        padding: 0; /* Elimina relleno */
+}
+*{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+
+header li{
+    display: flex;
+    list-style: none;
+    padding: 15px;
+    font-size: 26px;
+}
+header ul{
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+img{
+    height: 320px;
+    margin-top: -20px;
+}
+
+form h2{
+    color: #21277B;
+    font-size: 60px;
+    margin: 0;
+}
+form h3{
+    color: #161b5f;
+    font-size: 25px;
+}
+form{
+    padding-left: 70px ;
+}
+
+input[type="email"], input[type="password"] {
+    display: flex;
+    height: 50px;
+    width: 460px;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.3s, box-shadow 0.3s;
+    margin: 10px;
+    margin-left: 0;
+}
+
+input[type="email"]:focus, input[type="password"]:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 8px rgba(128, 189, 255, 0.5);
+    outline: none;
+}
+form button{
+    background-color: #21277B;
+    width: 200px;
+    height: 60px;
+    color: white;
+    border-radius: 10px;
+    border-color: white ;
+    justify-content: center;
+    align-items: center;
+}
+
+#registerb{
+    background-color: white;
+    border-color: #161b5f;
+    color: #161b5f;
+    border-radius: 10px;
+    border-width: 2px;
+
+}
+
+form input[type="checkbox"]{
+    display: flex;
+    height: 20px;
+    width: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.forg{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.forg h3{
+    font-size: 15px;
+    margin-right: 150px;
+}
+
+.fcontainter{
+    height: 400px;
+    width: 700px;
+    margin-top: -50px;
+}
+
