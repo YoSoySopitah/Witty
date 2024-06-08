@@ -1,41 +1,62 @@
-body{
-        background-size: cover; /* Hace que la imagen cubra todo el fondo */
-        background-repeat: no-repeat; /* Evita que la imagen se repita */
-        background-position: center center; /* Centra la imagen */
-        height: 100vh; /* Asegura que el body ocupe toda la altura de la ventana */
-        margin: 0; /* Elimina márgenes */
-        padding: 0; /* Elimina relleno */
+body {
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    background-image: url('https://i.imgur.com/KOL7oPb.png');
+    background-size: contain; /* Asegura que la imagen no se corte y se ajuste dentro del contenedor */
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Asegura que el fondo cubra toda la altura de la página */
 }
+
+
 *{
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 
-header li{
+header{
     display: flex;
-    list-style: none;
-    padding: 15px;
-    font-size: 26px;
-}
-header ul{
-    flex-direction: row;
-    display: flex;
+    background-color: white;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding-left: 20px;
     align-items: center;
-    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); 
+    z-index: 1;
 }
+header img{
+    height: 55px;
+    margin: 5px;
+    padding: 10px;
+}
+header h2{
+    color: #092A54;
+    font-weight: bold;
+}
+
+.asesorias{
+    text-align: center;
+    margin: 0 auto;
+}
+
 img{
-    height: 320px;
-    margin-top: -20px;
+    
+    padding: 70px 70px 0px 90px;
+    height: 200px;
+
 }
 
 form h2{
-    color: #21277B;
-    font-size: 60px;
+    color: #092A54;
+    font-size: 40px;
     margin: 0;
 }
 form h3{
-    color: #161b5f;
-    font-size: 25px;
+    margin-top: 0;
+    }
+form h4{
+    color: #006AD7;
+    margin-bottom: 0;
 }
 form{
     padding-left: 70px ;
@@ -43,7 +64,7 @@ form{
 
 input[type="email"], input[type="password"] {
     display: flex;
-    height: 50px;
+    height: 40px;
     width: 460px;
     padding: 10px;
     border: 2px solid #ddd;
@@ -83,8 +104,8 @@ form input[type="checkbox"]{
     display: flex;
     height: 20px;
     width: 20px;
-    margin-top: 20px;
     border-radius: 10px;
+    margin: 20px 0px 15px 0px;
 }
 
 .forg{
@@ -94,13 +115,21 @@ form input[type="checkbox"]{
 }
 
 .forg h3{
-    font-size: 15px;
-    margin-right: 150px;
+    font-size: 14px;
+    
+    margin: 20px 510px 20px 0px;
 }
 
+#Forget{
+    color: #006AD7;
+}
 .fcontainter{
     height: 400px;
     width: 700px;
-    margin-top: -50px;
+    padding-left: 50px;
 }
 
+#FC{
+    text-align: center;
+    margin: 0 auto;
+}
