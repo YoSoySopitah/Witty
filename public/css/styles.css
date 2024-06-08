@@ -2,10 +2,10 @@ body {
     background-repeat: no-repeat;
     background-position: bottom right;
     background-image: url('https://i.imgur.com/KOL7oPb.png');
-    background-size: contain; /* Asegura que la imagen no se corte y se ajuste dentro del contenedor */
+    background-size: contain; 
     margin: 0;
     padding: 0;
-    height: 100vh; /* Asegura que el fondo cubra toda la altura de la página */
+    height: 100vh; 
 }
 
 
