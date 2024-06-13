@@ -1,34 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Integradora - Login</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>Tutores</title>
+    <link rel="stylesheet" href="css/home.css">
+    <script src="js/buttons-carrers.js"></script>
 </head>
 <body>
     <header>
         <img src="img/logo.png" alt="">
-        <h2>INICIO</h1>
+        <h2>INICIO</h2>
         <h2 class="asesorias">ASESORIAS</h2>
         <img class="user" src="img/user.png" alt="">
     </header>
-    <img src="img/logo.png" alt="">
-    <div class="fcontainter">
-    <form action="/login" method="POST">
-        <h2>Iniciar Sesion</h2>
-        <h4>Correo electrónico</h4>
-        <input type="email" placeholder="Ingresa correo o usuario" name="usuario" id="usuario">
-        <h4>Contraseña</h4>
-        <input type="password" placeholder="Ingresa contraseña" name="contraseña" id="contraseña">
-        <button type="submit">Iniciar Sesion</button>
-        <div class="forg">
-            <input type="checkbox" name="" id="">
-            <h3>Recuérdame</h3>
+    
+
+    <div class="container"></div>
+    <div class="carrera">
+        <div class="title">Carreras</div>
+        <button class="button button-left">&#10094;</button>
+        <div class="card-wrapper">
+            <div class="card-container">
+                <div class="card">
+                    <img src="https://i.imgur.com/TNfABNY.png" alt="Energías Renovables">
+                    <div class="card-content">
+                        <p>Energías Renovables</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://i.imgur.com/RWNjIqa.jpeg" alt="Procesos Industriales">
+                    <div class="card-content">
+                        <p>Procesos Industriales</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://i.imgur.com/CaZrz8b.png" alt="Desarrollo de Negocios">
+                    <div class="card-content">
+                        <p>Desarrollo de Negocios</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://i.imgur.com/9YWcVMW.png" alt="Mantenimiento Industrial">
+                    <div class="card-content">
+                        <p>Mantenimiento Industrial</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://i.imgur.com/ZRNavvA.png" alt="Mecatrónica">
+                    <div class="card-content">
+                        <p>Mecatrónica</p>
+                    </div>
+                </div>
+                <div class="card">
+                    <img src="https://i.imgur.com/37EoWx1.jpeg" alt="Tecnologías de la Información">
+                    <div class="card-content">
+                        <p>Tecnologías de la Información</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <h3>¿Olvidaste tu contraseña? <span id="Forget">¡Recupérala!</span></h3>
-        <h3>¿Primera vez en Witty? <span id="Forget">Registrate aqui</span></h3>
-    </form>
-</div>
+        <button class="button button-right">&#10095;</button>
+    </div>
+
+    <div class="asesores">
+        <div class="title">Asesores</div>
+            <div class="asesor-wrapper">
+                <div class="asesor-container">
+                    <div class="asesor">
+                        <img src="https://i.pinimg.com/474x/ec/e7/95/ece79508305eddf0320d3152fc89a0fe.jpg" alt="">
+                            <div class="asesor-content">
+                                <p>Messi</p>
+                            </div>
+                    </div>
+                    <div class="asesor">
+                        <img src="https://www.futboltotal.com.mx/wp-content/uploads/2023/07/karim-benzema-mejor-pagados-arabia-300x300.jpg" alt="">
+                            <div class="asesor-content">
+                                <p>Benzema</p>
+                            </div>
+                    </div>
+                    <div class="asesor">
+                        <img src="https://cdn.24.co.za/files/Cms/General/d/8657/9def5425528849008eecd5aa6dabd183.jpg" alt="">
+                            <div class="asesor-content">
+                                <p>Cristiano Ronaldo</p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+    </div>
 </body>
 </html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Witty - Registro</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header>
+        <img src="img/logo.png" alt="">
+        <h2>INICIO</h2>
+        <h2 class="asesorias">ASESORIAS</h2>
+        <img class="user" src="img/user.png" alt="">
+    </header>
+    <img src="img/logo.png" alt="">
+    <div class="fcontainer">
+        <form action="/register" method="POST" onsubmit="return validateForm()">
+            <h2>Registrarse</h2>
+            <h4>Correo electrónico</h4>
+            <input type="email" placeholder="Ingresa correo o usuario" name="rusuario" id="rusuario" required>
+            <h4>Contraseña</h4>
+            <input type="password" placeholder="Ingresa contraseña" name="rcontraseña" id="rcontraseña" required>
+            <h4>Confirmar contraseña</h4>
+            <input type="password" placeholder="Confirma contraseña" name="confirmar_contraseña" id="confirmar_contraseña" required>
+            <span id="error-message" class="error-message">Las contraseñas no coinciden. Por favor, inténtalo de nuevo.</span>
+            <button type="submit">Registrarse</button>
+        </form>
+    </div>
+</body>
+
+<script src="js/confirmarcontraseña.js"></script>
+</html>

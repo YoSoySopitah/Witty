@@ -8,13 +8,11 @@ body {
     height: 100vh; 
 }
 
-
-*{
+* {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-
-header{
+header {
     display: flex;
     background-color: white;
     border-bottom-left-radius: 20px;
@@ -24,42 +22,39 @@ header{
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); 
     z-index: 1;
 }
-header img{
+
+header img {
     height: 55px;
     margin: 5px;
     padding: 10px;
 }
-header h2{
+
+header h2 {
     color: #092A54;
     font-weight: bold;
 }
 
-.asesorias{
+.asesorias {
     text-align: center;
     margin: 0 auto;
 }
-
-img{
-    
-    padding: 70px 70px 0px 90px;
-    height: 200px;
-
-}
-
-form h2{
+form h2 {
     color: #092A54;
     font-size: 40px;
     margin: 0;
 }
-form h3{
+
+form h3 {
     margin-top: 0;
-    }
-form h4{
+}
+
+form h4 {
     color: #006AD7;
     margin-bottom: 0;
 }
-form{
-    padding-left: 70px ;
+
+form {
+    padding-left: 70px;
 }
 
 input[type="email"], input[type="password"] {
@@ -80,27 +75,27 @@ input[type="email"]:focus, input[type="password"]:focus {
     box-shadow: 0 0 8px rgba(128, 189, 255, 0.5);
     outline: none;
 }
-form button{
+
+form button {
     background-color: #21277B;
     width: 200px;
     height: 60px;
     color: white;
     border-radius: 10px;
-    border-color: white ;
+    border-color: white;
     justify-content: center;
     align-items: center;
 }
 
-#registerb{
+#registerb {
     background-color: white;
     border-color: #161b5f;
     color: #161b5f;
     border-radius: 10px;
     border-width: 2px;
-
 }
 
-form input[type="checkbox"]{
+form input[type="checkbox"] {
     display: flex;
     height: 20px;
     width: 20px;
@@ -108,28 +103,74 @@ form input[type="checkbox"]{
     margin: 20px 0px 15px 0px;
 }
 
-.forg{
+.forg {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
 
-.forg h3{
+.forg h3 {
     font-size: 14px;
-    
     margin: 20px 510px 20px 0px;
 }
 
-#Forget{
+#Forget {
     color: #006AD7;
 }
-.fcontainter{
+
+.fcontainter {
+    display: flex;
+    flex-direction: column;
     height: 400px;
     width: 700px;
     padding-left: 50px;
+    margin: 10px;
 }
 
-#FC{
+#FC {
     text-align: center;
     margin: 0 auto;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.error-message {
+    color: red;
+    display: none;
+}
+
+/* Media query for mobile devices */
+@media (max-width: 768px) {
+    body {
+        background-image: none;
+        background-color: #f0f0f0; /* Ajusta el color de fondo según tus preferencias */
+    }
+
+    form {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    input[type="email"], input[type="password"] {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .fcontainter {
+        width: 100%;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    .forg {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .forg h3 {
+        margin: 10px 0;
+    }
 }

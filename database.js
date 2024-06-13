@@ -3,7 +3,7 @@ const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: 'sgame360',
-    database: 'Integradora'
+    database: 'Witty'
 });
 
 connection.connect((err) => {

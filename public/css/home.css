@@ -1,14 +1,153 @@
-body{
+body {
     margin: 0;
     padding: 0;
 }
 
-header{
-    width: 100%;
-    height: 70px;
-    background-color: #0F968C;
+* {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
-.logo{
-    height: 250px;
+header {
+    display: flex;
+    background-color: white;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding-left: 20px;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3); 
+    z-index: 1;
+}
+
+header img {
+    height: 55px;
+    margin: 5px;
+    padding: 10px;
+}
+
+header h2 {
+    color: #092A54;
+    font-weight: bold;
+}
+
+.asesorias {
+    text-align: center;
+    margin: 0 auto;
+}
+
+.container {
+    background-image: url('https://i.imgur.com/unvO2ji.jpeg');
+    height: 100vh; 
+    margin: 20px;
+    border-radius: 20px;
+}
+
+.carrera {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+}
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #2f4f4f;
+    margin-bottom: 20px;
+}
+.card-wrapper {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    width: 100%;
+}
+.card-container {
+    display: flex;
+}
+.card {
+    background-color: #d4c7ec;
+    border-radius: 15px;
+    overflow: hidden;
+    width: 300px;
+    margin-right: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+.card:last-child {
+    margin-right: 0;
+}
+.card:hover {
+    transform: translateY(-10px);
+}
+.card img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ccc;
+}
+.card-content {
+    padding: 20px;
+    text-align: center;
+}
+.button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 2;
+}
+.button-left {
+    left: -50px;
+}
+.button-right {
+    right: -50px;
+}
+
+.asesores {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+}
+
+
+.asesor-wrapper {
+    display: flex;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    width: 100%;
+    justify-content: center;
+}
+.asesor-container {
+    display: flex;
+}
+.asesor {
+    background-color: #d8dcdc;
+    border: 5px solid #789c9f;
+    border-radius: 15px;
+    overflow: hidden;
+    width: 300px;
+    margin-right: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+}
+.asesor img{
+    border-radius: 50%;
+    width: 300px;
+}
+.asesor:last-child {
+    margin-right: 0;
+}
+.asesor:hover {
+    transform: translateY(-10px);
+}
+.asesor img {
+    width: 100%;
+    height: auto;
+    border-bottom: 1px solid #ccc;
+}
+.asesor-content {
+    padding: 20px;
+    text-align: center;
 }
