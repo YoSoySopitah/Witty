@@ -17,17 +17,112 @@
     <div class="fcontainer">
         <form action="/register" method="POST" onsubmit="return validateForm()">
             <h2>Registrarse</h2>
+            <h4>Nombre Completo</h4>
+            <input type="text" placeholder="Ingresa tu nombre completo" name="nombre_completo" id="nombre_completo" required>
             <h4>Correo electrónico</h4>
             <input type="email" placeholder="Ingresa correo o usuario" name="rusuario" id="rusuario" required>
             <h4>Contraseña</h4>
             <input type="password" placeholder="Ingresa contraseña" name="rcontraseña" id="rcontraseña" required>
             <h4>Confirmar contraseña</h4>
             <input type="password" placeholder="Confirma contraseña" name="confirmar_contraseña" id="confirmar_contraseña" required>
-            <span id="error-message" class="error-message">Las contraseñas no coinciden. Por favor, inténtalo de nuevo.</span>
+            <h4>Tipo de Usuario</h4>
+            <select name="tipoUsuario" id="tipoUsuario" required>
+                <option value="" disabled selected>Seleccione un tipo de usuario</option>
+                <option value="estudiante">Estudiante</option>
+                <option value="asesor">Asesor</option>
+            </select>
+            <div id="camposAdicionales"></div>
             <button type="submit">Registrarse</button>
+            <span id="error-message" class="error-message">Las contraseñas no coinciden. Por favor, inténtalo de nuevo.</span>
         </form>
     </div>
-</body>
+    <script src="js/confirmarcontraseña.js"></script>
+    <script>
+        const tipoUsuarioSelect = document.getElementById('tipoUsuario');
+        const camposAdicionales = document.getElementById('camposAdicionales');
 
-<script src="js/confirmarcontraseña.js"></script>
+        tipoUsuarioSelect.addEventListener('change', function() {
+            const tipoUsuario = this.value;
+            camposAdicionales.innerHTML = '';
+
+            if (tipoUsuario === 'estudiante') {
+                camposAdicionales.innerHTML = `
+                    <h4>Carrera</h4>
+                    <select name="carrera" id="carrera" required></select>
+                    <h4>Cuatrimestre</h4>
+                    <select name="cuatrimestre" id="cuatrimestre" required></select>
+                    <h4>Materia</h4>
+                    <select name="materia" id="materia" required></select>
+                `;
+                loadCarreras();
+            } else if (tipoUsuario === 'asesor') {
+                camposAdicionales.innerHTML = `
+                    <h4>Disponibilidad</h4>
+                    <input type="text" placeholder="Ingresa tu disponibilidad" name="disponibilidad" required>
+                    <h4>Precio Asesoría</h4>
+                    <input type="number" placeholder="Ingresa el precio de la asesoría" name="precio_asesoria" required>
+                `;
+            }
+        });
+
+        function loadCarreras() {
+            fetch('/api/carreras')
+                .then(response => response.json())
+                .then(carreras => {
+                    const carreraSelect = document.getElementById('carrera');
+                    carreraSelect.innerHTML = '<option value="" disabled selected>Seleccione una carrera</option>';
+                    carreras.forEach(carrera => {
+                        const option = document.createElement('option');
+                        option.value = carrera.id_carrera;
+                        option.textContent = carrera.nombre_carrera;
+                        carreraSelect.appendChild(option);
+                    });
+                    carreraSelect.addEventListener('change', loadCuatrimestres);
+                })
+                .catch(error => {
+                    console.error('Error al cargar las carreras:', error);
+                });
+        }
+
+        function loadCuatrimestres() {
+            const carreraId = document.getElementById('carrera').value;
+            fetch(`/api/cuatrimestres?carreraId=${carreraId}`)
+                .then(response => response.json())
+                .then(cuatrimestres => {
+                    const cuatrimestreSelect = document.getElementById('cuatrimestre');
+                    cuatrimestreSelect.innerHTML = '<option value="" disabled selected>Seleccione un cuatrimestre</option>';
+                    cuatrimestres.forEach(cuatrimestre => {
+                        const option = document.createElement('option');
+                        option.value = cuatrimestre.numero_cuatrimestre;
+                        option.textContent = cuatrimestre.numero_cuatrimestre;
+                        cuatrimestreSelect.appendChild(option);
+                    });
+                    cuatrimestreSelect.addEventListener('change', loadMaterias);
+                })
+                .catch(error => {
+                    console.error('Error al cargar los cuatrimestres:', error);
+                });
+        }
+
+        function loadMaterias() {
+            const carreraId = document.getElementById('carrera').value;
+            const cuatrimestre = document.getElementById('cuatrimestre').value;
+            fetch(`/api/materias?carreraId=${carreraId}&cuatrimestre=${cuatrimestre}`)
+                .then(response => response.json())
+                .then(materias => {
+                    const materiaSelect = document.getElementById('materia');
+                    materiaSelect.innerHTML = '<option value="" disabled selected>Seleccione una materia</option>';
+                    materias.forEach(materia => {
+                        const option = document.createElement('option');
+                        option.value = materia.id_materia;
+                        option.textContent = materia.nombre_materia;
+                        materiaSelect.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al cargar las materias:', error);
+                });
+        }
+    </script>
+</body>
 </html>

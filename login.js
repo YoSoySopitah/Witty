@@ -1,18 +1,29 @@
 const express = require('express');
 const router = express.Router();
-const db = require('./database');
+const connection = require('./database');
 
 router.post('/', (req, res) => {
     const { usuario, contraseña } = req.body;
-    const queryText = 'SELECT * FROM usuarios WHERE correo = ? AND contraseña = ?';
-    db.query(queryText, [usuario, contraseña], (err, results) => {
-        if (err) {
-            console.error('Error executing query', err.stack);
-            res.status(500).send('Error en el servidor');
-        } else if (results.length > 0) {
-            res.redirect('/home.html');
+
+    connection.query('SELECT * FROM asesores WHERE correoA = ? AND contraseña = ?', [usuario, contraseña], (err, results) => {
+        if (err) throw err;
+        if (results.length > 0) {
+            req.session.loggedin = true;
+            req.session.tipoUsuario = 'asesor';
+            req.session.nombreUsuario = results[0].nombre_asesor; // Guarda el nombre del asesor
+            res.redirect('/asesor-home');
         } else {
-            res.send('Usuario o contraseña incorrectos');
+            connection.query('SELECT * FROM estudiantes WHERE correo_estudiante = ? AND contraseña_estudiante = ?', [usuario, contraseña], (err, results) => {
+                if (err) throw err;
+                if (results.length > 0) {
+                    req.session.loggedin = true;
+                    req.session.tipoUsuario = 'estudiante';
+                    req.session.nombreUsuario = results[0].nombre_estudiante; // Guarda el nombre del estudiante
+                    res.redirect('/estudiante-home');
+                } else {
+                    res.send('Usuario o contraseña incorrectos');
+                }
+            });
         }
     });
 });

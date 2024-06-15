@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contacto Asesor</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <img src="/img/logo.png" alt="">
+        <h2>INICIO</h2>
+        <h2 class="asesorias">ASESORIAS</h2>
+        <div id="usuario-info">
+            <h2>Hola, <%= nombreUsuario %></h2>
+            <a href="/logout">Salir</a>
+        </div>
+        <img class="user" src="/img/user.png" alt="">
+    </header>
+    <div class="container">
+        <h2>Contacto con el Asesor</h2>
+        <p>Gracias por tu pago. A continuación, puedes contactar con tu asesor.</p>
+        <p>Asesor: <%= req.session.asesorSeleccionado %></p>
+        <!-- Aquí puedes añadir más información de contacto, como correo electrónico, número de teléfono, etc. -->
+    </div>
+</body>
+</html>

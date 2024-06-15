@@ -57,7 +57,7 @@ form {
     padding-left: 70px;
 }
 
-input[type="email"], input[type="password"] {
+input[type="email"], input[type="password"], input[type="text"], input[type="number"], select {
     display: flex;
     height: 40px;
     width: 460px;
