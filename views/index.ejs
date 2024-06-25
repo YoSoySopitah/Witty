@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Witty - Home</title>
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="js/buttons-carrers.js"></script>
+</head>
+<body>
+    <header>
+        <img src="img/logo.png" alt="">
+        <h2>Witty</h2>
+        <h2 class="asesorias">ASESORIAS</h2>
+        <% if (user) { %>
+            <h2><%= user.nombre %></h2>
+        <% } else { %>
+            <a href="login"><h2>Iniciar Sesion</h2></a>
+        <% } %>
+        <img class="user" src="img/user.png" alt="">
+    </header>
+
+    <div class="container">
+        <div class="buscador">
+            <h1>¿Qué quieres aprender hoy?</h1>
+            <form id="buscar-carreras-form">
+                <input type="text" placeholder="Ingresa una materia" name="term" id="term">
+                <button type="submit">Buscar</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="carrera">
+        <div class="title">Carreras</div>
+        <button class="button button-left">&#10094;</button>
+        <div class="card-wrapper">
+            <div class="card-container">
+                <div class="card">
+                    <img src="https://i.imgur.com/TNfABNY.png" alt="Energías Renovables">
+                    <div class="card-content">
+                        <p>Energías Renovables</p>
+                    </div>
+                </div>
+                <!-- Agregar más carreras aquí -->
+            </div>
+        </div>
+        <button class="button button-right">&#10095;</button>
+    </div>
+
+    <div class="asesores">
+        <div id="asesort" class="title">Asesores top</div>
+        <div class="asesor-wrapper">
+            <div class="asesor-container">
+                <div class="asesor">
+                    <img id="asesorti" src="https://laboratoriosniam.com/wp-content/uploads/2018/07/michael-dam-258165-unsplash_WEB2.jpg" alt="">
+                    <div class="asesor-content">
+                        <p>Asesor 1</p>
+                        <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h4>
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="star" class="fa fa-star"></i>
+                    </div>
+                </div>
+                <!-- Agregar más asesores aquí -->
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <h1>Copyright ©Witty todos los derechos están reservados.</h1>
+    </div>
+
+    <script>
+        document.getElementById('buscar-carreras-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const term = document.getElementById('term').value;
+            fetch(`/buscar-carreras?term=${term}`)
+                .then(response => response.json())
+                .then(data => {
+                    // Lógica para mostrar los resultados
+                    console.log(data);
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+</html>

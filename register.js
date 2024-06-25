@@ -9,11 +9,11 @@ router.post('/', (req, res) => {
     let values;
 
     if (tipoUsuario === 'estudiante') {
-        query = 'INSERT INTO estudiantes (nombre_estudiante, correo_estudiante, contraseña_estudiante, fk_carrera, fk_materia) VALUES (?, ?, ?, ?, ?)';
+        query = 'INSERT INTO estudiantes (nombre_estudiante, correo_estudiante, contraseña_estudiante, fk_carrera, fk_materia, fecha_registro) VALUES (?, ?, ?, ?, ?, NOW())';
         values = [nombre_completo, rusuario, rcontraseña, carrera, materia];
     } else if (tipoUsuario === 'asesor') {
-        query = 'INSERT INTO asesores (nombre_asesor, correoA, contraseñaA, disponibilidad, precio_asesoria) VALUES (?, ?, ?, ?, ?)';
-        values = [nombre_completo, rusuario, rcontraseña, disponibilidad, precio_asesoria];
+        query = 'INSERT INTO asesores (nombre_asesor, correoA, contraseña, disponibilidad, precio_asesoria, fk_carrera, fk_materia, fecha_registro) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())';
+        values = [nombre_completo, rusuario, rcontraseña, disponibilidad, precio_asesoria, carrera, materia];
     }
 
     connection.query(query, values, (err, results) => {

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Asesorías</title>
+</head>
+<body>
+    <header>
+        <h1>Mis Asesorías</h1>
+        <p>Usuario: <%= user.nombre %></p>
+    </header>
+    <div>
+        <% if (asesorias.length > 0) { %>
+            <ul>
+                <% asesorias.forEach(asesoria => { %>
+                    <li><%= asesoria.nombre %> - <%= asesoria.fecha %></li>
+                <% }) %>
+            </ul>
+        <% } else { %>
+            <p>No tienes asesorías registradas.</p>
+        <% } %>
+    </div>
+</body>
+</html>
