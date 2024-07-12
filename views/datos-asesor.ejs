@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/home.css">
+
+</head>
+<body>
+    <header>
+        <a href="/"><img src="img/logo.png" alt=""></a>
+        <h2>Witty</h2>
+        <h2 class="asesorias">ASESORIAS</h2>
+        <% if (user) { %>
+            <h2><%= user.nombre %></h2>
+        <% } else { %>
+            <a href="login"><h2>Iniciar Sesion</h2></a>
+        <% } %>
+        <img class="user" src="img/user.png" alt="">
+    </header>
+</body>
+</html>

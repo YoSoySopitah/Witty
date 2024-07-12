@@ -1,7 +1,7 @@
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
-const stripe = require('stripe')('your-stripe-secret-key');
+const stripe = require('stripe')('sk_test_51PRjxWLDT4L4UaZVi4zxVL3oXLFhZGHWKTcYRKAcaqV8QcCXoW9VmmWB1Dr16XT17wJ4x42ixI9xXluiPHaKKlyn00dv8spBcw');
 const connection = require('./database'); // Importar la configuración de la base de datos
 const path = require('path'); // Necesario para manejar rutas
 
@@ -44,20 +44,31 @@ app.get('/register', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-    const { usuario, contraseña, tipoUsuario } = req.body;
+    const { usuario, contraseña } = req.body;
 
-    const table = tipoUsuario === 'estudiante' ? 'estudiantes' : 'asesores';
-    const emailColumn = tipoUsuario === 'estudiante' ? 'correo_estudiante' : 'correoA';
-    const passwordColumn = tipoUsuario === 'estudiante' ? 'contraseña_estudiante' : 'contraseña';
-
-    connection.query(`SELECT * FROM ${table} WHERE ${emailColumn} = ? AND ${passwordColumn} = ?`, [usuario, contraseña], (err, results) => {
+    // Buscar en la tabla de estudiantes primero
+    connection.query(`SELECT * FROM estudiantes WHERE correo_estudiante = ? AND contraseña_estudiante = ?`, [usuario, contraseña], (err, estResults) => {
         if (err) throw err;
-        if (results.length > 0) {
-            req.session.user = results[0];
-            res.redirect('/');
-        } else {
-            res.redirect('/login');
+
+        if (estResults.length > 0) {
+            req.session.user = estResults[0];
+            req.session.tipoUsuario = 'estudiante';
+            return res.redirect('/estudiante-home');
         }
+
+        // Si no se encuentra en estudiantes, buscar en la tabla de asesores
+        connection.query(`SELECT * FROM asesores WHERE correoA = ? AND contraseña = ?`, [usuario, contraseña], (err, asResults) => {
+            if (err) throw err;
+
+            if (asResults.length > 0) {
+                req.session.user = asResults[0];
+                req.session.tipoUsuario = 'asesor';
+                return res.redirect('/asesor-home');
+            }
+
+            // Si no se encuentra en ninguna tabla, redirigir al login
+            res.redirect('/login');
+        });
     });
 });
 
@@ -100,6 +111,7 @@ app.post('/register', (req, res) => {
         connection.query(`SELECT * FROM ${table} WHERE ${tipoUsuario === 'estudiante' ? 'correo_estudiante' : 'correoA'} = ?`, [rusuario], (err, results) => {
             if (err) throw err;
             req.session.user = results[0];
+            req.session.tipoUsuario = tipoUsuario;
             res.redirect('/elegir-asesor'); // Redirigir a la página de selección de asesor
         });
     });
@@ -208,6 +220,24 @@ app.get('/api/asesores', (req, res) => {
     });
 });
 
+// Rutas para las páginas de inicio de asesores y estudiantes
+app.get('/asesor-home', (req, res) => {
+    if (req.session.user && req.session.tipoUsuario === 'asesor') {
+        res.render('asesor-home', { nombreUsuario: req.session.user.nombre_asesor });
+    } else {
+        res.redirect('/login');
+    }
+});
+
+app.get('/estudiante-home', (req, res) => {
+    if (req.session.user && req.session.tipoUsuario === 'estudiante') {
+        res.render('estudiante-home', { nombreUsuario: req.session.user.nombre_estudiante });
+    } else {
+        res.redirect('/login');
+    }
+});
+
+// Iniciar el servidor
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });

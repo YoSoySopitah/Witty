@@ -10,11 +10,12 @@
 </head>
 <body>
     <header>
-        <img src="img/logo.png" alt="">
+        <a href="/"><img src="img/logo.png" alt=""></a>
         <h2>Witty</h2>
         <h2 class="asesorias">ASESORIAS</h2>
         <div id="usuario-info">
-            <h2>Hola, <span id="nombre-usuario"><%= nombreUsuario %></span></h2>
+            <h2>Hola, <%= nombreUsuario %></h2>
+            <a href="/logout">Salir</a>
         </div>
         <img class="user" src="img/user.png" alt="">
     </header>
