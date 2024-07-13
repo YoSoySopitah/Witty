@@ -145,7 +145,7 @@ header h2 {
 .title {
     font-size: 24px;
     font-weight: bold;
-    color: #2f4f4f;
+    color: #092A54;
     margin-bottom: 20px;
 }
 
@@ -164,7 +164,7 @@ header h2 {
 }
 
 .card {
-    background-color: #789c9f;
+    background-color: #092A54;
     color: white;
     border-radius: 15px;
     overflow: hidden;
@@ -180,7 +180,7 @@ header h2 {
 
 .card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 8px 16px #789c9f;
+    box-shadow: 0 8px 16px #092A54;
 }
 
 .card img {
@@ -204,7 +204,7 @@ header h2 {
     border-radius: 50%;
     height: 50px;
     width: 50px;
-    background-color: #789c9f;
+    background-color: #092A54;
     padding: 10px;
     cursor: pointer;
     z-index: 3;

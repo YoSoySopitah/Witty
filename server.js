@@ -112,18 +112,20 @@ app.post('/register', (req, res) => {
             if (err) throw err;
             req.session.user = results[0];
             req.session.tipoUsuario = tipoUsuario;
-            res.redirect('/elegir-asesor'); // Redirigir a la página de selección de asesor
+            res.redirect('/register-info'); // Redirigir a la página de selección de asesor
         });
     });
 });
 
-// Ruta para elegir asesor
-app.get('/elegir-asesor', (req, res) => {
+// Ruta para registrar info
+app.get('/register-info', (req, res) => {
     if (!req.session.user) {
         return res.redirect('/login');
     }
-    res.render('elegir-asesor', { nombreUsuario: req.session.user.nombre_estudiante || req.session.user.nombre_asesor });
+    res.render('register-info', { nombreUsuario: req.session.user.nombre_estudiante || req.session.user.nombre_asesor });
 });
+    
+
 
 app.post('/create-checkout-session', async (req, res) => {
     const session = await stripe.checkout.sessions.create({
@@ -144,33 +146,6 @@ app.post('/create-checkout-session', async (req, res) => {
     });
 
     res.json({ id: session.id });
-});
-
-app.get('/success', (req, res) => {
-    if (req.session.user) {
-        const user = req.session.user;
-        connection.query('INSERT INTO asesorias (fk_materia, fk_asesor, fk_estudiante, fecha_asesoria, fk_costo, duracion_asesoria) VALUES (?, ?, ?, NOW(), ?, ?)', [1, 1, user.id_estudiante, 1, 60], (err, result) => {
-            if (err) throw err;
-            res.redirect('/mis-asesorias');
-        });
-    } else {
-        res.redirect('/');
-    }
-});
-
-app.get('/cancel', (req, res) => {
-    res.redirect('/');
-});
-
-app.get('/mis-asesorias', (req, res) => {
-    if (!req.session.user) {
-        return res.redirect('/login');
-    }
-    const user = req.session.user;
-    connection.query('SELECT * FROM asesorias WHERE fk_estudiante = ?', [user.id_estudiante], (err, results) => {
-        if (err) throw err;
-        res.render('mis-asesorias', { user, asesorias: results });
-    });
 });
 
 app.get('/api/carreras', (req, res) => {

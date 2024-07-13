@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Witty - Register Informacion</title>
+    <link rel="stylesheet" href="css/register-info.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <header>
+        <a href="/"><img src="img/logo.png" alt=""></a>
+        <h2>Witty</h2>
+        <h2 class="header-a">ASESORIAS</h2>
+        <div id="usuario-info">
+            <h2>Hola, <%= nombreUsuario %></h2>
+        </div>
+        <img class="user" src="img/user.png" alt="">
+    </header>
+    
+    <div class="container">
+        <h2>Usuario</h2>
+        <div class="form">
+            <input type="text" placeholder="Nombre" name="" id="">
+            <select name="tipoUsuario" id="tipoUsuario" required>
+                <option value="" disabled selected>Seleccione un tipo de usuario</option>
+                <option value="estudiante">Estudiante</option>
+                <option value="asesor">Asesor</option>
+            </select>
+            <input type="text" placeholder="Apellido Paterno" name="" id="">
+            <input type="text" placeholder="Apellido Materno" name="" id="">
+            <input type="file" name="" id="">
+        </div>
+    </div>
+</body>
+</html>

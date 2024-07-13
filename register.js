@@ -30,7 +30,7 @@ router.post('/', (req, res) => {
         req.session.carrera = carrera;
 
         // Redirige al usuario a la página de elección de asesor
-        res.redirect('/elegir-asesor');
+        res.redirect('/register-info');
     });
 });
 
