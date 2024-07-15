@@ -29,8 +29,6 @@ app.get('/', (req, res) => {
     res.render('index', { user: req.session.user });
 });
 
-z
-
 app.get('/login', (req, res) => {
     if (req.session.user) {
         return res.redirect('/');
@@ -198,7 +196,7 @@ app.get('/api/asesores', (req, res) => {
 // Rutas para las páginas de inicio de asesores y estudiantes
 app.get('/asesor-home', (req, res) => {
     if (req.session.user && req.session.tipoUsuario === 'asesor') {
-        const asesorId = req.session.user.id_asesores;
+        const asesorId = req.session.user.id_asesores; // Obtener el ID del asesor desde la sesión
 
         connection.query(`
             SELECT asesores.nombre_asesor AS nombre, asesores.correoA AS correo, asesores.disponibilidad AS disponibilidad, carrera.nombre_carrera AS carrera
@@ -211,13 +209,15 @@ app.get('/asesor-home', (req, res) => {
                 res.status(500).json({ error: 'Internal Server Error' });
             } else {
                 const { nombre, correo, disponibilidad, carrera } = results[0];
-                res.render('asesor-home', { nombreUsuario: nombre, correo, disponibilidad, carrera });
+                res.render('asesor-home', { nombreUsuario: nombre, correo, disponibilidad, carrera, asesorId });
             }
         });
     } else {
         res.redirect('/login');
     }
 });
+
+
 
 app.get('/estudiante-home', (req, res) => {
     if (req.session.user && req.session.tipoUsuario === 'estudiante') {
@@ -227,7 +227,31 @@ app.get('/estudiante-home', (req, res) => {
     }
 });
 
+// Ruta para obtener las materias de un asesor específico
+app.get('/api/materias-asesor/:idAsesor', (req, res) => {
+    const idAsesor = req.params.idAsesor;
+    connection.query(`
+        SELECT asesores.nombre_asesor AS nombreAsesor, carrera.nombre_carrera AS nombreCarrera,
+               materias.nombre_materia AS nombreMateria, asesores.precio_asesoria AS precio,
+               asesores.disponibilidad AS disponibilidad
+        FROM asesores
+        JOIN carrera ON asesores.fk_carrera = carrera.id_carrera
+        JOIN materias ON asesores.fk_materia = materias.id_materia
+        WHERE asesores.id_asesores = ?
+    `, [idAsesor], (err, results) => {
+        if (err) {
+            console.error('Error al cargar las materias del asesor:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            res.json(results);
+        }
+    });
+});
+
+
+
 // Iniciar el servidor
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
 });
+

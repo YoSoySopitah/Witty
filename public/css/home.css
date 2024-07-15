@@ -424,14 +424,23 @@ header a{
     margin: 20px;
 }
 
+.asesoriainfo h2{
+    margin-bottom: 0px;
+    margin-top: 5px;
+    padding-left: 30px;
+}
+.asesoriainfo h1{
+    text-align: center;
+}
 .asesoriainfo{
     display: flex;
     flex-direction: column;
     margin: 20px;
-    width: 300px;
-    height: 400px;
+    width: 400px;
+    height: 500px;
     background-color:  #296391;
     border-radius: 20px;
+    color: white;
 }   
 .asesoriaadd {
     display: flex;
