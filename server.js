@@ -29,6 +29,8 @@ app.get('/', (req, res) => {
     res.render('index', { user: req.session.user });
 });
 
+z
+
 app.get('/login', (req, res) => {
     if (req.session.user) {
         return res.redirect('/');
@@ -125,8 +127,6 @@ app.get('/register-info', (req, res) => {
     res.render('register-info', { nombreUsuario: req.session.user.nombre_estudiante || req.session.user.nombre_asesor });
 });
     
-
-
 app.post('/create-checkout-session', async (req, res) => {
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
@@ -198,7 +198,22 @@ app.get('/api/asesores', (req, res) => {
 // Rutas para las páginas de inicio de asesores y estudiantes
 app.get('/asesor-home', (req, res) => {
     if (req.session.user && req.session.tipoUsuario === 'asesor') {
-        res.render('asesor-home', { nombreUsuario: req.session.user.nombre_asesor });
+        const asesorId = req.session.user.id_asesores;
+
+        connection.query(`
+            SELECT asesores.nombre_asesor AS nombre, asesores.correoA AS correo, asesores.disponibilidad AS disponibilidad, carrera.nombre_carrera AS carrera
+            FROM asesores
+            JOIN carrera ON asesores.fk_carrera = carrera.id_carrera
+            WHERE asesores.id_asesores = ?
+        `, [asesorId], (err, results) => {
+            if (err) {
+                console.error('Error al cargar los datos del asesor:', err);
+                res.status(500).json({ error: 'Internal Server Error' });
+            } else {
+                const { nombre, correo, disponibilidad, carrera } = results[0];
+                res.render('asesor-home', { nombreUsuario: nombre, correo, disponibilidad, carrera });
+            }
+        });
     } else {
         res.redirect('/login');
     }

@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <a href="/"><img src="i mg/logo.png" alt=""></a>
+        <a href="/"><img src="img/logo.png" alt=""></a>
         <h2>Witty</h2>
         <h2 class="asesorias">ASESORIAS</h2>
         <div id="usuario-info">
@@ -18,6 +18,7 @@
         <img class="user" src="img/user.png" alt="">
     </header>
 
+    <div class="containerinfo">
         <div class="menu">
                 <h1>OPCIONES</h1>
                 <a class="opc1" href="">INFORMACION</a>
@@ -25,5 +26,95 @@
                 <a class="opc3" href="">CITAS AGENDADAS</a>
                 <a class="opc4"></a>
         </div>
+    <div id="contenido-dinamico">
+    <!-- Aquí se mostrará el contenido dinámico -->
+</div>
+</div>
+
+
+    <script>
+        // Obtén referencia a los enlaces de opciones
+        const opc1 = document.querySelector('.opc1');
+        const opc2 = document.querySelector('.opc2');
+        const opc3 = document.querySelector('.opc3');
+    
+        // Agrega event listener para cada opción
+        opc1.addEventListener('click', mostrarInformacion);
+        opc2.addEventListener('click', mostrarFormulario);
+        opc3.addEventListener('click', mostrarCitasAgendadas);
+    
+        // Funciones para mostrar diferentes contenidos
+        function mostrarInformacion(event) {
+            event.preventDefault(); // Evita que se recargue la página
+    
+            // Ejemplo de contenido dinámico
+            const contenido = `
+            <div class="containerinfo">
+
+        <div class="informacion">
+            <h1 class="i1">Nombre:</h1>
+            <h1 class="i1" id="bk"><%= nombreUsuario %></h1>
+            <h1 class="i2">Correo:</h1>
+            <h1 class="i2" id="bk"><%= correo %></h1>
+            <h1 class="i1">Carrera:</h1>
+            <h1 class="i1" id="bk"><%= carrera %></h1>
+            <h1 class="i2">Horario:</h1>
+            <h1 class="i2" id="bk"><%= disponibilidad %></h1>
+        </div>
+
+        <div class="fotoasesor">
+            <img src="https://pbs.twimg.com/profile_images/1734712433799774208/xVVE-2vF_400x400.jpg" alt="">
+        </div>
+    </div>
+            `;
+    
+            // Actualiza el contenido dinámico en el contenedor
+            document.getElementById('contenido-dinamico').innerHTML = contenido;
+        }
+    
+        function mostrarFormulario(event) {
+            event.preventDefault(); // Evita que se recargue la página
+    
+            // Ejemplo de contenido dinámico
+            const formulario = `
+            <div class="asesoriasi">
+            <div class="asesoriainfo">
+                <h1>NOMBRE</h1>
+                <h2>carrera</h2>
+                <h2>precio</h2>
+                <h2>materia</h2>
+                <h2>horario asesoria</h2>
+            </div>
+            
+            <div class="asesoriainfo">
+                <div class="asesoriaadd">
+                    <img src="https://i.imgur.com/lR7c7Ee.png" alt="">
+                </div>
+            </div>
+        </div>
+            `;
+    
+            // Actualiza el contenido dinámico en el contenedor
+            document.getElementById('contenido-dinamico').innerHTML = formulario;
+        }
+    
+        function mostrarCitasAgendadas(event) {
+            event.preventDefault(); // Evita que se recargue la página
+    
+            // Ejemplo de contenido dinámico
+            const citas = `
+                <h1>Citas Agendadas:</h1>
+                <ul>
+                    <li>Fecha: 15 de julio de 2024</li>
+                    <li>Asunto: Revisión de temas</li>
+                    <!-- Agrega más citas -->
+                </ul>
+            `;
+    
+            // Actualiza el contenido dinámico en el contenedor
+            document.getElementById('contenido-dinamico').innerHTML = citas;
+        }
+    </script>
+    
 </body>
 </html>
