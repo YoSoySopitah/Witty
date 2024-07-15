@@ -309,3 +309,61 @@ header h2 {
 header a{
     text-decoration: none;
 }
+
+.menu h1{
+    display: flex;
+    background-color: #386ba0;
+    color: white;
+    margin: 0;
+    height: 50px;
+    align-items: center;
+    padding-left: 20px;
+    border-top-right-radius: 20px;
+}
+
+.opc1{
+    background-color: #4d8fd4;
+    color: white;
+    margin-bottom: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.opc2{
+    background-color: #4c86c2;
+    color: white;
+    margin-bottom: 10px;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.opc3{
+    background-color: #4d80b4;
+    color: white;
+    margin-bottom: 10px;
+    border-bottom-right-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.opc4{
+    background-color: #386ba0;
+    border-bottom-right-radius: 25px;
+    border-top-right-radius: 10px;
+}
+
+.menu a{
+    display: flex;
+    text-decoration: none;
+    height: 50px;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.menu{
+    margin-top: 20px;
+    width: 22%;
+}
+
+.menu hr{
+    color: white;
+    border: none;
+}
