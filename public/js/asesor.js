@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function mostrarInformacion(event) {
         event.preventDefault(); 
 
-        // Obtén los datos del elemento HTML
         const userData = document.getElementById('user-data');
         const nombreUsuario = userData.getAttribute('data-nombre-usuario');
         const correo = userData.getAttribute('data-correo');
@@ -72,6 +71,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
 
                 document.getElementById('contenido-dinamico').innerHTML = formulario;
+
+                // Agregar el evento de clic al div
+                document.querySelector('.asesoriaadd').addEventListener('click', abrirModal);
             })
             .catch(error => {
                 console.error('Error al obtener datos:', error);
@@ -86,5 +88,87 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
 
         document.getElementById('contenido-dinamico').innerHTML = citas;
+    }
+
+    function abrirModal() {
+        const modal = document.getElementById('modal');
+        modal.style.display = 'block';
+
+        // Cargar las carreras cuando se abra el modal
+        loadCarreras();
+
+        // Agregar el evento de clic al botón de cerrar
+        document.querySelector('.close').addEventListener('click', cerrarModal);
+
+        // Cerrar el modal si se hace clic fuera del contenido del modal
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                cerrarModal();
+            }
+        });
+    }
+
+    function cerrarModal() {
+        const modal = document.getElementById('modal');
+        modal.style.display = 'none';
+    }
+
+    function loadCarreras() {
+        fetch('/api/carreras')
+            .then(response => response.json())
+            .then(carreras => {
+                const carreraSelect = document.getElementById('carrera');
+                carreraSelect.innerHTML = '<option value="" disabled selected>Seleccione una carrera</option>';
+                carreras.forEach(carrera => {
+                    const option = document.createElement('option');
+                    option.value = carrera.id_carrera;
+                    option.textContent = carrera.nombre_carrera;
+                    carreraSelect.appendChild(option);
+                });
+                carreraSelect.addEventListener('change', loadCuatrimestres);
+            })
+            .catch(error => {
+                console.error('Error al cargar las carreras:', error);
+            });
+    }
+
+    function loadCuatrimestres() {
+        const carreraId = document.getElementById('carrera').value;
+        fetch(`/api/cuatrimestres?carreraId=${carreraId}`)
+            .then(response => response.json())
+            .then(cuatrimestres => {
+                const cuatrimestreSelect = document.getElementById('cuatrimestre');
+                cuatrimestreSelect.innerHTML = '<option value="" disabled selected>Seleccione un cuatrimestre</option>';
+                cuatrimestres.forEach(cuatrimestre => {
+                    const option = document.createElement('option');
+                    option.value = cuatrimestre.numero_cuatrimestre;
+                    option.textContent = cuatrimestre.numero_cuatrimestre;
+                    cuatrimestreSelect.appendChild(option);
+                });
+                cuatrimestreSelect.addEventListener('change', loadMaterias);
+            })
+            .catch(error => {
+                console.error('Error al cargar los cuatrimestres:', error);
+            });
+    }
+
+    function loadMaterias() {
+        const carreraId = document.getElementById('carrera').value;
+        const cuatrimestre = document.getElementById('cuatrimestre').value;
+        fetch(`/api/materias?carreraId=${carreraId}&cuatrimestre=${cuatrimestre}`)
+            .then(response => response.json())
+            .then(materias => {
+                const materiaSelect = document.getElementById('materia');
+                materiaSelect.innerHTML = '<option value="" disabled selected>Seleccione una materia</option>';
+                materias.forEach(materia => {
+                    const option = document.createElement('option');
+                    option.value = materia.id_materia;
+                    option.textContent = materia.nombre_materia;
+                    materiaSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error al cargar las materias:', error);
+            });
     }
 });

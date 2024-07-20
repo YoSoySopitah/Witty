@@ -247,6 +247,27 @@ app.get('/api/materias-asesor/:idAsesor', (req, res) => {
         }
     });
 });
+app.post('/registrar-asesoria', (req, res) => {
+    const { carrera, cuatrimestre, materia, disponibilidad, horario } = req.body;
+
+    // Obtener el id y nombre del asesor desde la sesión
+    const id_asesor = req.session.user.id_asesor;
+    const nombre_asesor = req.session.user.nombre_asesor;
+
+    // Insertar el nuevo asesor en la tabla asesores
+    connection.query(
+        'INSERT INTO asesores (id_asesor, nombre_asesor, carrera, cuatrimestre, materia, disponibilidad, horario) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        [id_asesor, nombre_asesor, carrera, cuatrimestre, materia, disponibilidad, horario],
+        (err, result) => {
+            if (err) {
+                console.error('Error al insertar el asesor:', err);
+                res.status(500).json({ error: 'Error interno del servidor al registrar el asesor' });
+            } else {
+                res.redirect('/asesor-home'); // Redirigir a la página de inicio del asesor
+            }
+        }
+    );
+});
 
 
 

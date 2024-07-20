@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Witty - Home</title>
-    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/asesor-home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
@@ -38,6 +38,31 @@
         <div id="contenido-dinamico" data-asesor-id="<%= asesorId %>"></div>
 </div>
 
+<!-- Modal -->
+<!-- Modal -->
+<div id="modal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h1>CREAR NUEVA TUTORIA</h1>
+        <form action="/registrar-asesoria" method="POST">
+            <h4>Carrera</h4>
+            <select name="carrera" id="carrera" required></select>
+            <h4>Cuatrimestre</h4>
+            <select name="cuatrimestre" id="cuatrimestre" required></select>
+            <h4>Materia</h4>
+            <select name="materia" id="materia" required></select>
+            <h4>Disponibilidad</h4>
+            <input type="text" placeholder="Ingresa tu disponibilidad" name="disponibilidad" required>
+            <h4>Precio Asesoría</h4>
+            <input type="number" placeholder="Ingresa el precio de la asesoría" name="precio_asesoria" required>
+            <button type="submit">Crear Tutoría</button>
+        </form>
+    </div>
+</div>
+
+
+
 </body>
 <script src="js/asesor.js"></script>
+    
 </html>
