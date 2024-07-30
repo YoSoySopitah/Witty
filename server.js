@@ -247,14 +247,6 @@ app.get('/estudiante-admin', (req, res) => {
     }
 });
 
-app.get('/asesor-admin', (req, res) => {
-    if (req.session.user && req.session.tipoUsuario === 'asesor') {
-        res.render('asesor-admin', { nombreUsuario: req.session.user.nombre_estudiante });
-    } else {
-        res.redirect('/login');
-    }
-});
-
 // Ruta para obtener las materias de un asesor específico
 app.get('/api/materias-asesor/:idAsesor', (req, res) => {
     const idAsesor = req.params.idAsesor;
@@ -299,7 +291,73 @@ app.post('/registrar-asesoria', (req, res) => {
 
 // Ruta para cerrar sesión
 
+app.get('/asesor-admin', (req, res) => {
+    if (req.session.user && req.session.tipoUsuario === 'asesor') {
+        const asesorId = req.session.user.id_asesores; // Obtener el ID del asesor desde la sesión
 
+        connection.query(`
+            SELECT asesores.nombre_asesor AS nombre, asesores.correoA AS correo, asesores.disponibilidad AS disponibilidad, 
+                   carrera.nombre_carrera AS carrera, asesores.descripcion AS descripcion, asesores.precio_asesoria AS tarifa,
+                   materias.nombre_materia AS materia1
+            FROM asesores
+            JOIN carrera ON asesores.fk_carrera = carrera.id_carrera
+            LEFT JOIN asesorias ON asesores.id_asesores = asesorias.fk_asesor
+            LEFT JOIN materias ON asesorias.fk_materia = materias.id_materia
+            WHERE asesores.id_asesores = ?
+        `, [asesorId], (err, results) => {
+            if (err) {
+                console.error('Error al cargar los datos del asesor:', err);
+                res.status(500).json({ error: 'Internal Server Error' });
+            } else {
+                // Desestructurar el primer resultado
+                const { nombre, correo, disponibilidad, carrera, descripcion, tarifa, materia1 } = results[0];
+                
+                // Renderizar la vista 'asesor-admin' con los datos obtenidos
+                res.render('asesor-admin', { nombreUsuario: nombre, correo, disponibilidad, carrera, descripcion, tarifa, materia1, asesorId });
+            }
+        });
+    } else {
+        res.redirect('/login');
+    }
+});
+
+
+
+// Ruta para actualizar el nombre y carrera del asesor
+app.post('/update-asesor', (req, res) => {
+    const { asesorId, nuevoNombre, nuevaCarrera } = req.body;
+
+    connection.query(`
+        UPDATE asesores
+        SET nombre_asesor = ?, carrera = ?
+        WHERE id_asesores = ?
+    `, [nuevoNombre, nuevaCarrera, asesorId], (err, results) => {
+        if (err) {
+            console.error('Error al actualizar el asesor:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            res.redirect('/asesor-admin');
+        }
+    });
+});
+
+// Ruta para actualizar la descripción del asesor
+app.post('/update-descripcion', (req, res) => {
+    const { asesorId, nuevaDescripcion } = req.body;
+
+    connection.query(`
+        UPDATE asesores
+        SET descripcion = ?
+        WHERE id_asesores = ?
+    `, [nuevaDescripcion, asesorId], (err, results) => {
+        if (err) {
+            console.error('Error al actualizar la descripción:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            res.redirect('/asesor-admin');
+        }
+    });
+});
 
 // Iniciar el servidor
 app.listen(port, () => {

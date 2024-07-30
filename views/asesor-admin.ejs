@@ -15,7 +15,8 @@
             </button>
         </div>
         <div class="header-center">
-            <img src="https://i.imgur.com/zxHjzgd.png" alt="Logo">
+            
+            <a href="/asesor-home"><img src="https://i.imgur.com/zxHjzgd.png" alt="Logo"></a>
         </div>
     </header>
     <div class="menu hidden">
@@ -23,21 +24,69 @@
         <a class="opc2" href=""><i class="fa fa-user"></i> Perfil</a>
         <a class="opc3" href=""><i class="fa fa-pencil"></i> Crear</a>
     </div>
-    <div class="containerinfo"> 
-        <div class="perfilcontainer">
-            <div class="perfilfoto">
-                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135768.png" alt="">
-                <h1>Oscar Mayers</h1>
-                <div class="informacion">
-                    <h2>Carrera: Tecnologias de la informacion</h2>
-                    <h2>E-Mail: oscarmayers@gmail.com</h2>
-                </div>
+    <div class="containerinfo">
+        <div class="asesorbox">
+            <img src="https://2356021.fs1.hubspotusercontent-na1.net/hubfs/2356021/Cortes%20de%20pelo%20para%20cara%20cuadrada%20de%20hombre%206.webp" alt="">
+            <h2><%= nombreUsuario %></h2>
+            <div class="starsc">
+                <i id="star" class="fa fa-star"></i>
+                <i id="star" class="fa fa-star"></i>
+                <i id="star" class="fa fa-star"></i>
+                <i id="star" class="fa fa-star"></i>
+                <i id="star" class="fa fa-star-o"></i>
             </div>
-            <h2>Soy una persona muy responsable y me encanta ayudar a los demas soy paciente cuando enseño :D</h2>
+            <h3>Carrera: <span class="carrera"><%= carrera %></span></h3>
+            <button type="button" class="btn btn-primary" id="openModal">
+                Actualizar
+            </button>
         </div>
-        <div class="fx"></div>
+        <div class="description">
+            <h3><%= descripcion %></h3>
+            <form action="/update-descripcion" method="POST">
+                <input type="hidden" name="asesorId" value="<%= asesorId %>">
+                <textarea name="nuevaDescripcion" placeholder="Nueva descripción"><%= descripcion %></textarea>
+                <button type="submit">Actualizar Descripción</button>
+            </form>
+        </div>
+        <div class="tarifa">
+            <h2>$<%= tarifa %></h2>
+            <h3>Tarifa por hora</h3>
+        </div>
+        <div class="horario">
+            <h2>Horario de disponibilidad</h2>
+            <h2><%= disponibilidad %></h2>
+        </div>
     </div>
-    
+
+    <!-- Modal -->
+    <div id="updateModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Actualizar Asesor</h5>
+                <span class="modal-close">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form action="/update-asesor" method="POST">
+                    <input type="hidden" name="asesorId" value="<%= asesorId %>">
+                    <div class="form-group">
+                        <label for="nuevoNombre">Nombre</label>
+                        <input type="text" class="form-control" id="nuevoNombre" name="nuevoNombre" placeholder="Nuevo nombre" value="<%= nombreUsuario %>">
+                    </div>
+                    <div class="form-group">
+                        <label for="nuevaCarrera">Carrera</label>
+                        <select id="nuevaCarrera" name="nuevaCarrera" class="form-control">
+                            <!-- Opciones serán llenadas por JavaScript -->
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Actualizar</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary modal-close">Cerrar</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         document.getElementById('menu-toggle').addEventListener('click', function() {
             var menu = document.querySelector('.menu');
@@ -47,6 +96,42 @@
             containerinfo.classList.toggle('menu-visible');
             header.classList.toggle('menu-visible');
         });
+
+        var modal = document.getElementById('updateModal');
+        var openModalButton = document.getElementById('openModal');
+        var closeModalButtons = document.querySelectorAll('.modal-close');
+
+        openModalButton.addEventListener('click', function() {
+            modal.style.display = 'block';
+            // Cargar carreras en el modal cuando se abre
+            fetch('/api/carreras')
+                .then(response => response.json())
+                .then(carreras => {
+                    const carreraSelect = document.getElementById('nuevaCarrera');
+                    carreraSelect.innerHTML = ''; // Limpiar opciones anteriores
+                    carreras.forEach(carrera => {
+                        const option = document.createElement('option');
+                        option.value = carrera.id_carrera; // Suponiendo que tienes un campo 'id_carrera'
+                        option.textContent = carrera.nombre; // Suponiendo que tienes un campo 'nombre'
+                        carreraSelect.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al cargar las carreras:', error);
+                });
+        });
+
+        closeModalButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
     </script>
-</body>    
+</body>
 </html>

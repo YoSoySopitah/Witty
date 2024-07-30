@@ -713,6 +713,147 @@
     padding-bottom: 15px;
     background-color: none;
 }
+
+#fcard{
+    margin-left: 100px;
+}
+
+.card:hover{
+    z-index: 55;
+}
+
+.section i{
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    padding-bottom: 15px;
+}
+
+.section a{
+    text-decoration: none;
+}
+.card {
+  background-color: #30344c;
+  padding: 2em;
+  z-index: 50;
+  box-shadow: 4px 4px 20px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  width: 400px;
+  height: 200px;
+  margin-top: 200px;
+    margin-right: -50px;
+  display: flex;
+}
+
+
+
+
+.username {
+  color: #C6E1ED;
+  font-size: 0.85em;
+  font-weight: 600;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+}
+
+.body .text {
+  margin: 0 10px 0 0;
+  white-space: pre-line;
+  color: #c0c3d7;
+  font-weight: 400;
+  line-height: 1.5;
+  margin-bottom: 4px;
+}
+
+.foote {
+  position: relative;
+  width: 100%;
+  color: #9fa4aa;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: none;
+  margin-top: 10px;
+}
+
+.foote div {
+  margin-right: 1rem;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.foote svg {
+  margin-right: 5px;
+  height: 100%;
+  stroke: #9fa4aa;
+}
+
+.viewer span {
+  height: 20px;
+  width: 20px;
+  background-color: rgb(28, 117, 219);
+  margin-right: -6px;
+  border-radius: 50%;
+  border: 1px solid #fff;
+  display: grid;
+  align-items: center;
+  text-align: center;
+  font-weight: bold;
+  font-size: 8px;
+  color: #fff;
+  padding: 2px;
+}
+
+#flast{
+    margin-right: -5000px;
+}
+
+.viewer span svg {
+  stroke: #fff;
+}
+
+.slider {
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  .cards {
+    margin: 10px;
+    display: flex;
+    transition: transform 1s ease-in-out;
+    
+  }
+
+
+.facebook{
+    display: flex;
+    flex-direction: row;
+}
+
+.instagram{
+        display: flex;
+        flex-direction: row;
+}
+
+.facebook h3{
+    margin: 0;
+    padding-left: 10px;
+}
+
+
+.instagram h3{
+    margin: 0;
+    padding-left: 10px;
+}
 #consejostitle{
     font-size:50px;
     font-weight: 100;
@@ -734,7 +875,7 @@
 }
 
 .contactanos form{
-    margin: 40px;
+    margin: 40px ;
     display: flex;
     flex-direction: column;
     width: 560px;
@@ -742,6 +883,7 @@
     border-radius: 20px;
     padding: 20px;
     color: gray;    
+    
 }
 
 .contactanos input{
@@ -752,9 +894,10 @@
 }
 .contactanos {
     display: flex;
-    justify-content: end;
     background: linear-gradient(to bottom, #577bb5 1%, #577bb5 2%, #0e2e6c 70%);
 }
+
+
 
 #mensaje{
     height: 130px;
