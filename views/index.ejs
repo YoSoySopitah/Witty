@@ -6,119 +6,321 @@
     <title>Witty - Home</title>
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="js/buttons-carrers.js"></script>
+
 </head>
 <body>
     <header>
-        <a href="/"><img src="img/logo.png" alt=""></a>
-        <h2>Witty</h2>
-        <h2 class="asesorias">ASESORIAS</h2>
-        <% if (user) { %>
-            
+        <div class="header-center">
+            <img src="https://i.imgur.com/zxHjzgd.png" alt="Logo">
+        </div>
+        <div class="header-right">
+            <% if (user) { %>
                 <h2>Hola, <%= nombreUsuario %></h2>
-        <% } else { %>
-            <a href="login"><h2>Iniciar Sesion</h2></a>
-        <% } %>
-        <img class="user" src="img/user.png" alt="">
+            <% } else { %>
+                <a href="login"><h2>Iniciar Sesión</h2></a>
+            <% } %>
+            <img class="user" src="img/user.png" alt="Usuario">
+        </div>
     </header>
 
     <div class="container">
         <div class="buscador">
-            <h1>¿Qué quieres aprender hoy?</h1>
-            <form id="buscar-carreras-form">
-                <input type="text" placeholder="Ingresa una materia" name="term" id="term">
-                <button type="submit">Buscar</button>
+            <form id="buscar-carreras-form" action="/buscar-carreras" method="POST">
+                <input type="text" placeholder="¿Qué necesitas hacer hoy?" name="term" id="term" class="input-with-image"> 
+                <button type="submit" style="display: none;">Buscar</button>
             </form>
         </div>
-    </div>
 
-    <div class="carrera">
-        <div class="title">Carreras</div>
-        <button class="button button-left">&#10094;</button>
-        <div class="card-wrapper">
-            <div class="card-container">
-                <div class="card">
-                    <img src="https://hidrogenoverdehoy.com.ar/wp-content/uploads/2022/09/IRENA-Annual-Review-2022-1.png" alt="Energías Renovables">
-                    <div class="card-content">
-                        <p>Energías Renovables</p>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <img src="https://assets.usc.gal/sites/default/files/image/2020-02/enxenar%C3%ADa-quimica.jpg" alt="Energías Renovables">
-                    <div class="card-content">
-                        <p>Procesos Industriales</p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <img src="https://uvp.mx/uvpblog/wp-content/uploads/2021/06/empresas.jpeg" alt="Energías Renovables">
-                    <div class="card-content">
-                        <p>Desarrollo de negocios</p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <img src="https://www.utch.edu.mx/wp-content/uploads/2021/03/mi1.png" alt="Energías Renovables">
-                    <div class="card-content">
-                        <p>Mantenimiento Industrial</p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <img src="https://blogs.unitec.mx/hubfs/Imported_Blog_Media/habilidades-que-todo-ingeniero-mecatronico-debe-tener-1-compressor-Dec-17-2022-06-53-53-9602-PM.jpg" alt="Energías Renovables">
-                    <div class="card-content">
-                        <p>Mecatronica</p>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBCbD6-Qvgr8VYgnmBFEGWPVOL1HPF85s14w&s  " alt="Energías Renovables">
-                    <div class="card-content">
-                        <p>Tecnologias de la informacion</p>
-                    </div>
-                </div>
-            </div>
+        <div class="toolbar">
+            <img src="https://i.imgur.com/WWRWHc2.jpeg" alt="">
         </div>
-        <button class="button button-right">&#10095;</button>
-    </div>
-    
+    </div> 
+
+    <div class="asesorescontainer">
+    <div id="asesort" class="title">TOP ASESORES</div>
     <div class="asesores">
-        <div id="asesort" class="title">Asesores top</div>
         <div class="asesor-wrapper">
+            <button class="button-left">&lt;</button>
             <div class="asesor-container">
                 <div class="asesor">
-                    <img id="asesorti" src="https://laboratoriosniam.com/wp-content/uploads/2018/07/michael-dam-258165-unsplash_WEB2.jpg" alt="">
-                    <div class="asesor-content">
-                        <p>Asesor 1</p>
-                        <h4>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</h4>
+                    <img src="https://laboratoriosniam.com/wp-content/uploads/2018/07/michael-dam-258165-unsplash_WEB2.jpg" alt="">
+                    <div class="asesor-info">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.7074821341303!2d-106.15020459671838!3d28.638527898341234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86ea4382e031e667%3A0xca6655ebf3770218!2sUTCH%20Tecnolog%C3%ADas%20de%20la%20Informaci%C3%B3n!5e0!3m2!1ses-419!2smx!4v1721668212269!5m2!1ses-419!2smx" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <div class="starsc">
                         <i id="star" class="fa fa-star"></i>
                         <i id="star" class="fa fa-star"></i>
                         <i id="star" class="fa fa-star"></i>
                         <i id="star" class="fa fa-star"></i>
                         <i id="star" class="fa fa-star"></i>
+                        <i id="location" class="fa fa-map-marker"></i>
+                        <p>Edificio K</p>
+                        </div>
+                        <h4 id="start-p">Materias:</h4>
+                        <p id="start-p">Programacion Avanzada.</p>
+                        <p>Clases completamente personalizadas experiencia dando asesorias, paciencia al enseñar.</p>
+                        <p>$150/hr</p>
+                        <div class="skills">
+                            <p>Java</p>
+                            <p>Python</p>
+                            <p>C++</p>
+                        </div>
+                        <a href="">Ver perfil</a>
                     </div>
                 </div>
-                <!-- Agregar más asesores aquí -->
+                <div class="asesor">
+                    <img src="https://opem.b-cdn.net/wp-content/uploads/2022/10/como-elegir-foto-para-curriculum.png" alt="">
+                    <div class="asesor-info">
+                        miguel.sanchez@utch.edu.mx   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.7074821341303!2d-106.15020459671838!3d28.638527898341234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86ea4382e031e667%3A0xca6655ebf3770218!2sUTCH%20Tecnolog%C3%ADas%20de%20la%20Informaci%C3%B3n!5e0!3m2!1ses-419!2smx!4v1721668212269!5m2!1ses-419!2smx" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <div class="starsc">
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="location" class="fa fa-map-marker"></i>
+                        <p>Edificio K</p>
+                        </div>
+                        <h4 id="start-p">Materias:</h4>
+                        <p id="start-p">Programacion Avanzada.</p>
+                        <p>Clases completamente personalizadas experiencia dando asesorias, paciencia al enseñar.</p>
+                        <p>$150/hr</p>
+                        <div class="skills">
+                            <p>Java</p>
+                            <p>Python</p>
+                            <p>C++</p>
+                        </div>
+                        <a href="">Ver perfil</a>
+                    </div>
+                </div>
+                <div class="asesor">
+                    <img src="https://img.freepik.com/foto-gratis/retrato-hermoso-mujer-joven-posicion-pared-gris_231208-10760.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1721520000&semt=sph" alt="">
+                    <div class="asesor-info">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.7074821341303!2d-106.15020459671838!3d28.638527898341234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86ea4382e031e667%3A0xca6655ebf3770218!2sUTCH%20Tecnolog%C3%ADas%20de%20la%20Informaci%C3%B3n!5e0!3m2!1ses-419!2smx!4v1721668212269!5m2!1ses-419!2smx" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <div class="starsc">
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="location" class="fa fa-map-marker"></i>
+                        <p>Edificio K</p>
+                        </div>
+                        <h4 id="start-p">Materias:</h4>
+                        <p id="start-p">Programacion Avanzada.</p>
+                        <p>Clases completamente personalizadas experiencia dando asesorias, paciencia al enseñar.</p>
+                        <p>$150/hr</p>
+                        <div class="skills">
+                            <p>Java</p>
+                            <p>Python</p>
+                            <p>C++</p>
+                        </div>
+                        <a href="">Ver perfil</a>
+                    </div>
+                </div>
+                <div class="asesor">
+                    <img src="https://img.freepik.com/foto-gratis/retrato-joven-sonriente-gafas_171337-4842.jpg" alt="">
+                    <div class="asesor-info">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.7074821341303!2d-106.15020459671838!3d28.638527898341234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86ea4382e031e667%3A0xca6655ebf3770218!2sUTCH%20Tecnolog%C3%ADas%20de%20la%20Informaci%C3%B3n!5e0!3m2!1ses-419!2smx!4v1721668212269!5m2!1ses-419!2smx" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <div class="starsc">
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="location" class="fa fa-map-marker"></i>
+                        <p>Edificio K</p>
+                        </div>
+                        <h4 id="start-p">Materias:</h4>
+                        <p id="start-p">Programacion Avanzada.</p>
+                        <p>Clases completamente personalizadas experiencia dando asesorias, paciencia al enseñar.</p>
+                        <p>$150/hr</p>
+                        <div class="skills">
+                            <p>Java</p>
+                            <p>Python</p>
+                            <p>C++</p>
+                        </div>
+                        <a href="">Ver perfil</a>
+                    </div>
+                </div>
+                <div class="asesor">
+                    <img src="https://img.freepik.com/foto-gratis/retrato-joven-sonriente-gafas_171337-4842.jpg" alt="">
+                    <div class="asesor-info">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.7074821341303!2d-106.15020459671838!3d28.638527898341234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86ea4382e031e667%3A0xca6655ebf3770218!2sUTCH%20Tecnolog%C3%ADas%20de%20la%20Informaci%C3%B3n!5e0!3m2!1ses-419!2smx!4v1721668212269!5m2!1ses-419!2smx" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        <div class="starsc">
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="star" class="fa fa-star"></i>
+                        <i id="location" class="fa fa-map-marker"></i>
+                        <p>Edificio K</p>
+                        </div>
+                        <h4 id="start-p">Materias:</h4>
+                        <p id="start-p">Programacion Avanzada.</p>
+                        <p>Clases completamente personalizadas experiencia dando asesorias, paciencia al enseñar.</p>
+                        <p>$150/hr</p>
+                        <div class="skills">
+                            <p>Java</p>
+                            <p>Python</p>
+                            <p>C++</p>
+                        </div>
+                        <a href="">Ver perfil</a>
+                    </div>
+                </div>
+                <div class="asesor">
+                    <img src="https://img.freepik.com/foto-gratis/retrato-joven-sonriente-gafas_171337-4842.jpg" alt="">
+                    <div class="asesor-info">
+                        <h4>Asesor 6</h4>
+                        <p>Información sobre el asesor 6.</p>
+                        <button>Contactar</button>
+                    </div>
+                </div>  
+                <div class="asesor">
+                    <img src="https://img.freepik.com/foto-gratis/retrato-joven-sonriente-gafas_171337-4842.jpg" alt="">
+                    <div class="asesor-info">
+                        <h4>Asesor 7</h4>
+                        <p>Información sobre el asesor 7.</p>
+                        <button>Contactar</button>
+                    </div>
+                </div>  
+            </div>
+            <button class="button-right">&gt;</button>
+        </div>
+    </div>
+</div>
+
+    <div class="why">
+        <h1>¿Por qué 
+            <br>
+            elegirnos?</h1>
+        <hr>
+        <h2>Somos una empresa comprometida con ayudar a los jóvenes mexicanos a alcanzar su potencial académico. nos dedicamos a proporcionar asesorias personalizadas y recursos educativos de calidad. Nuestra misión es empoderar a los estudiantes, brindándoles el apoyo necesario para superar desafíos y alcanzar sus metas académicas , creemos fielmente en la capacidad de cada estudiante para lograr el éxito y trabajamos con pasión y dedicacion para facilitar su aprendizaje. Elegirnos significa confiar en un equpo de profesionales comprometidos con la excelencia y el desarrollo integral de nuestros jovenes</h2>
+    </div>
+
+    <div class="consejos">
+        <h2 id="consejostitle">Consejos</h2>
+        <div class="consejoswrapper">
+        <div class="consejoscontainer">
+            <img src="img/uno.png" alt="">
+            <div class="consejoinfo">
+                <h1>Como ser menos procastinador</h1>
+                <h2>los dispositivos electrónicos son parte de nuestro dia a dia, pero para estudiar debemos dejarlos de lado para evitar distracciones. Ya habrá tiempo para contestar mensajes, ver la television o jugar.</h2>
+                <hr>
+            </div>
+            <div class="consejobtn">
+                <i id="icons" class="fa fa-comment-o"></i>
+                <i id="icons" class="fa fa-heart-o"></i>
+            </div>
+        </div>
+
+        <div class="consejoscontainer">
+            <img src="img/dos.png" alt="">
+            <div class="consejoinfo">
+                <h1>Desventajas del celular</h1>
+                <h2>los dispositivos electrónicos son parte de nuestro dia a dia, pero para estudiar debemos dejarlos de lado para evitar distracciones. Ya habrá tiempo para contestar mensajes, ver la television o jugar.</h2>
+                <hr>
+            </div>
+            <div class="consejobtn">
+                <i id="icons" class="fa fa-comment-o"></i>
+                <i id="icons" class="fa fa-heart-o"></i>
+            </div>
+        </div>
+
+        <div class="consejoscontainer">
+            <img src="img/tres.png" alt="">
+            <div class="consejoinfo">
+                <h1>Hábitos para el estudio </h1>
+                <h2>los dispositivos electrónicos son parte de nuestro dia a dia, pero para estudiar debemos dejarlos de lado para evitar distracciones. Ya habrá tiempo para contestar mensajes, ver la television o jugar.</h2>
+                <hr>
+            </div>
+            <div class="consejobtn">
+                <i id="icons" class="fa fa-comment-o"></i>
+                <i id="icons" class="fa fa-heart-o"></i>
             </div>
         </div>
     </div>
+    </div>
+
+    <div class="utchbg">
+        <h2>"El educador es el hombre que hace que las cosas difíciles parezcan fáciles"</h2>
+        <h3>Ralph Waldo Emerson</h3>
+    </div>
+
+    <div class="contactanos">
+        <form action="">
+            <h1>Contactános</h1>
+            <h2>Si tienes alguna sugerencia escribenos</h2>
+            <div class="firstc">
+                <div class="input-group">
+                    <label for="nombre">Nombre*</label>
+                    <input type="text" id="nombre">
+                </div>
+                <div class="input-group">
+                    <label for="apellido">Apellido*</label>
+                    <input type="text" id="apelllido">
+                </div>
+                <div class="input-group">
+                    <label for="email">Email*</label>
+                    <input type="email" id="email">
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="asunto">Asunto</label>
+                <input type="text" id="asunto">
+            </div>
+            
+            <div class="input-group">
+                <label for="mensaje">Dejanos un mensaje...</label>
+                <input type="text" id="mensaje">
+            </div>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
     
+
     <div class="footer">
-        <h1>Copyright ©Witty todos los derechos están reservados.</h1>
+        <div class="section">
+            <img src="img/Logo.png" alt="">
+            <h2 id="alcance">Al alcance de tu mano</h2>
+            <a href="/register"><h2>Registrate</h2></a>
+        </div>
+        <div class="section">
+            <h2>Informacion</h2>
+            <h3>Misión</h3>
+            <h3>Visión</h3>
+            <h3>Justificacion</h3>
+        </div>
+        <div class="section">
+            <h2>Ayuda</h2>
+            <h3>Servicios</h3>
+            <h3>Soporte</h3>
+            <h3>Politica de privacidad</h3>
+        </div>
+        <div class="section">
+            <h2>Menu</h2>
+        </div>
+        <div class="section">
+            <h2>Redes Sociales</h2>
+        </div>  
+    </div>
+    <div class="foot">
+    <hr>
+        <h2>2024 @ Copyright | Witty</h2>
     </div>
 
     <script>
-        document.getElementById('buscar-carreras-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const term = document.getElementById('term').value;
-            fetch(`/buscar-carreras?term=${term}`)
-                .then(response => response.json())
-                .then(data => {
-                    // Lógica para mostrar los resultados
-                    console.log(data);
-                })
-                .catch(error => console.error('Error:', error));
+        document.querySelector('.button-left').addEventListener('click', function() {
+            document.querySelector('.asesor-container').scrollBy({
+                left: -300, // Ajusta la cantidad que quieres desplazar
+                behavior: 'smooth'
+            });
+        });
+    
+        document.querySelector('.button-right').addEventListener('click', function() {
+            document.querySelector('.asesor-container').scrollBy({
+                left: 300, // Ajusta la cantidad que quieres desplazar
+                behavior: 'smooth'
+            });
         });
     </script>
 </body>

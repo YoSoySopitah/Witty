@@ -1,0 +1,134 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #9cc2fb; /* Color de fondo en caso de que la imagen no cargue */
+    min-height: 100vh; /* Asegura que el body tenga al menos la altura de la ventana */
+    display: flex;
+    flex-direction: column;
+}
+
+* {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+header {
+    display: flex;
+    background-color: white;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    flex-wrap: wrap;
+    margin-left: 17%; /* Ajusta este valor según el ancho del menú */
+    padding-left: 20px; /* Opcional: Para añadir espacio entre el menú y el header */
+}
+
+header img {
+    height: 55px;
+    margin: 5px;
+    padding: 10px;
+}
+
+header h2 {
+    color: #092A54;
+    font-weight: bold;
+}
+
+.menu {
+    width: 17%;
+    background-color: #004aad;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding-top: 20px;
+    box-sizing: border-box;
+    z-index: 2; /* Asegúrate de que el menú esté encima de la imagen */
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+.opc1{
+    margin-top: 200px;
+    margin-left: 2px;
+}
+
+.opc2{
+    margin-left: 12px;
+}
+.menu h1 {
+    display: flex;
+    color: white;
+    margin: 0;
+    height: 50px;
+    align-items: center;
+    padding-left: 20px;
+    border-top-right-radius: 20px;
+}
+
+.menu a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    height: 50px;
+    padding-left: 20px;
+    color: white;
+    font-size: 40px;
+    justify-content: center;
+}
+.menu a i {
+    margin-right: 10px; /* Espacio entre el icono y el texto */
+    font-size: 40px; /* Tamaño del icono */
+}
+
+.menu hr {
+    color: white;
+    border: none;
+}
+
+@media (max-width: 768px) {
+    header {
+        margin-left: 0;
+        padding-left: 0;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .menu {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .menu h1, .menu a {
+        font-size: 20px;
+        padding-left: 0;
+        justify-content: center;
+    }
+}
+
+.containerinfo {
+    flex: 1; /* Permite que el contenedor se expanda y ocupe el espacio restante */
+    padding-top: 20px; /* Espacio superior para que no se superponga con el contenido */
+    padding-left: 17%; /* Espacio a la izquierda para evitar que se superponga con el menú */
+    box-sizing: border-box;
+}
+
+
+.fx {
+    width: calc(100% ); /* Ajusta el ancho para que no se superponga con el menú */
+    height: 250px; /* Ajusta la altura según tus necesidades */
+    background-image: url(https://i.imgur.com/sAe7JRj.png);
+    background-repeat: no-repeat;
+    background-size: 100% auto; /* La imagen se estira horizontalmente */
+    background-position: top; /* Alinea la imagen a la parte superior del contenedor */
+    display: flex;
+    align-items: flex-end; /* Alinea el contenido al fondo del contenedor */
+    justify-content: center; /* Alinea el contenido horizontalmente al centro */
+    position: relative; /* Mantiene el contenedor en el flujo del documento */
+    z-index: 1; /* Asegúrate de que la imagen esté detrás del menú */
+    margin-top: auto; /* Empuja el contenedor hacia el final de la página */
+}

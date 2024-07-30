@@ -1,6 +1,10 @@
 body {
     margin: 0;
     padding: 0;
+    background-color: #9cc2fb; /* Color de fondo en caso de que la imagen no cargue */
+    min-height: 100vh; /* Asegura que el body tenga al menos la altura de la ventana */
+    display: flex;
+    flex-direction: column;
 }
 
 * {
@@ -12,12 +16,15 @@ header {
     background-color: white;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-    align-items: center;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     z-index: 1;
     flex-wrap: wrap;
-    margin-left: 22%; /* Ajusta este valor según el ancho del menú */
-    padding-left: 20px; /* Opcional: Para añadir espacio entre el menú y el header */
+    width: 100%;
+    transition: margin-left 0.3s ease; /* Transición suave */
+}
+
+header.menu-visible {
+    margin-left: 17%; /* Ajusta este valor según el ancho del menú */
 }
 
 header img {
@@ -26,35 +33,31 @@ header img {
     padding: 10px;
 }
 
+.header-left,
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.header-left {
+    margin-right: auto; /* Esto empuja el logo hacia el centro */
+}
+
+.header-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+}
+
 header h2 {
     color: #092A54;
     font-weight: bold;
 }
 
-.asesorias {
-    text-align: center;
-    margin: 0 auto;
-}
-
-.containerinfo {
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-    padding: 20px;
-    margin-left: 22%; /* Ajusta este valor según el ancho del menú */
-    width: 78%; /* Ajusta este valor según el ancho del menú */
-    box-sizing: border-box;
-}
-
-#contenido-dinamico {
-    flex-grow: 1;
-    padding: 20px;
-    background-color: #f4f4f4;
-    border-radius: 10px;
-}
-
 .menu {
-    width: 22%;
+    width: 17%;
     background-color: #004aad;
     position: fixed;
     top: 0;
@@ -62,6 +65,24 @@ header h2 {
     height: 100%;
     padding-top: 20px;
     box-sizing: border-box;
+    z-index: 2; /* Asegúrate de que el menú esté encima de la imagen */
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    transition: transform 0.3s ease; /* Transición suave */
+}
+
+.menu.hidden {
+    transform: translateX(-100%); /* Oculta el menú */
+}
+
+.opc1 {
+    margin-top: 200px;
+    margin-left: 2px;
+}
+
+.opc2 {
+    margin-left: 12px;
 }
 
 .menu h1 {
@@ -76,56 +97,23 @@ header h2 {
 
 .menu a {
     display: flex;
+    align-items: center;
     text-decoration: none;
     height: 50px;
-    align-items: center;
     padding-left: 20px;
     color: white;
-    font-size: 30px;
+    font-size: 40px;
+    justify-content: center;
+}
+
+.menu a i {
+    margin-right: 10px; /* Espacio entre el icono y el texto */
+    font-size: 40px; /* Tamaño del icono */
 }
 
 .menu hr {
     color: white;
     border: none;
-}
-
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 2;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.5);
-}
-
-.modal-content {
-    background-color: white;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 500px;
-    border-radius: 10px;
-}
-
-.modal-content h1, .modal-content h4 {
-    margin: 0 0 10px;
-}
-
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.close:hover, .close:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
 }
 
 @media (max-width: 768px) {
@@ -148,13 +136,68 @@ header h2 {
         justify-content: center;
     }
 
-    .containerinfo {
-        margin-left: 0;
-        width: 100%;
+    .menu.hidden {
+        transform: translateY(-100%);
     }
 
-    .modal-content {
-        width: 90%;
-        margin: 30% auto;
+    header.menu-visible {
+        margin-left: 0;
     }
+}
+
+.containerinfo {
+    flex: 1; /* Permite que el contenedor se expanda y ocupe el espacio restante */
+    padding-top: 20px; /* Espacio superior para que no se superponga con el contenido */
+    box-sizing: border-box;
+    width: 100%;
+    transition: margin-left 0.3s ease; /* Transición suave */
+}
+
+.containerinfo.menu-visible {
+    margin-left: 17%; /* Espacio a la izquierda para evitar que se superponga con el menú */
+}
+
+.fx {
+    width: 100%; /* Ajusta el ancho para que no se superponga con el menú */
+    height: 250px; /* Ajusta la altura según tus necesidades */
+    background-image: url(https://i.imgur.com/sAe7JRj.png);
+    background-repeat: no-repeat;
+    background-size: 100% auto; /* La imagen se estira horizontalmente */
+    background-position: top; /* Alinea la imagen a la parte superior del contenedor */
+    display: flex;
+    align-items: flex-end; /* Alinea el contenido al fondo del contenedor */
+    justify-content: center; /* Alinea el contenido horizontalmente al centro */
+    position: relative; /* Mantiene el contenedor en el flujo del documento */
+    z-index: 1; /* Asegúrate de que la imagen esté detrás del menú */
+    margin-top: auto; /* Empuja el contenedor hacia el final de la página */
+}
+
+.perfilcontainer {
+    display: flex;
+    background-color: white;
+    border-radius: 30px;
+    right: 0;
+    padding: 30px;
+    flex-direction: column;
+}
+
+.perfilfoto {
+    display: flex;
+    flex-direction: column;
+}
+
+.perfilfoto img {
+    height: 200px;
+    width: 200px;
+}
+
+
+#menu-toggle img{
+    width: 50px;
+    height: 50px;
+}
+
+#menu-toggle{
+    border: none;
+    background: none;
 }

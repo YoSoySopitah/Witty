@@ -1,133 +1,268 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Witty - Registro</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <title>Witty - Registrate</title>
+    <link id="cssLink" rel="stylesheet" href="css/cssLogin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+    <style>
+        #userFormSection.hidden {
+            display: none;
+        }
+        header.hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <a href="/"><img src="img/logo.png" alt=""></a>
-        <h2>INICIO</h2>
-        <h2 class="asesorias">ASESORIAS</h2>
-        <img class="user" src="img/user.png" alt="">
+    <header id="mainHeader">
+        <img src="img/AguaCian.png" alt="ImagenHeider" class="ImagenInicio">
+        <a href="/"><h1>Inicio</h1></a>
     </header>
-    <img src="img/logo.png" alt="">
-    <div class="fcontainer">
-        <form action="/register" method="POST" onsubmit="return validateForm()">
-            <h2>Registrarse</h2>
-            <h4>Nombre Completo</h4>
-            <input type="text" placeholder="Ingresa tu nombre completo" name="nombre_completo" id="nombre_completo" required>
-            <h4>Correo electrónico</h4>
-            <input type="email" placeholder="Ingresa correo o usuario" name="rusuario" id="rusuario" required>
-            <h4>Contraseña</h4>
-            <input type="password" placeholder="Ingresa contraseña" name="rcontraseña" id="rcontraseña" required>
-            <h4>Confirmar contraseña</h4>
-            <input type="password" placeholder="Confirma contraseña" name="confirmar_contraseña" id="confirmar_contraseña" required>
-            <h4>Tipo de Usuario</h4>
-            <select name="tipoUsuario" id="tipoUsuario" required>
-                <option value="" disabled selected>Seleccione un tipo de usuario</option>
-                <option value="estudiante">Estudiante</option>
-                <option value="asesor">Asesor</option>
-            </select>
-            <div id="camposAdicionales"></div>
-            <button type="submit">Registrarse</button>
-            <span id="error-message" class="error-message">Las contraseñas no coinciden. Por favor, inténtalo de nuevo.</span>
-        </form>
+    <div class="container" id="registerSection">
+        <div class="left-section">
+            <img src="img/Logo.png" alt="Logo" class="logo">
+            <h2>Bienvenidos!</h2>
+            <form id="registerForm" action="/register" method="POST">
+                <label for="email">Correo</label>
+                <input type="email" placeholder="Ingresa correo o usuario" name="rusuario" id="rusuario" required>
+
+                <label for="password">Contraseña</label>
+                <input type="password" placeholder="Ingresa contraseña" name="rcontraseña" id="rcontraseña" required>
+
+                <label for="confirm-password">Confirmar Contraseña</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+
+                <div class="show-password">
+                    <input type="checkbox" id="toggle-password">
+                    <label for="toggle-password">Mostrar Contraseña</label>
+                </div>
+
+                <!-- Campos adicionales para asesores -->
+                <div id="asesorFields" style="display: none;">
+                    <label for="disponibilidad">Disponibilidad</label>
+                    <input type="text" id="disponibilidad" name="disponibilidad">
+                    
+                    <label for="precio_asesoria">Precio de Asesoría</label>
+                    <input type="number" id="precio_asesoria" name="precio_asesoria">
+                </div>
+
+                <p>¿Ya tienes una cuenta? <a href="/login" class="transition-link">¡Iniciar Sesión!</a></p>
+
+                <button type="submit">Crear Cuenta</button>
+            </form>
+        </div>
+        <div class="LadoDerecho" id="reg">
+            <img src="img/AguaAzul.png" alt="AguaAzul" class="aguaAzul">
+            <img src="img/AguaAzul.png" alt="AguaAzultras" class="aguaAzulAtras">
+            <img src="img/ImagenLogin.png" alt="ImagenLogin" class="personas">
+        </div>
     </div>
-    <script src="js/confirmarcontraseña.js"></script>
+
+    <div class="container hidden" id="userFormSection">
+        <div class="card">
+            <div class="dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
+            <div class="logo-container">
+                <img src="img/Logo.png" alt="Logo" class="logo-img">
+            </div>
+            <div class="content" id="nameSection">
+                <div class="illustration">
+                    <img id="mainImage" src="img/1.png" alt="Ilustración" class="img-fluid">
+                </div>
+                <div class="form-container">
+                    <h2 id="formTitle">Escribe tu nombre</h2>
+                    <form id="nombreForm">
+                        <div class="form-group">
+                            <label for="nombre">Nombre</label>
+                            <input type="text" id="nombre" name="nombre" class="form-control" required>
+                            <div class="error-message" id="nombreError"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="apellido">Apellido</label>
+                            <input type="text" id="apellido" name="apellido" class="form-control" required>
+                            <div class="error-message" id="apellidoError"></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="content hidden" id="userTypeSection">
+                <div class="illustration">
+                    <img src="img/2.png" alt="Ilustración" class="img-fluid Imagen2">
+                </div>
+                <div class="form-container">
+                    <h2>Selecciona el tipo de usuario</h2>
+                    <div class="button-container">
+                        <button class="user-type-btn" id="asesorBtn">Asesor</button>
+                        <button class="user-type-btn" id="asesoradoBtn">Estudiante</button>
+                    </div>
+                    <div class="error-message" id="userTypeError">Selecciona un tipo de usuario.</div>
+                </div>
+            </div>
+            <div class="content hidden" id="section3">
+                <div class="illustration">
+                    <img src="img/3.png" alt="Ilustración" class="img-fluid Imagen3">
+                </div>
+                <div class="form-container">
+                    <h2>Dinos quién eres</h2>
+                    <textarea class="text-box" id="presentationText" placeholder="¡Hola! Mi nombre es Yesica Lara. Estudio Tecnología de la Información y la Innovación Digital, con especialización en Programación Orientada a Objetos.   
+Tengo una gran pasión por compartir mis conocimientos y ayudar a otros a alcanzar sus metas académicas y profesionales.
+Ofrezco clases y asesorías personalizadas en Programación Orientada a Objetos, adaptadas a tus necesidades y nivel de conocimiento."></textarea>
+                    <div class="error-message" id="presentationError"></div>
+                </div>
+            </div>
+            <div class="content hidden" id="section4">
+                <div class="illustration">
+                    <img src="img/4.png" alt="Ilustración" class="img-fluid Imagen4">
+                </div>
+                <div class="form-container">
+                    <h2>Por último sube una foto</h2>
+                    <div class="photo-upload-container">
+                        <img id="avatarPreview" src="img/Perfil.png" alt="Avatar" class="avatar-preview">
+                        <input type="file" id="photoUpload" accept="image/*" style="display: none;">
+                        <button id="uploadButton" class="upload-btn">Subir Imagen</button>
+                        <div class="error-message" id="photoUploadError"></div>
+                    </div>
+                </div>
+                <div class="create-user-container">
+                    <button id="createUserBtn" class="create-user-btn">Crear Usuario</button>
+                </div>
+            </div>
+            <div class="background">
+                <img src="img/fondo.png" alt="Fondo" class="fondo-img">
+                <a href="#" id="nextArrow" class="next-arrow">
+                    <img src="img/flecha.png" alt="Siguiente" class="arrow-img">
+                </a>
+                <a href="#" id="prevArrow" class="prev-arrow hidden">
+                    <img src="img/flecha2.png" alt="Anterior" class="arrow-img">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/jsCuenta.js"></script>
     <script>
-        const tipoUsuarioSelect = document.getElementById('tipoUsuario');
-        const camposAdicionales = document.getElementById('camposAdicionales');
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.querySelector('#registerForm');
+            const password = document.getElementById('rcontraseña');
+            const confirmPassword = document.getElementById('confirm-password');
+            const errorMessage = document.createElement('div');
+            const header = document.getElementById('mainHeader');
+    
+            errorMessage.style.color = 'red';
+            errorMessage.style.display = 'none';
+            errorMessage.style.marginTop = '5px';
+            errorMessage.style.fontSize = '0.8em';
+            errorMessage.innerHTML = '<img src="img/Advertencia.png" alt="" style="vertical-align: middle; width: 20px; height: 20px; margin-right: 5px;"> Las contraseñas no coinciden.';
+            confirmPassword.parentNode.insertBefore(errorMessage, confirmPassword.nextSibling);
+    
+            form.addEventListener('submit', (event) => {
+                event.preventDefault(); // Previene el envío del formulario
+    
+                if (password.value !== confirmPassword.value) {
+                    errorMessage.style.display = 'block'; // Muestra el mensaje de error
+                } else {
+                    errorMessage.style.display = 'none'; // Oculta el mensaje de error
+    
+                    // Cambiar el archivo CSS al enviar el formulario de registro
+                    document.getElementById('cssLink').href = 'css/cssCuenta.css';
+    
+                    // Oculta el encabezado y el formulario de registro
+                    header.classList.add('hidden');
+                    document.getElementById('registerSection').classList.add('hidden');
+                    document.getElementById('userFormSection').classList.remove('hidden');
+                }
+            });
+    
+            confirmPassword.addEventListener('input', () => {
+                if (password.value === confirmPassword.value) {
+                    errorMessage.style.display = 'none';
+                }
+            });
+        });
+    
+        document.getElementById('toggle-password').addEventListener('change', function() {
+            const passwordField = document.getElementById('confirm-password');
+            passwordField.type = this.checked ? 'text' : 'password';
+        });
 
-        tipoUsuarioSelect.addEventListener('change', function() {
-            const tipoUsuario = this.value;
-            camposAdicionales.innerHTML = '';
+        // Mostrar u ocultar campos adicionales basados en el tipo de usuario seleccionado
+        document.getElementById('tipoUsuario').addEventListener('change', function() {
+            const asesorFields = document.getElementById('asesorFields');
+            asesorFields.style.display = this.value === 'asesor' ? 'block' : 'none';
+        });
 
-            if (tipoUsuario === 'estudiante') {
-                camposAdicionales.innerHTML = `
-                    <h4>Carrera</h4>
-                    <select name="carrera" id="carrera" required></select>
-                    <h4>Cuatrimestre</h4>
-                    <select name="cuatrimestre" id="cuatrimestre" required></select>
-                    <h4>Materia</h4>
-                    <select name="materia" id="materia" required></select>
-                `;
-                loadCarreras();
-            } else if (tipoUsuario === 'asesor') {
-                camposAdicionales.innerHTML = `
-                    <h4>Carrera</h4>
-                    <select name="carrera" id="carrera" required></select>
-                    <h4>Materia</h4>
-                    <select name="materia" id="materia" required></select>
-                    <h4>Disponibilidad</h4>
-                    <input type="text" placeholder="Ingresa tu disponibilidad" name="disponibilidad" required>
-                    <h4>Precio Asesoría</h4>
-                    <input type="number" placeholder="Ingresa el precio de la asesoría" name="precio_asesoria" required>
-                `;
-                loadCarreras();
+        // Manejo del formulario de nombre
+        document.getElementById('nombreForm').addEventListener('submit', (event) => {
+            event.preventDefault();
+            // Aquí se pueden agregar validaciones adicionales y lógica para enviar los datos al servidor
+            // Por ejemplo, podrías usar fetch() o XMLHttpRequest para enviar los datos al backend
+
+            // Para simular el proceso, ocultamos el formulario actual y mostramos el siguiente
+            document.getElementById('nameSection').classList.add('hidden');
+            document.getElementById('userTypeSection').classList.remove('hidden');
+        });
+
+        // Manejo del tipo de usuario
+        document.getElementById('asesorBtn').addEventListener('click', () => {
+            document.getElementById('userTypeSection').classList.add('hidden');
+            document.getElementById('section3').classList.remove('hidden');
+        });
+
+        document.getElementById('asesoradoBtn').addEventListener('click', () => {
+            document.getElementById('userTypeSection').classList.add('hidden');
+            document.getElementById('section3').classList.remove('hidden');
+        });
+
+        // Manejo del texto de presentación
+        document.getElementById('presentationText').addEventListener('input', () => {
+            // Validar el texto de presentación si es necesario
+        });
+
+        // Manejo de la carga de fotos
+        document.getElementById('uploadButton').addEventListener('click', () => {
+            document.getElementById('photoUpload').click();
+        });
+
+        document.getElementById('photoUpload').addEventListener('change', (event) => {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    document.getElementById('avatarPreview').src = reader.result;
+                };
+                reader.readAsDataURL(file);
             }
         });
 
-        function loadCarreras() {
-            fetch('/api/carreras')
-                .then(response => response.json())
-                .then(carreras => {
-                    const carreraSelect = document.getElementById('carrera');
-                    carreraSelect.innerHTML = '<option value="" disabled selected>Seleccione una carrera</option>';
-                    carreras.forEach(carrera => {
-                        const option = document.createElement('option');
-                        option.value = carrera.id_carrera;
-                        option.textContent = carrera.nombre_carrera;
-                        carreraSelect.appendChild(option);
-                    });
-                    carreraSelect.addEventListener('change', loadCuatrimestres);
-                })
-                .catch(error => {
-                    console.error('Error al cargar las carreras:', error);
-                });
-        }
+        // Crear usuario
+        document.getElementById('createUserBtn').addEventListener('click', () => {
+    // Lógica para enviar los datos al backend
+    const formData = new FormData(document.querySelector('#nombreForm'));
 
-        function loadCuatrimestres() {
-            const carreraId = document.getElementById('carrera').value;
-            fetch(`/api/cuatrimestres?carreraId=${carreraId}`)
-                .then(response => response.json())
-                .then(cuatrimestres => {
-                    const cuatrimestreSelect = document.getElementById('cuatrimestre');
-                    cuatrimestreSelect.innerHTML = '<option value="" disabled selected>Seleccione un cuatrimestre</option>';
-                    cuatrimestres.forEach(cuatrimestre => {
-                        const option = document.createElement('option');
-                        option.value = cuatrimestre.numero_cuatrimestre;
-                        option.textContent = cuatrimestre.numero_cuatrimestre;
-                        cuatrimestreSelect.appendChild(option);
-                    });
-                    cuatrimestreSelect.addEventListener('change', loadMaterias);
-                })
-                .catch(error => {
-                    console.error('Error al cargar los cuatrimestres:', error);
-                });
-        }
+    fetch('/register', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Usuario creado exitosamente');
+        // Redirigir o hacer otras acciones según sea necesario
+    })
+    .catch(error => {
+        console.error('Error al crear el usuario:', error);
+    });
+});
 
-        function loadMaterias() {
-            const carreraId = document.getElementById('carrera').value;
-            const cuatrimestre = document.getElementById('cuatrimestre').value;
-            fetch(`/api/materias?carreraId=${carreraId}&cuatrimestre=${cuatrimestre}`)
-                .then(response => response.json())
-                .then(materias => {
-                    const materiaSelect = document.getElementById('materia');
-                    materiaSelect.innerHTML = '<option value="" disabled selected>Seleccione una materia</option>';
-                    materias.forEach(materia => {
-                        const option = document.createElement('option');
-                        option.value = materia.id_materia;
-                        option.textContent = materia.nombre_materia;
-                        materiaSelect.appendChild(option);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error al cargar las materias:', error);
-                });
-        }
     </script>
 </body>
 </html>
