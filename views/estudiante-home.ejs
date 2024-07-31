@@ -6,7 +6,12 @@
     <title>Witty - Home</title>
     <link rel="stylesheet" href="css/home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
+<script>
+    Weglot.initialize({
+        api_key: 'wg_c5f1bdd47bbf4ba47b4415c173518fea1'
+    });
+</script>
 </head>
 <body>
     <header>
@@ -31,177 +36,19 @@
         <a class="opc4" href="/logout"><i class="fa fa-close"></i> Cerrar sesion</a>
     </div>
 
-    <nav id="profile" class="hidden">
-        <ul>
-            <li><a href="/logout">Cerrar Sesion</a></li>
-        </ul>
-    </nav>
-
     <div class="container">
         <div class="buscador">
-            <form id="buscar-carreras-form" action="/buscar-carreras" method="POST">
+            <form id="buscar-carreras-form">
                 <input type="text" placeholder="¿Qué necesitas hacer hoy?" name="term" id="term" class="input-with-image"> 
                 <button type="submit" style="display: none;">Buscar</button>
             </form>
         </div>
+        
 
         <div class="toolbar">
             <img src="https://i.imgur.com/WWRWHc2.jpeg" alt="">
         </div>
     </div> 
-
-    <div class="asesorescontainer">
-    <div id="asesort" class="title">TOP ASESORES</div>
-    <div class="asesores">
-        <div class="asesor-wrapper">
-            <button class="button-left">&lt;</button>
-            <div class="asesor-container">
-                <div class="asesor">
-                    <img src="https://laboratoriosniam.com/wp-content/uploads/2018/07/michael-dam-258165-unsplash_WEB2.jpg" alt="">
-                    <div class="asesor-info">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.7074821341303!2d-106.15020459671838!3d28.638527898341234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86ea4382e031e667%3A0xca6655ebf3770218!2sUTCH%20Tecnolog%C3%ADas%20de%20la%20Informaci%C3%B3n!5e0!3m2!1ses-419!2smx!4v1721668212269!5m2!1ses-419!2smx" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                        <div class="starsc">
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="location" class="fa fa-map-marker"></i>
-                        <p>Edificio K</p>
-                        </div>
-                        <h4 id="start-p">Materias:</h4>
-                        <p id="start-p">Programacion Avanzada.</p>
-                        <p>Clases completamente personalizadas experiencia dando asesorias, paciencia al enseñar.</p>
-                        <p>$150/hr</p>
-                        <div class="skills">
-                            <p>Java</p>
-                            <p>Python</p>
-                            <p>C++</p>
-                        </div>
-                        <a href="">Ver perfil</a>
-                    </div>
-                </div>
-                <div class="asesor">
-                    <img src="https://opem.b-cdn.net/wp-content/uploads/2022/10/como-elegir-foto-para-curriculum.png" alt="">
-                    <div class="asesor-info">
-                        miguel.sanchez@utch.edu.mx   <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.7074821341303!2d-106.15020459671838!3d28.638527898341234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86ea4382e031e667%3A0xca6655ebf3770218!2sUTCH%20Tecnolog%C3%ADas%20de%20la%20Informaci%C3%B3n!5e0!3m2!1ses-419!2smx!4v1721668212269!5m2!1ses-419!2smx" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                        <div class="starsc">
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="location" class="fa fa-map-marker"></i>
-                        <p>Edificio K</p>
-                        </div>
-                        <h4 id="start-p">Materias:</h4>
-                        <p id="start-p">Programacion Avanzada.</p>
-                        <p>Clases completamente personalizadas experiencia dando asesorias, paciencia al enseñar.</p>
-                        <p>$150/hr</p>
-                        <div class="skills">
-                            <p>Java</p>
-                            <p>Python</p>
-                            <p>C++</p>
-                        </div>
-                        <a href="">Ver perfil</a>
-                    </div>
-                </div>
-                <div class="asesor">
-                    <img src="https://img.freepik.com/foto-gratis/retrato-hermoso-mujer-joven-posicion-pared-gris_231208-10760.jpg?size=626&ext=jpg&ga=GA1.1.2008272138.1721520000&semt=sph" alt="">
-                    <div class="asesor-info">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.7074821341303!2d-106.15020459671838!3d28.638527898341234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86ea4382e031e667%3A0xca6655ebf3770218!2sUTCH%20Tecnolog%C3%ADas%20de%20la%20Informaci%C3%B3n!5e0!3m2!1ses-419!2smx!4v1721668212269!5m2!1ses-419!2smx" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                        <div class="starsc">
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="location" class="fa fa-map-marker"></i>
-                        <p>Edificio K</p>
-                        </div>
-                        <h4 id="start-p">Materias:</h4>
-                        <p id="start-p">Programacion Avanzada.</p>
-                        <p>Clases completamente personalizadas experiencia dando asesorias, paciencia al enseñar.</p>
-                        <p>$150/hr</p>
-                        <div class="skills">
-                            <p>Java</p>
-                            <p>Python</p>
-                            <p>C++</p>
-                        </div>
-                        <a href="">Ver perfil</a>
-                    </div>
-                </div>
-                <div class="asesor">
-                    <img src="https://img.freepik.com/foto-gratis/retrato-joven-sonriente-gafas_171337-4842.jpg" alt="">
-                    <div class="asesor-info">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.7074821341303!2d-106.15020459671838!3d28.638527898341234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86ea4382e031e667%3A0xca6655ebf3770218!2sUTCH%20Tecnolog%C3%ADas%20de%20la%20Informaci%C3%B3n!5e0!3m2!1ses-419!2smx!4v1721668212269!5m2!1ses-419!2smx" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                        <div class="starsc">
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="location" class="fa fa-map-marker"></i>
-                        <p>Edificio K</p>
-                        </div>
-                        <h4 id="start-p">Materias:</h4>
-                        <p id="start-p">Programacion Avanzada.</p>
-                        <p>Clases completamente personalizadas experiencia dando asesorias, paciencia al enseñar.</p>
-                        <p>$150/hr</p>
-                        <div class="skills">
-                            <p>Java</p>
-                            <p>Python</p>
-                            <p>C++</p>
-                        </div>
-                        <a href="">Ver perfil</a>
-                    </div>
-                </div>
-                <div class="asesor">
-                    <img src="https://img.freepik.com/foto-gratis/retrato-joven-sonriente-gafas_171337-4842.jpg" alt="">
-                    <div class="asesor-info">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.7074821341303!2d-106.15020459671838!3d28.638527898341234!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x86ea4382e031e667%3A0xca6655ebf3770218!2sUTCH%20Tecnolog%C3%ADas%20de%20la%20Informaci%C3%B3n!5e0!3m2!1ses-419!2smx!4v1721668212269!5m2!1ses-419!2smx" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                        <div class="starsc">
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="star" class="fa fa-star"></i>
-                        <i id="location" class="fa fa-map-marker"></i>
-                        <p>Edificio K</p>
-                        </div>
-                        <h4 id="start-p">Materias:</h4>
-                        <p id="start-p">Programacion Avanzada.</p>
-                        <p>Clases completamente personalizadas experiencia dando asesorias, paciencia al enseñar.</p>
-                        <p>$150/hr</p>
-                        <div class="skills">
-                            <p>Java</p>
-                            <p>Python</p>
-                            <p>C++</p>
-                        </div>
-                        <a href="">Ver perfil</a>
-                    </div>
-                </div>
-                <div class="asesor">
-                    <img src="https://img.freepik.com/foto-gratis/retrato-joven-sonriente-gafas_171337-4842.jpg" alt="">
-                    <div class="asesor-info">
-                        <h4>Asesor 6</h4>
-                        <p>Información sobre el asesor 6.</p>
-                        <button>Contactar</button>
-                    </div>
-                </div>  
-                <div class="asesor">
-                    <img src="https://img.freepik.com/foto-gratis/retrato-joven-sonriente-gafas_171337-4842.jpg" alt="">
-                    <div class="asesor-info">
-                        <h4>Asesor 7</h4>
-                        <p>Información sobre el asesor 7.</p>
-                        <button>Contactar</button>
-                    </div>
-                </div>  
-            </div>
-            <button class="button-right">&gt;</button>
-        </div>
-    </div>
-</div>
 
     <div class="why">
         <h1>¿Por qué 
@@ -530,11 +377,22 @@
             });
         });
     </script>
-    <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
+
     <script>
-        Weglot.initialize({
-            api_key: 'wg_c5f1bdd47bbf4ba47b4415c173518fea1'
-        });
+        document.addEventListener('DOMContentLoaded', () => {
+    const buscarCarrerasForm = document.getElementById('buscar-carreras-form');
+    const termInput = document.getElementById('term');
+
+    buscarCarrerasForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const searchTerm = encodeURIComponent(termInput.value.trim());
+        
+        if (searchTerm.length > 0) {
+            window.location.href = `/buscar-tutores`;
+        }
+    });
+});
+
     </script>
 </body>
 </html>

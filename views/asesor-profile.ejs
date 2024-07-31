@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Witty - Home</title>
-    <link rel="stylesheet" href="css/estudiante-home.css">
+    <title>Witty - Asesores</title>
+    <link rel="stylesheet" href="/css/asesor-home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
 <script>
@@ -24,49 +24,41 @@
             <a href="/estudiante-home"><img src="https://i.imgur.com/zxHjzgd.png" alt="Logo"></a>
         </div>
     </header>
+
     <div class="menu hidden">
         <a class="opc1" href="/estudiante-home"><i class="fa fa-home"></i> Inicio</a>
-        <a class="opc2" href=""><i class="fa fa-user"></i> Perfil</a>
+        <a class="opc2" href="/estudiante-admin"><i class="fa fa-user"></i> Perfil</a>
         <a class="opc4" href="/logout"><i class="fa fa-close"></i> Cerrar sesión</a>
     </div>
+
     <div class="containerinfo">
-        <div class="estudiantebox">
-            <img src="https://2356021.fs1.hubspotusercontent-na1.net/hubfs/2356021/Cortes%20de%20pelo%20para%20cara%20cuadrada%20de%20hombre%206.webp" alt="">
-            <div class="infocont">
-                <h2><%= nombreUsuario %></h2>
-                <div class="info">
-                    <h3>Carrera: <%= carrera %></h3>
-                    <h3>E-Mail: <%= correo %></h3>
-                </div>
+        <div class="asesorbox">
+            <img src="https://wallpapers.com/images/featured/cool-profile-picture-87h46gcobjl5e4xu.jpg" alt="">
+            <h2><%= asesor.nombre_asesor %></h2>
+            <div class="starsc">
+                <i id="star" class="fa fa-star"></i>
+                <i id="star" class="fa fa-star"></i>
+                <i id="star" class="fa fa-star"></i>
+                <i id="star" class="fa fa-star"></i>
+                <i id="star" class="fa fa-star-o"></i>
             </div>
+            <h3>Carrera: <span class="carrera"><%=  asesor.nombre_carrera  %></span></h3>
+            <button type="button" class="btn btn-primary">Contactar</button>
         </div>
+        <div class="description">
+            <h3><%= asesor.descripcion %></h3>
+        </div>
+        <div class="tarifa">
+            <h2>$<%= asesor.precio_asesoria %></h2>
+            <h3>Tarifa por hora</h3>
+        </div>
+        <div class="horario">
+            <h2>Horario de disponibilidad</h2>
+            <h2><%= asesor.disponibilidad %></h2>
+        </div>
+        
     </div>
 
-    <div class="asesoriaspendientes">
-        <img src="https://i.imgur.com/CznD8zn.png" alt="">
-        <div class="asesoriaswrapper">
-            <% if (asesorias.length > 0) { %>
-                <% asesorias.forEach((asesoria, index) => { %>
-                    <div class="asesoria color-pastel-<%= (index % 4) + 1 %>">
-                        <div class="asesoria-info">
-                            <div class="asesoria-details">
-                                <h2>Carrera: <%= asesoria.nombre_carrera %></h2>
-                                <h2>Materia: <%= asesoria.nombre_materia %></h2>
-                            </div>
-                            <div class="asesoria-asesor">
-                                <img src="<%= asesoria.foto_asesor %>" alt="Foto del asesor">
-                                <h3>Asesor: <%= asesoria.nombre_asesor %></h3>
-                            </div>
-                        </div>
-                        <button>Cancelar</button>
-                    </div>
-                <% }) %>
-            <% } else { %>
-                <p>No hay asesorías pendientes.</p>
-            <% } %>
-        </div>        
-    </div>
-    
     <div class="footer">
         <div class="section">
             <img src="img/Logo.png" alt="">
@@ -100,22 +92,22 @@
                 <a href="https://www.instagram.com/wittyasesorias?igsh=d3RzYWdpZW03ZTho"><i class="fa fa-instagram"></i></a>
                 <a href="https://www.instagram.com/wittyasesorias?igsh=d3RzYWdpZW03ZTho"><h3>Instagram</h3></a>
             </div>
-        </div>
+        </div>  
     </div>
     <div class="foot">
         <hr>
         <h2>2024 @ Copyright | Witty</h2>
     </div>
+
     <script>
         document.getElementById('menu-toggle').addEventListener('click', function() {
             var menu = document.querySelector('.menu');
             var containerinfo = document.querySelector('.containerinfo');
             var header = document.querySelector('header');
             menu.classList.toggle('hidden');
-            containerinfo.classList.toggle('menu-visible');
-            header.classList.toggle('menu-visible');
+            containerinfo.classList.toggle('hidden');
+            header.classList.toggle('menuactive');
         });
     </script>
-
 </body>
 </html>

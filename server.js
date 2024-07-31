@@ -9,6 +9,7 @@ const multer = require('multer');
 const app = express();
 const port = 3000;
 
+app.use(express.static(path.join(__dirname, 'public')));
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -137,6 +138,13 @@ app.get('/register-info', (req, res) => {
     res.render('register-info', { nombreUsuario: req.session.user.nombre_estudiante || req.session.user.nombre_asesor });
 });
     
+app.get('/perfil-asesor', (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/login');
+    }
+    res.render('asesor-profile', { nombreUsuario: req.session.user.nombre_estudiante || req.session.user.nombre_asesor });
+});
+
 app.post('/create-checkout-session', async (req, res) => {
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ['card'],
@@ -205,6 +213,73 @@ app.get('/api/asesores', (req, res) => {
     });
 });
 
+app.get('/searchMaterias', (req, res) => {
+    const query = req.query.query;
+    if (!query) {
+        return res.status(400).json({ error: 'Query no proporcionado' });
+    }
+
+    connection.query('SELECT * FROM materias WHERE nombre_materia LIKE ?', [`%${query}%`], (err, results) => {
+        if (err) {
+            return res.status(500).json({ error: 'Error al consultar la base de datos' });
+        }
+        res.json(results);
+    });
+});
+
+// Ruta para ver el perfil del asesor
+app.get('/ver-perfil-asesor/:id', (req, res) => {
+    const asesorId = req.params.id; // Obtención del parámetro de la URL
+    const sql = `
+    SELECT a.id_asesores, a.nombre_asesor, a.descripcion, a.disponibilidad, a.correoA, a.precio_asesoria, c.nombre_carrera
+    FROM asesores a
+    JOIN carrera c ON a.fk_carrera = c.id_carrera
+    WHERE a.id_asesores = '3';
+    
+    `;
+
+    connection.query(sql, [asesorId], (error, results) => {
+        if (error) {
+            console.error('Error en la consulta:', error); // Muestra el error en la consola
+            return res.status(500).send('Error en la consulta');
+        }
+        
+        if (results.length > 0) {
+            const asesor = results[0];
+            res.render('asesor-profile', { asesor });
+        } else {
+            res.status(404).send('Asesor no encontrado');
+        }
+    });
+});
+
+
+
+app.get('/buscar-materias', (req, res) => {
+    const searchQuery = req.query.q;
+    const sql = `SELECT id_materia, nombre_materia FROM materias WHERE nombre_materia LIKE ?`;
+    connection.query(sql, [`%${searchQuery}%`], (err, results) => {
+        if (err) throw err;
+        res.json(results);
+    });
+});
+
+// Ruta para obtener asesores por materia
+app.get('/asesores-por-materia/:id', (req, res) => {
+    const materiaId = req.params.id;
+    const sql = `
+        SELECT a.id_asesores, a.nombre_asesor, a.descripcion, a.disponibilidad, a.correoA
+        FROM asesores a
+        INNER JOIN asesorias b ON a.id_asesores = b.fk_asesor
+        WHERE b.fk_materia = ?
+    `;
+    connection.query(sql, [materiaId], (err, results) => {
+        if (err) throw err;
+        res.json(results);
+    });
+});
+
+
 // Rutas para las páginas de inicio de asesores y estudiantes
 app.get('/asesor-home', (req, res) => {
     if (req.session.user && req.session.tipoUsuario === 'asesor') {
@@ -242,6 +317,14 @@ app.get('/estudiante-home', (req, res) => {
 app.get('/informacion', (req, res) => {
     if (req.session.user && req.session.tipoUsuario === 'estudiante') {
         res.render('informacion', { nombreUsuario: req.session.user.nombre_estudiante });
+    } else {
+        res.redirect('/login');
+    }
+});
+
+app.get('/buscar-tutores', (req, res) => {
+    if (req.session.user && req.session.tipoUsuario === 'estudiante') {
+        res.render('buscar-tutores', { nombreUsuario: req.session.user.nombre_estudiante });
     } else {
         res.redirect('/login');
     }
@@ -402,6 +485,31 @@ app.post('/update-asesor', (req, res) => {
 });
 
 
+app.get('/carreras', (req, res) => {
+    connection.query('SELECT * FROM carrera', (err, results) => {
+      if (err) throw err;
+      res.json(results);
+    });
+  });
+  
+  // Ruta para obtener las materias
+  app.get('/materias', (req, res) => {
+    connection.query('SELECT * FROM materias', (err, results) => {
+      if (err) throw err;
+      res.json(results);
+    });
+  });
+
+
+  // Ejemplo en Express.js
+app.get('/materias/:carreraId', (req, res) => {
+    const carreraId = req.params.carreraId;
+    // Aquí deberías buscar las materias basadas en el `carreraId` en tu base de datos
+    // Supongamos que tienes una función `getMateriasByCarreraId`
+    getMateriasByCarreraId(carreraId)
+        .then(materias => res.json(materias))
+        .catch(error => res.status(500).json({ error: 'Error al obtener las materias' }));
+});
 
 // Ruta para actualizar la descripción del asesor
 

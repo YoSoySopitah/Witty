@@ -10,8 +10,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const asesorBtn = document.getElementById('asesorBtn');
     const asesoradoBtn = document.getElementById('asesoradoBtn');
     const createUserBtn = document.getElementById('createUserBtn');
+    const coverPhotoSection = document.getElementById('coverPhotoSection');
+    const galleryItems = coverPhotoSection.querySelectorAll('.gallery-item');
     let currentSlide = 0;
     let cropper;
+    let isAsesor = false;
+    let coverPhotoSelected = false;
 
     function clearErrors() {
         document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
@@ -27,42 +31,49 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function validateSection() {
         clearErrors();
-
         const currentSection = sections[currentSlide];
 
         if (currentSlide === 0) {
             const nombre = document.getElementById('nombre').value.trim();
             const apellido = document.getElementById('apellido').value.trim();
-            if (nombre === '') {
-                showError('nombreError', 'El nombre es obligatorio.');
-                return false;
-            }
-            if (apellido === '') {
-                showError('apellidoError', 'El apellido es obligatorio.');
-                return false;
-            }
-            return true;
+            return nombre !== '' && apellido !== '';
+        } else if (currentSlide === 1) {
+            return asesorBtn.classList.contains('selected') || asesoradoBtn.classList.contains('selected');
+        } else if (currentSlide === 2 && isAsesor) {
+            const textarea = currentSection.querySelector('textarea');
+            return textarea && textarea.value.trim() !== '';
+        } else if (currentSlide === 3 || (currentSlide === 2 && !isAsesor)) {
+            return coverPhotoSelected;
+        } else if (currentSlide === 4 || (currentSlide === 3 && !isAsesor)) {
+            return avatarPreview.src && !avatarPreview.src.endsWith('Perfil.png');
+        }
+        return true;
+    }
+
+    function showSectionErrors() {
+        if (currentSlide === 0) {
+            const nombre = document.getElementById('nombre').value.trim();
+            const apellido = document.getElementById('apellido').value.trim();
+            if (nombre === '') showError('nombreError', 'El nombre es obligatorio.');
+            if (apellido === '') showError('apellidoError', 'El apellido es obligatorio.');
         } else if (currentSlide === 1) {
             if (!(asesorBtn.classList.contains('selected') || asesoradoBtn.classList.contains('selected'))) {
                 showError('userTypeError', 'Selecciona un tipo de usuario.');
-                return false;
             }
-            return true;
-        } else if (currentSlide === 2) {
-            const textarea = currentSection.querySelector('textarea');
+        } else if (currentSlide === 2 && isAsesor) {
+            const textarea = sections[currentSlide].querySelector('textarea');
             if (textarea && textarea.value.trim() === '') {
-                showError('presentationError', 'El texto de presentación es obligatorio.');
-                return false;
+                showError('presentationError', 'El texto de presentación es obligatorio para asesores.');
             }
-            return true;
-        } else if (currentSlide === 3) {
+        } else if (currentSlide === 3 || (currentSlide === 2 && !isAsesor)) {
+            if (!coverPhotoSelected) {
+                showError('coverPhotoError', 'Selecciona una foto de portada.');
+            }
+        } else if (currentSlide === 4 || (currentSlide === 3 && !isAsesor)) {
             if (!avatarPreview.src || avatarPreview.src.endsWith('Perfil.png')) {
                 showError('photoUploadError', 'Por favor, suba su foto.');
-                return false;
             }
-            return true;
         }
-        return true;
     }
 
     function updateSlide() {
@@ -71,38 +82,51 @@ document.addEventListener('DOMContentLoaded', function() {
         
         sections.forEach(section => section.classList.add('hidden'));
 
-        // Animate section transition
         sections[currentSlide].classList.remove('hidden');
         sections[currentSlide].classList.add('slide-in');
         
         prevArrow.style.display = currentSlide === 0 ? 'none' : 'flex';
         nextArrow.style.display = currentSlide === dots.length - 1 ? 'none' : 'flex';
+
+        dots[2].style.display = isAsesor ? 'block' : 'none';
+
+        if (currentSlide === 3 || (currentSlide === 2 && !isAsesor)) {
+            updateCoverPhotoSelection();
+        }
     }
 
     function moveToSlide(index) {
+        if (Math.abs(index - currentSlide) !== 1) {
+            return;
+        }
+
         if (validateSection()) {
-            // Slide out current section
             const currentSection = sections[currentSlide];
             const isMovingForward = index > currentSlide;
 
-            // Apply appropriate animation class based on direction
             currentSection.classList.add(isMovingForward ? 'slide-out-left' : 'slide-out-right');
 
-            // Wait for the slide-out animation to complete
             setTimeout(() => {
+                if (!isAsesor) {
+                    if (currentSlide === 1 && index === 2) {
+                        index = 3;
+                    } else if (currentSlide === 3 && index === 2) {
+                        index = 1;
+                    }
+                }
+
                 currentSlide = index;
                 updateSlide();
-                // Remove the slide-out class after transition
                 currentSection.classList.remove('slide-out-left', 'slide-out-right');
-            }, 300); // Matches the duration of the slide-out animation
+            }, 300);
+        } else {
+            showSectionErrors();
         }
     }
 
     nextArrow.addEventListener('click', function(event) {
         event.preventDefault();
-        if (validateSection()) {
-            moveToSlide((currentSlide + 1) % dots.length);
-        }
+        moveToSlide((currentSlide + 1) % dots.length);
     });
 
     prevArrow.addEventListener('click', function(event) {
@@ -111,19 +135,24 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     dots.forEach((dot, index) => {
-        dot.addEventListener('click', function() {
-            moveToSlide(index);
+        dot.addEventListener('click', function(event) {
+            event.preventDefault();
+            // No hacer nada cuando se hace clic en los puntos
         });
     });
 
     asesorBtn.addEventListener('click', function() {
         asesorBtn.classList.add('selected');
         asesoradoBtn.classList.remove('selected');
+        isAsesor = true;
+        updateSlide();
     });
 
     asesoradoBtn.addEventListener('click', function() {
         asesoradoBtn.classList.add('selected');
         asesorBtn.classList.remove('selected');
+        isAsesor = false;
+        updateSlide();
     });
 
     uploadButton.addEventListener('click', function() {
@@ -198,12 +227,40 @@ document.addEventListener('DOMContentLoaded', function() {
 
     createUserBtn.addEventListener('click', function() {
         if (validateSection()) {
-            // Aquí puedes agregar la lógica para enviar los datos del formulario
             console.log('Usuario creado exitosamente');
-            // Por ejemplo, podrías recopilar todos los datos y enviarlos a un servidor
+            // Aquí puedes agregar la lógica para enviar los datos del formulario
+        } else {
+            showSectionErrors();
         }
     });
 
-    // Inicializa la primera visualización
+    galleryItems.forEach(item => {
+        const radio = item.querySelector('input[type="radio"]');
+        const img = item.querySelector('img');
+
+        img.addEventListener('click', function() {
+            radio.checked = true;
+            coverPhotoSelected = true;
+            updateCoverPhotoSelection();
+        });
+
+        radio.addEventListener('change', function() {
+            coverPhotoSelected = true;
+            updateCoverPhotoSelection();
+        });
+    });
+
+    function updateCoverPhotoSelection() {
+        galleryItems.forEach(item => {
+            const radio = item.querySelector('input[type="radio"]');
+            item.classList.toggle('selected', radio.checked);
+        });
+
+        coverPhotoSelected = Array.from(galleryItems).some(item => item.querySelector('input[type="radio"]').checked);
+
+        nextArrow.style.pointerEvents = coverPhotoSelected ? 'auto' : 'none';
+        nextArrow.style.opacity = coverPhotoSelected ? '1' : '0.5';
+    }
+
     updateSlide();
 });

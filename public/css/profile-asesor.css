@@ -1,0 +1,576 @@
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh; /* Asegura que el body tenga al menos la altura de la ventana */
+    display: flex;
+    flex-direction: column;
+}
+
+* {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+header {
+    display: flex;
+    background-color: white;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    z-index: 1;
+    flex-wrap: wrap;
+    width: 100%;
+    transition: margin-left 0.3s ease; /* Transición suave */
+}
+
+header.menu-visible {
+    margin-left: 17%; /* Ajusta este valor según el ancho del menú */
+}
+
+header img {
+    height: 55px;
+    margin: 5px;
+    padding: 10px;
+}
+
+.header-left,
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.header-left {
+    margin-right: auto; /* Esto empuja el logo hacia el centro */
+}
+
+.header-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
+}
+
+header h2 {
+    color: #092A54;
+    font-weight: bold;
+}
+
+.menu {
+    width: 17%;
+    background-color: #004aad;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    padding-top: 20px;
+    box-sizing: border-box;
+    z-index: 2; /* Asegúrate de que el menú esté encima de la imagen */
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    transition: transform 0.3s ease; /* Transición suave */
+}
+
+.menu.hidden {
+    transform: translateX(-100%); /* Oculta el menú */
+}
+
+.opc1 {
+    margin-top: 200px;
+    margin-left: 2px;
+}
+
+.opc2 {
+    margin-left: 12px;
+}
+
+.menu h1 {
+    display: flex;
+    color: white;
+    margin: 0;
+    height: 50px;
+    align-items: center;
+    padding-left: 20px;
+    border-top-right-radius: 20px;
+}
+
+.menu a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    height: 50px;
+    padding-left: 20px;
+    color: white;
+    font-size: 40px;
+    justify-content: center;
+}
+
+.menu a i {
+    margin-right: 10px; /* Espacio entre el icono y el texto */
+    font-size: 40px; /* Tamaño del icono */
+}
+
+.menu hr {
+    color: white;
+    border: none;
+}
+
+@media (max-width: 768px) {
+    header {
+        margin-left: 0;
+        padding-left: 0;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .menu {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    .menu h1, .menu a {
+        font-size: 20px;
+        padding-left: 0;
+        justify-content: center;
+    }
+
+    .menu.hidden {
+        transform: translateY(-100%);
+    }
+
+    header.menu-visible {
+        margin-left: 0;
+    }
+}
+
+.containerinfo {
+    flex: 1; /* Permite que el contenedor se expanda y ocupe el espacio restante */
+    box-sizing: border-box;
+    width: 100%;
+    transition: margin-left 0.3s ease; /* Transición suave */
+    background-image: url('https://blog.orange.es/wp-content/uploads/sites/4/2024/03/fondos-de-pantalla-3d-paisaje.jpg');
+    background-size: 100% 350px;
+    background-repeat: no-repeat;
+}
+
+.containerinfo.menu-visible {
+    margin-left: 17%; /* Espacio a la izquierda para evitar que se superponga con el menú */
+}
+
+
+.perfilcontainer {
+    display: flex;
+    background-color: white;
+    border-radius: 30px;
+    right: 0;
+    padding: 30px;
+    flex-direction: column;
+}
+
+.perfilfoto {
+    display: flex;
+    flex-direction: column;
+}
+
+.perfilfoto img {
+    height: 200px;
+    width: 200px;
+}
+
+.bg-asesor{
+    background-image: url();
+    width: 100%;
+    height: 300px;
+}
+
+#menu-toggle img{
+    width: 50px;
+    height: 50px;
+}
+
+#menu-toggle{
+    border: none;
+    background: none;
+}
+
+#star{
+    color:gold;
+    font-size: 20px;
+}
+
+
+.starsc{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.asesorbox{
+    width: 250px;
+    height: 500px;
+    background-color: white;
+    margin-left: 150px;
+    padding: 50px;
+    margin-top: 200px;
+    z-index: 2;
+    border: 4px solid gray;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+        
+}
+
+.asesorbox img{
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 4px solid gray; 
+}
+
+.asesorbox h2{
+    color: black;
+    font-size: 30px;
+}
+
+.asesorbox h3{
+    font-size: 15px;
+    color: rgb(76, 76, 76);
+    font-weight: 100;
+    margin: 15px;
+}
+
+.carrera{
+    color: black;
+}
+
+.asesorbox button{
+    width: 150px;
+    height: 50px;
+    border: none;
+    border-radius: 20px;
+    color: blue;
+    font-size: 25px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.description{
+    display: flex;
+    width: 70%;
+    margin: 0 auto;
+    margin-top: -380px;
+}
+
+.description h3{
+    font-size: 25px;
+    font-weight: 100;
+    margin-left: 250px;
+}
+
+.description i{
+    color: gray;
+    font-size: 40px;
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    padding: 40px;
+}
+.materias{
+    background-color: rgb(230, 230, 230);
+    width: 270px;
+    padding: 5px;
+    margin-left: 187px;
+    margin-top: 150px;
+    border-radius:10px;
+    color: #b1b1b1;
+}
+
+.matedit{
+    display: flex;
+}
+
+.matedit i{
+    margin-left: 180px;
+    padding: 0;
+}
+.matedit h3{
+    margin: 0;
+    
+}
+
+.tarifa{
+    background-color: #e5efff;
+    width: 240px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    margin-left: 800px;
+    margin-top: 100px;
+}
+
+.tarifa h2,h3{
+    margin: 0;
+}
+
+.horario h2,h3{
+    margin: 0;
+
+}
+
+.horario{
+    background-color: #9cc2fb;
+    color: white;
+    width: 340px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    margin-left: 1200px ;
+    margin-top: -100px;
+}
+
+/* Estilo del modal */
+.modal {
+    display: none; /* Oculta el modal por defecto */
+    position: fixed; /* Fijo en la pantalla */
+    z-index: 1000; /* Asegúrate de que esté sobre otros elementos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Habilita el desplazamiento si el contenido es más grande que la ventana */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+    
+}
+
+/* Contenido del modal */
+.modal-content {
+    background-color: #749ec6;
+    color: #e2e2e2;
+    margin: 5% auto; /* Ajusta el margen superior para una mejor vista en pantallas grandes */
+    padding: 100px;
+    border-radius: 10px;
+    width: 90%; /* Ajusta el ancho para dispositivos más pequeños */
+    max-width: 600px; /* Ajusta el ancho máximo para un mejor diseño */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Cabecera del modal */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+/* Título del modal */
+.modal-title {
+    margin: 0;
+    font-size: 1.5rem; /* Ajusta el tamaño del texto para una mejor legibilidad */
+}
+
+/* Botón de cerrar */
+.modal-close {
+    font-size: 1.5rem;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+/* Cuerpo del modal */
+.modal-body {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Agrupación de campos en filas */
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px; /* Añade un espacio entre los campos */
+    margin-bottom: 20px;
+}
+
+/* Estilo para los grupos de campos en cada fila */
+.form-group {
+    flex: 1;
+    min-width: 200px; /* Ajusta el ancho mínimo de los campos */
+    margin: 5px;
+}
+
+/* Estilo para las etiquetas y campos */
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.modal-content #descriptionedit {
+    max-height: 50px;
+}
+
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Estilo para el textarea */
+.form-group textarea {
+    resize: vertical; /* Permite cambiar el tamaño verticalmente */
+    min-height: 100px; /* Ajusta la altura mínima */
+}
+
+/* Pie del modal */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+
+/* Botones dentro del modal */
+.modal-footer .btn {
+    margin-left: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.modal-content button {
+    margin-left: auto; /* Empuja el botón hacia la derecha */
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+}
+
+.modal-content button:hover{
+    background-color: green;
+
+}
+
+.modal-footer .btn-secondary {
+    background-color: rgb(201, 13, 13);
+}
+
+
+
+.asesor-info p{
+    margin: 5px;
+    padding: 0;
+}
+
+.footer{
+    background-color:#000652;
+    margin: 0 auto;
+    width: 100%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    margin-top: 500px;
+}
+
+.footer h3{
+    color: #888;
+    margin-top: 10px;
+}
+.footer h1{
+    margin: 0;
+}
+
+.foot hr{
+    margin: 0;
+}
+.foot{
+    background-color: #000652;
+    color: white;
+    width: 100%;
+    height: 100%;
+}    
+.foot h2{
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.footer a h2{
+    background-color: #cfe8af;
+    width: 140px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.footer a{
+    text-decoration: none;
+}
+header a{
+    text-decoration: none;
+}
+
+.section i{
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    padding-bottom: 15px;
+}
+
+.section a{
+    text-decoration: none;
+}
+
+.section{
+    margin: 10px;
+    padding: 70px;
+}
+
+.facebook{
+    display: flex;
+    flex-direction: row;
+}
+
+.instagram{
+        display: flex;
+        flex-direction: row;
+}
+
+.facebook h3{
+    margin: 0;
+    padding-left: 10px;
+}
+
+
+.instagram h3{
+    margin: 0;
+    padding-left: 10px;
+}

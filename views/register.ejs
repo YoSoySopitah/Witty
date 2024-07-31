@@ -18,6 +18,12 @@
             display: none;
         }
     </style>
+    <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
+    <script>
+        Weglot.initialize({
+            api_key: 'wg_c5f1bdd47bbf4ba47b4415c173518fea1'
+        });
+    </script>
 </head>
 <body>
     <header id="mainHeader">
@@ -71,17 +77,18 @@
                 <span class="dot"></span>
                 <span class="dot"></span>
                 <span class="dot"></span>
+                <span class="dot"></span>
             </div>
             <div class="logo-container">
-                <img src="img/Logo.png" alt="Logo" class="logo-img">
+                <img src="img/logo.png" alt="Logo" class="logo-img">
             </div>
-            <div class="content" id="nameSection">
-                <div class="illustration">
-                    <img id="mainImage" src="img/1.png" alt="Ilustración" class="img-fluid">
-                </div>
-                <div class="form-container">
-                    <h2 id="formTitle">Escribe tu nombre</h2>
-                    <form id="nombreForm">
+            <form id="userForm">
+                <div class="content" id="nameSection">
+                    <div class="illustration">
+                        <img id="mainImage" src="img/1.png" alt="Ilustración" class="img-fluid">
+                    </div>
+                    <div class="form-container">
+                        <h2 id="formTitle">Escribe tu nombre</h2>
                         <div class="form-group">
                             <label for="nombre">Nombre</label>
                             <input type="text" id="nombre" name="nombre" class="form-control" required>
@@ -92,51 +99,92 @@
                             <input type="text" id="apellido" name="apellido" class="form-control" required>
                             <div class="error-message" id="apellidoError"></div>
                         </div>
-                    </form>
-                </div>
-            </div>
-            <div class="content hidden" id="userTypeSection">
-                <div class="illustration">
-                    <img src="img/2.png" alt="Ilustración" class="img-fluid Imagen2">
-                </div>
-                <div class="form-container">
-                    <h2>Selecciona el tipo de usuario</h2>
-                    <div class="button-container">
-                        <button class="user-type-btn" id="asesorBtn">Asesor</button>
-                        <button class="user-type-btn" id="asesoradoBtn">Estudiante</button>
                     </div>
-                    <div class="error-message" id="userTypeError">Selecciona un tipo de usuario.</div>
                 </div>
-            </div>
-            <div class="content hidden" id="section3">
-                <div class="illustration">
-                    <img src="img/3.png" alt="Ilustración" class="img-fluid Imagen3">
+                <div class="content hidden" id="userTypeSection">
+                    <div class="illustration">
+                        <img src="img/2.png" alt="Ilustración" class="img-fluid Imagen2">
+                    </div>
+                    <div class="form-container">
+                        <h2>Selecciona el tipo de usuario</h2>
+                        <div class="button-container">
+                            <button type="button" class="user-type-btn" id="asesorBtn">Asesor</button>
+                            <button type="button" class="user-type-btn" id="asesoradoBtn">Estudiante</button>
+                        </div>
+                        <input type="hidden" name="userType" id="userTypeInput" value="">
+                        <div class="error-message" id="userTypeError">Selecciona un tipo de usuario.</div>
+                    </div>
                 </div>
-                <div class="form-container">
-                    <h2>Dinos quién eres</h2>
-                    <textarea class="text-box" id="presentationText" placeholder="¡Hola! Mi nombre es Yesica Lara. Estudio Tecnología de la Información y la Innovación Digital, con especialización en Programación Orientada a Objetos.   
+                <div class="content hidden" id="section3">
+                    <div class="illustration">
+                        <img src="img/3.png" alt="Ilustración" class="img-fluid Imagen3">
+                    </div>
+                    <div class="form-container">
+                        <h2>Dinos quién eres</h2>
+                        <textarea class="text-box" id="presentationText" name="presentationText" placeholder="¡Hola! Mi nombre es Yesica Lara. Estudio Tecnología de la Información y la Innovación Digital, con especialización en Programación Orientada a Objetos.   
+
 Tengo una gran pasión por compartir mis conocimientos y ayudar a otros a alcanzar sus metas académicas y profesionales.
+
 Ofrezco clases y asesorías personalizadas en Programación Orientada a Objetos, adaptadas a tus necesidades y nivel de conocimiento."></textarea>
-                    <div class="error-message" id="presentationError"></div>
-                </div>
-            </div>
-            <div class="content hidden" id="section4">
-                <div class="illustration">
-                    <img src="img/4.png" alt="Ilustración" class="img-fluid Imagen4">
-                </div>
-                <div class="form-container">
-                    <h2>Por último sube una foto</h2>
-                    <div class="photo-upload-container">
-                        <img id="avatarPreview" src="img/Perfil.png" alt="Avatar" class="avatar-preview">
-                        <input type="file" id="photoUpload" accept="image/*" style="display: none;">
-                        <button id="uploadButton" class="upload-btn">Subir Imagen</button>
-                        <div class="error-message" id="photoUploadError"></div>
+                        <div class="error-message" id="presentationError"></div>
                     </div>
                 </div>
-                <div class="create-user-container">
-                    <button id="createUserBtn" class="create-user-btn">Crear Usuario</button>
+                <div class="content hidden" id="coverPhotoSection">
+                    <div class="form-container">
+                        <h2>Escoge una foto de portada</h2>
+                        <div class="cover-photo-grid">
+                            <div class="gallery-item">
+                                <input type="radio" id="coverPhoto1" name="coverPhoto" value="Imagenes_Cuenta/Portada1.png">
+                                <label for="coverPhoto1"></label>
+                                <img src="img/Portada1.png" alt="Portada 1" class="cover-photo-option">
+                            </div>
+                            <div class="gallery-item">
+                                <input type="radio" id="coverPhoto2" name="coverPhoto" value="Imagenes_Cuenta/Portada2.png">
+                                <label for="coverPhoto2"></label>
+                                <img src="img/Portada2.png" alt="Portada 2" class="cover-photo-option">
+                            </div>
+                            <div class="gallery-item">
+                                <input type="radio" id="coverPhoto3" name="coverPhoto" value="Imagenes_Cuenta/Portada3.png">
+                                <label for="coverPhoto3"></label>
+                                <img src="img/Portada3.png" alt="Portada 3" class="cover-photo-option">
+                            </div>
+                            <div class="gallery-item">
+                                <input type="radio" id="coverPhoto4" name="coverPhoto" value="Imagenes_Cuenta/Portada4.png">
+                                <label for="coverPhoto4"></label>
+                                <img src="img/Portada4.png" alt="Portada 4" class="cover-photo-option">
+                            </div>
+                            <div class="gallery-item">
+                                <input type="radio" id="coverPhoto5" name="coverPhoto" value="Imagenes_Cuenta/Portada5.png">
+                                <label for="coverPhoto5"></label>
+                                <img src="img/Portada5.png" alt="Portada 5" class="cover-photo-option">
+                            </div>
+                            <div class="gallery-item">
+                                <input type="radio" id="coverPhoto6" name="coverPhoto" value="Imagenes_Cuenta/Portada6.png">
+                                <label for="coverPhoto6"></label>
+                                <img src="img/Portada6.png" alt="Portada 6" class="cover-photo-option">
+                            </div>
+                        </div>
+                        <div class="error-message" id="coverPhotoError">Selecciona una foto de portada.</div>
+                    </div>
                 </div>
-            </div>
+                <div class="content hidden" id="section4">
+                    <div class="illustration">
+                        <img src="img/4.png" alt="Ilustración" class="img-fluid Imagen4">
+                    </div>
+                    <div class="form-container">
+                        <h2>Por último sube tu foto</h2>
+                        <div class="photo-upload-container">
+                            <img id="avatarPreview" src="img/Perfil.png" alt="Avatar" class="avatar-preview">
+                            <input type="file" id="photoUpload" name="photoUpload" accept="image/*" style="display: none;">
+                            <button type="button" id="uploadButton" class="upload-btn">Subir Imagen</button>
+                            <div class="error-message" id="photoUploadError"></div>
+                        </div>
+                    </div>
+                    <div class="create-user-container">
+                        <button type="submit" id="createUserBtn" class="create-user-btn">Crear Usuario</button>
+                    </div>
+                </div>
+            </form>
             <div class="background">
                 <img src="img/fondo.png" alt="Fondo" class="fondo-img">
                 <a href="#" id="nextArrow" class="next-arrow">
@@ -148,7 +196,6 @@ Ofrezco clases y asesorías personalizadas en Programación Orientada a Objetos,
             </div>
         </div>
     </div>
-
     <script src="js/jsCuenta.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
