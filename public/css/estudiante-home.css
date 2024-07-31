@@ -1,7 +1,6 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #9cc2fb; /* Color de fondo en caso de que la imagen no cargue */
     min-height: 100vh; /* Asegura que el body tenga al menos la altura de la ventana */
     display: flex;
     flex-direction: column;
@@ -16,19 +15,39 @@ header {
     background-color: white;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
-    align-items: center;
-    justify-content: center;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
     z-index: 1;
     flex-wrap: wrap;
+    width: 100%;
+    transition: margin-left 0.3s ease; /* Transición suave */
+}
+
+header.menu-visible {
     margin-left: 17%; /* Ajusta este valor según el ancho del menú */
-    padding-left: 20px; /* Opcional: Para añadir espacio entre el menú y el header */
 }
 
 header img {
     height: 55px;
     margin: 5px;
     padding: 10px;
+}
+
+.header-left,
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+.header-left {
+    margin-right: auto; /* Esto empuja el logo hacia el centro */
+}
+
+.header-center {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: center;
 }
 
 header h2 {
@@ -49,16 +68,22 @@ header h2 {
     display: flex;
     flex-direction: column;
     align-items: start;
+    transition: transform 0.3s ease; /* Transición suave */
 }
 
-.opc1{
+.menu.hidden {
+    transform: translateX(-100%); /* Oculta el menú */
+}
+
+.opc1 {
     margin-top: 200px;
     margin-left: 2px;
 }
 
-.opc2{
+.opc2 {
     margin-left: 12px;
 }
+
 .menu h1 {
     display: flex;
     color: white;
@@ -79,6 +104,7 @@ header h2 {
     font-size: 40px;
     justify-content: center;
 }
+
 .menu a i {
     margin-right: 10px; /* Espacio entre el icono y el texto */
     font-size: 40px; /* Tamaño del icono */
@@ -108,27 +134,408 @@ header h2 {
         padding-left: 0;
         justify-content: center;
     }
+
+    .menu.hidden {
+        transform: translateY(-100%);
+    }
+
+    header.menu-visible {
+        margin-left: 0;
+    }
 }
 
 .containerinfo {
     flex: 1; /* Permite que el contenedor se expanda y ocupe el espacio restante */
-    padding-top: 20px; /* Espacio superior para que no se superponga con el contenido */
-    padding-left: 17%; /* Espacio a la izquierda para evitar que se superponga con el menú */
     box-sizing: border-box;
+    width: 100%;
+    transition: margin-left 0.3s ease; /* Transición suave */
+    background-image: url('https://blog.orange.es/wp-content/uploads/sites/4/2024/03/fondos-de-pantalla-3d-paisaje.jpg');
+    background-size: 100% 250px;
+    background-repeat: no-repeat;
+}
+
+.containerinfo.menu-visible {
+    margin-left: 17%; /* Espacio a la izquierda para evitar que se superponga con el menú */
 }
 
 
-.fx {
-    width: calc(100% ); /* Ajusta el ancho para que no se superponga con el menú */
-    height: 250px; /* Ajusta la altura según tus necesidades */
-    background-image: url(https://i.imgur.com/sAe7JRj.png);
-    background-repeat: no-repeat;
-    background-size: 100% auto; /* La imagen se estira horizontalmente */
-    background-position: top; /* Alinea la imagen a la parte superior del contenedor */
+.perfilcontainer {
     display: flex;
-    align-items: flex-end; /* Alinea el contenido al fondo del contenedor */
-    justify-content: center; /* Alinea el contenido horizontalmente al centro */
-    position: relative; /* Mantiene el contenedor en el flujo del documento */
-    z-index: 1; /* Asegúrate de que la imagen esté detrás del menú */
-    margin-top: auto; /* Empuja el contenedor hacia el final de la página */
+    background-color: white;
+    border-radius: 30px;
+    right: 0;
+    padding: 30px;
+    flex-direction: column;
+}
+
+.perfilfoto {
+    display: flex;
+    flex-direction: column;
+}
+
+.perfilfoto img {
+    height: 200px;
+    width: 200px;
+}
+
+.bg-asesor{
+    background-image: url();
+    width: 100%;
+    height: 300px;
+}
+
+#menu-toggle img{
+    width: 50px;
+    height: 50px;
+}
+
+#menu-toggle{
+    border: none;
+    background: none;
+}
+
+.estudiantebox{
+    width: 600px;
+    height: 100px;
+    background-color: white;
+    margin-left: 550px;
+    padding: 50px;
+    margin-top: 150px;
+    border: 2px solid gray;
+    border-radius: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.estudiantebox h2{
+    display: flex;
+    margin: 0;
+}
+
+.info{
+    display: flex;
+    flex-direction: column;
+}
+
+.estudiantebox img{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 2px solid gray; 
+}
+
+.asesoriaswrapper{
+    display: flex;
+}
+.asesoriaspendientes .asesoriaswrapper {
+    flex-direction: row;    
+    display: flex
+}
+
+.asesoria{
+    border: 1px solid black;
+    border-radius: 20px;
+}
+.estudiantebox h2{
+    color: black;
+    font-size: 30px;
+}
+
+.estudiantebox h3{
+    font-size: 15px;
+    color: rgb(76, 76, 76);
+    font-weight: 100;
+    margin: 15px;
+}
+
+.carrera{
+    color: black;
+}
+
+.estudiantebox button{
+    width: 150px;
+    height: 50px;
+    border: none;
+    border-radius: 20px;
+    color: blue;
+    font-size: 25px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.description{
+    display: flex;
+    width: 70%;
+    margin: 0 auto;
+    margin-top: -380px;
+}
+
+.description h3{
+    font-size: 25px;
+    font-weight: 100;
+    margin-left: 250px;
+}
+
+.description i{
+    color: gray;
+    font-size: 40px;
+    display: flex;
+    align-items: end;
+    justify-content: end;
+    padding: 40px;
+}
+.materias{
+    background-color: rgb(230, 230, 230);
+    width: 270px;
+    padding: 5px;
+    margin-left: 187px;
+    margin-top: 150px;
+    border-radius:10px;
+    color: #b1b1b1;
+}
+
+.matedit{
+    display: flex;
+}
+
+.matedit i{
+    margin-left: 180px;
+    padding: 0;
+}
+.matedit h3{
+    margin: 0;
+    
+}
+
+.tarifa{
+    background-color: #e5efff;
+    width: 240px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    margin-left: 800px;
+    margin-top: 100px;
+}
+
+.tarifa h2,h3{
+    margin: 0;
+}
+
+.horario h2,h3{
+    margin: 0;
+
+}
+
+.horario{
+    background-color: #9cc2fb;
+    color: white;
+    width: 340px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    margin-left: 1200px ;
+    margin-top: -100px;
+}
+
+/* Estilo del modal */
+.modal {
+    display: none; /* Oculta el modal por defecto */
+    position: fixed; /* Fijo en la pantalla */
+    z-index: 1000; /* Asegúrate de que esté sobre otros elementos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Habilita el desplazamiento si el contenido es más grande que la ventana */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+}
+
+/* Contenido del modal */
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto; /* Centra el contenido verticalmente y horizontalmente */
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px; /* Puedes ajustar el ancho máximo según sea necesario */
+}
+
+/* Cabecera del modal */
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 10px;
+}
+
+/* Título del modal */
+.modal-title {
+    margin: 0;
+}
+
+/* Botón de cerrar */
+.modal-close {
+    font-size: 24px;
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+/* Cuerpo del modal */
+.modal-body {
+    margin: 20px 0;
+}
+
+/* Pie del modal */
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    border-top: 1px solid #ddd;
+    padding-top: 10px;
+}
+
+/* Botones dentro del modal */
+.modal-footer .btn {
+    margin-left: 10px;
+}
+
+
+.asesor-info p{
+    margin: 5px;
+    padding: 0;
+}
+
+.footer{
+    background-color:#000652;
+    margin: 0 auto;
+    width: 100%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: start;
+
+}
+
+.footer h3{
+    color: #888;
+    margin-top: 10px;
+}
+.footer h1{
+    margin: 0;
+}
+
+.foot hr{
+    margin: 0;
+}
+.foot{
+    background-color: #000652;
+    color: white;
+    width: 100%;
+    height: 100%;
+}    
+.foot h2{
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.footer a h2{
+    background-color: #cfe8af;
+    width: 140px;
+    text-align: center;
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.footer a{
+    text-decoration: none;
+}
+header a{
+    text-decoration: none;
+}
+
+.section i{
+    display: flex;
+    flex-direction: row;
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    padding-bottom: 15px;
+}
+
+.section a{
+    text-decoration: none;
+}
+
+.section{
+    margin: 10px;
+    padding: 70px;
+}
+
+.facebook{
+    display: flex;
+    flex-direction: row;
+}
+
+.instagram{
+        display: flex;
+        flex-direction: row;
+}
+
+.facebook h3{
+    margin: 0;
+    padding-left: 10px;
+}
+
+
+.instagram h3{
+    margin: 0;
+    padding-left: 10px;
+}   
+
+/* Define clases de colores pastel */
+.color-pastel-1 {
+    background-color: #f2fae6; /* Rosa pastel */
+    border: 3px solid #cfe8af;
+}
+
+.color-pastel-2 {
+    background-color: #e5efff; /* Amarillo pastel */
+    border: 3px solid #8299ce;
+}
+
+.color-pastel-3 {
+    background-color: #FFFFBA; /* Verde pastel */
+    border: 3px solid #eeff00;
+}
+
+.color-pastel-4 {
+    background-color: #BAE1FF; /* Azul pastel */
+    border: 3px solid #008cff;
+}
+
+/* Asegúrate de que las asesorías se vean bien */
+.asesoria {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 20px;
+}
+
+/* Define clases de colores pastel */
+
+.asesorwrapper{
+    display: flex;
 }

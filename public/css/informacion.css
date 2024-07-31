@@ -1,0 +1,211 @@
+body {
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    position: relative;
+    overflow: hidden; /* Evita el scroll */
+    height: 100vh; /* Ocupa toda la ventana del navegador */
+}
+
+/* Contenedor de las imágenes de fondo */
+.background-images {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden; /* Asegura que las imágenes no se salgan del contenedor */
+}
+
+.background-images img {
+    position: absolute;
+    object-fit: cover; /* Mantiene la relación de aspecto y recorta si es necesario */
+    width: 100%;
+    height: 100%;
+}
+
+.linea-verde {
+    position: absolute;
+    top: 0;
+    left: -400px;
+    width: 100%;
+    height: 73%;
+    z-index: -1;
+}
+
+.linea-gris {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    top: 0;
+    left: -200px;
+    width: 100%;
+    height: 73%;
+    z-index: -1;
+}
+
+.linea-esquina {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    top: 54%;
+    width: 120%;
+    height: 20%;
+    left: 40%;
+    z-index: -1;
+}
+
+header {
+    position: relative;
+    background: rgba(255, 255, 255, 0.9);
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4), 0 3px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 0 0 20px 20px;
+    padding-left: 40px;
+    z-index: 5;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+    font-size: 20px;
+    color: #21277bc2;
+    position: relative;
+    z-index: 10;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.logo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+
+.logo img {
+    width: 105px;
+    height: auto;
+}
+
+.logo h1 {
+    font-family: 'Red Hat Display', sans-serif;
+    font-size: 20px;
+    color: #005baa;
+    margin: 5px 0 0 16px;
+}
+
+.section {
+    position: relative;
+    width: calc(50% - 10px);
+    min-height: 300px;
+    transition: transform 0.3s ease; /* Transición suave */
+}
+
+.section:hover {
+    transform: translateY(-10px); /* Eleva 10px hacia arriba */
+}
+
+.justificacion {
+    width: 100%;
+}
+
+.video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.video-container video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.text-container,
+.text-containerVision {
+    position: absolute;
+    z-index: 2;
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 3px 4px rgba(0, 0, 0, 0.1);
+    border-top: 4px solid #2e3192;
+    border-bottom: 4px solid #2e3192;
+    padding: 20px;
+}
+
+/* Estilos individuales para cada contenedor de texto */
+.mision-text {
+    max-width: 25%;
+    top: 130px;
+    left: 20px;
+}
+
+.vision-text {
+    max-width: 30%;
+    top: -90px;
+    right: 20px;
+}
+
+.justificacion-text {
+    max-width: 60%;
+    top: -100px;
+    left: 60%;
+    transform: translateX(-50%);
+    padding: 5px;
+}
+
+.section h2 {
+    font-family: 'Montserrat', sans-serif;
+    color: #2e3192;
+    font-size: 27px;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.section p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #2e3192;
+    margin: 0;
+}
+
+.justificacion-text p {
+    font-size: 11px;
+}
+
+/* Ajustes para pantallas pequeñas */
+@media (max-width: 768px) {
+    .section {
+        width: 100%;
+    }
+    
+    .mision-text,
+    .vision-text,
+    .justificacion-text {
+        max-width: 80%;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 20px;
+    }
+}

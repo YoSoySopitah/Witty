@@ -239,13 +239,65 @@ app.get('/estudiante-home', (req, res) => {
     }
 });
 
-app.get('/estudiante-admin', (req, res) => {
+app.get('/informacion', (req, res) => {
     if (req.session.user && req.session.tipoUsuario === 'estudiante') {
-        res.render('estudiante-admin', { nombreUsuario: req.session.user.nombre_estudiante });
+        res.render('informacion', { nombreUsuario: req.session.user.nombre_estudiante });
     } else {
         res.redirect('/login');
     }
 });
+
+app.get('/estudiante-admin', (req, res) => {
+    if (req.session.user && req.session.tipoUsuario === 'estudiante') {
+        const estudianteId = req.session.user.id_estudiante; // Obtener el ID del estudiante desde la sesión
+
+        // Consultar la información del estudiante
+        connection.query(`
+            SELECT estudiantes.nombre_estudiante AS nombre, estudiantes.correo_estudiante AS correo, 
+                   carrera.nombre_carrera AS carrera
+            FROM estudiantes
+            JOIN carrera ON estudiantes.fk_carrera = carrera.id_carrera
+            WHERE estudiantes.id_estudiante = ?
+        `, [estudianteId], (err, estudianteResults) => {
+            if (err) {
+                console.error('Error al cargar los datos del estudiante:', err);
+                res.status(500).json({ error: 'Internal Server Error' });
+            } else {
+                if (estudianteResults.length > 0) {
+                    const { nombre, correo, carrera } = estudianteResults[0];
+
+                    // Consultar las asesorías pendientes
+                    connection.query(`
+                        SELECT ap.fecha_asesoria, ap.duracion_asesoria, c.nombre_carrera, a.nombre_asesor, m.nombre_materia
+                        FROM asesoriasPendiente ap
+                        JOIN materias m ON ap.fk_materia = m.id_materia
+                        JOIN asesores a ON ap.fk_asesor = a.id_asesores
+                        JOIN carrera c ON a.fk_carrera = c.id_carrera
+                        WHERE ap.fk_estudiante = ?
+      
+                    `, [estudianteId], (err, asesoriasResults) => {
+                        if (err) {
+                            console.error('Error al cargar las asesorías pendientes:', err);
+                            res.status(500).json({ error: 'Internal Server Error' });
+                        } else {
+                            res.render('estudiante-admin', { 
+                                nombreUsuario: nombre, 
+                                correo, 
+                                carrera, 
+                                asesorias: asesoriasResults 
+                            });
+                        }
+                    });
+                } else {
+                    res.status(404).json({ error: 'Estudiante no encontrado' });
+                }
+            }
+        });
+    } else {
+        res.redirect('/login');
+    }
+});
+
 
 // Ruta para obtener las materias de un asesor específico
 app.get('/api/materias-asesor/:idAsesor', (req, res) => {
@@ -324,38 +376,42 @@ app.get('/asesor-admin', (req, res) => {
 
 
 // Ruta para actualizar el nombre y carrera del asesor
+// En server.js o el archivo principal de tu backend
 app.post('/update-asesor', (req, res) => {
-    const { asesorId, nuevoNombre, nuevaCarrera } = req.body;
+    const nuevoNombre = req.body.nuevoNombre;
+    const nuevaDescripcion = req.body.nuevaDescripcion;
+    const nuevoPrecio = req.body.NuevoPrecio; // Asegúrate de que el nombre coincide con el del formulario
+    const nuevaDisponibilidad = req.body.NuevaDisponibilidad;
+    const asesorId = req.body.asesorId;
 
-    connection.query(`
+    const sql = `
         UPDATE asesores
-        SET nombre_asesor = ?, carrera = ?
-        WHERE id_asesores = ?
-    `, [nuevoNombre, nuevaCarrera, asesorId], (err, results) => {
-        if (err) {
-            console.error('Error al actualizar el asesor:', err);
-            res.status(500).json({ error: 'Internal Server Error' });
-        } else {
-            res.redirect('/asesor-admin');
+        SET nombre_asesor = ?, descripcion = ?, precio_asesoria = ?, disponibilidad = ?
+        WHERE id_asesores = ?;
+    `;
+
+    const values = [nuevoNombre, nuevaDescripcion, nuevoPrecio, nuevaDisponibilidad, asesorId];
+
+    connection.query(sql, values, (error, results) => {
+        if (error) {
+            console.error('Error al actualizar el asesor:', error);
+            return res.status(500).send('Error al actualizar el asesor');
         }
+        res.redirect('/asesor-admin');
     });
 });
 
-// Ruta para actualizar la descripción del asesor
-app.post('/update-descripcion', (req, res) => {
-    const { asesorId, nuevaDescripcion } = req.body;
 
-    connection.query(`
-        UPDATE asesores
-        SET descripcion = ?
-        WHERE id_asesores = ?
-    `, [nuevaDescripcion, asesorId], (err, results) => {
+
+// Ruta para actualizar la descripción del asesor
+
+app.get('/logout', (req, res) => {
+    req.session.destroy(err => {
         if (err) {
-            console.error('Error al actualizar la descripción:', err);
-            res.status(500).json({ error: 'Internal Server Error' });
-        } else {
-            res.redirect('/asesor-admin');
+            console.error('Error al destruir la sesión:', err);
+            return res.status(500).send('No se pudo cerrar la sesión');
         }
+        res.redirect('/login');
     });
 });
 

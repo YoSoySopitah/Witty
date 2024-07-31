@@ -9,15 +9,106 @@
 </head>
 <body>
     <header>
-        <img src="https://i.imgur.com/zxHjzgd.png" alt="Logo">
-    </header>
-    <div class="containerinfo">
-        <div class="menu">
-            <a class="opc1" href="/estudiante-home"><i class="fa fa-home"></i> Inicio</a>
-            <a class="opc2" href=""><i class="fa fa-user"></i> Perfil</a>
-            <a class="opc3" href=""><i class="fa fa-envelope"></i> Correo</a>
+        <div class="header-left">
+            <button id="menu-toggle">
+                <img src="https://i.imgur.com/j0RM5oD.png" alt="Menú" id="menu-icon">
+            </button>
         </div>
-</div>
-<div class="fx"></div>
-</body>    
+        <div class="header-center">
+            <a href="/estudiante-home"><img src="https://i.imgur.com/zxHjzgd.png" alt="Logo"></a>
+        </div>
+    </header>
+    <div class="menu hidden">
+        <a class="opc1" href="/estudiante-home"><i class="fa fa-home"></i> Inicio</a>
+        <a class="opc2" href=""><i class="fa fa-user"></i> Perfil</a>
+        <a class="opc4" href="/logout"><i class="fa fa-close"></i> Cerrar sesión</a>
+    </div>
+    <div class="containerinfo">
+        <div class="estudiantebox">
+            <img src="https://2356021.fs1.hubspotusercontent-na1.net/hubfs/2356021/Cortes%20de%20pelo%20para%20cara%20cuadrada%20de%20hombre%206.webp" alt="">
+            <div class="infocont">
+                <h2><%= nombreUsuario %></h2>
+                <div class="info">
+                    <h3>Carrera: <%= carrera %></h3>
+                    <h3>E-Mail: <%= correo %></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="asesoriaspendientes">
+        <img src="https://i.imgur.com/CznD8zn.png" alt="">
+        <div class="asesoriaswrapper">
+            <% if (asesorias.length > 0) { %>
+                <% asesorias.forEach((asesoria, index) => { %>
+                    <div class="asesoria color-pastel-<%= (index % 4) + 1 %>">
+                        <div class="asesoria-info">
+                            <div class="asesoria-details">
+                                <h2>Carrera: <%= asesoria.nombre_carrera %></h2>
+                                <h2>Materia: <%= asesoria.nombre_materia %></h2>
+                            </div>
+                            <div class="asesoria-asesor">
+                                <img src="<%= asesoria.foto_asesor %>" alt="Foto del asesor">
+                                <h3>Asesor: <%= asesoria.nombre_asesor %></h3>
+                            </div>
+                        </div>
+                        <button>Cancelar</button>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <p>No hay asesorías pendientes.</p>
+            <% } %>
+        </div>        
+    </div>
+    
+    <div class="footer">
+        <div class="section">
+            <img src="img/Logo.png" alt="">
+            <h2 id="alcance">Al alcance de tu mano</h2>
+        </div>
+        <div class="section">
+            <h2>Información</h2>
+            <h3>Misión</h3>
+            <h3>Visión</h3>
+            <h3>Justificación</h3>
+        </div>
+        <div class="section">
+            <h2>Ayuda</h2>
+            <h3>Servicios</h3>
+            <h3>Soporte</h3>
+            <h3>Política de privacidad</h3>
+        </div>
+        <div class="section">
+            <h2>Menú</h2>
+            <a href="/asesor-home"><h3>Home</h3></a>
+            <a href="/asesor-admin"><h3>Perfil</h3></a>
+            <a href="/asesor-admin/"><h3>Crear Asesoría</h3></a>
+        </div>
+        <div class="section">
+            <h2>Redes Sociales</h2>
+            <div class="facebook">
+                <a href="https://www.facebook.com/share/kdBcQETc9FZBoLnc/?mibextid=LQQJ4d"><i class="fa fa-facebook"></i></a>
+                <a href="https://www.facebook.com/share/kdBcQETc9FZBoLnc/?mibextid=LQQJ4d"><h3>Facebook</h3></a>
+            </div>
+            <div class="instagram">
+                <a href="https://www.instagram.com/wittyasesorias?igsh=d3RzYWdpZW03ZTho"><i class="fa fa-instagram"></i></a>
+                <a href="https://www.instagram.com/wittyasesorias?igsh=d3RzYWdpZW03ZTho"><h3>Instagram</h3></a>
+            </div>
+        </div>
+    </div>
+    <div class="foot">
+        <hr>
+        <h2>2024 @ Copyright | Witty</h2>
+    </div>
+    <script>
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            var menu = document.querySelector('.menu');
+            var containerinfo = document.querySelector('.containerinfo');
+            var header = document.querySelector('header');
+            menu.classList.toggle('hidden');
+            containerinfo.classList.toggle('menu-visible');
+            header.classList.toggle('menu-visible');
+        });
+    </script>
+</body>
 </html>

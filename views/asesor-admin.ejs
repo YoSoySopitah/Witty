@@ -1,137 +1,195 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Witty - Home</title>
-    <link rel="stylesheet" href="css/asesor-home.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
-<body>
-    <header>
-        <div class="header-left">
-            <button id="menu-toggle">
-                <img src="https://i.imgur.com/j0RM5oD.png" alt="Menú" id="menu-icon">
-            </button>
-        </div>
-        <div class="header-center">
-            
-            <a href="/asesor-home"><img src="https://i.imgur.com/zxHjzgd.png" alt="Logo"></a>
-        </div>
-    </header>
-    <div class="menu hidden">
-        <a class="opc1" href="/asesor-home"><i class="fa fa-home"></i> Inicio</a>
-        <a class="opc2" href=""><i class="fa fa-user"></i> Perfil</a>
-        <a class="opc3" href=""><i class="fa fa-pencil"></i> Crear</a>
-    </div>
-    <div class="containerinfo">
-        <div class="asesorbox">
-            <img src="https://2356021.fs1.hubspotusercontent-na1.net/hubfs/2356021/Cortes%20de%20pelo%20para%20cara%20cuadrada%20de%20hombre%206.webp" alt="">
-            <h2><%= nombreUsuario %></h2>
-            <div class="starsc">
-                <i id="star" class="fa fa-star"></i>
-                <i id="star" class="fa fa-star"></i>
-                <i id="star" class="fa fa-star"></i>
-                <i id="star" class="fa fa-star"></i>
-                <i id="star" class="fa fa-star-o"></i>
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Witty - Home</title>
+        <link rel="stylesheet" href="css/asesor-home.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    </head>
+    <body>
+        <header>
+            <div class="header-left">
+                <button id="menu-toggle">
+                    <img src="https://i.imgur.com/j0RM5oD.png" alt="Menú" id="menu-icon">
+                </button>
             </div>
-            <h3>Carrera: <span class="carrera"><%= carrera %></span></h3>
-            <button type="button" class="btn btn-primary" id="openModal">
-                Actualizar
-            </button>
+            <div class="header-center">
+                
+                <a href="/asesor-home"><img src="https://i.imgur.com/zxHjzgd.png" alt="Logo"></a>
+            </div>
+        </header>
+        <div class="menu hidden">
+            <a class="opc1" href="/asesor-home"><i class="fa fa-home"></i> Inicio</a>
+            <a class="opc2" href=""><i class="fa fa-user"></i> Perfil</a>
+            <a class="opc3" href=""><i class="fa fa-pencil"></i> Crear</a>
         </div>
-        <div class="description">
-            <h3><%= descripcion %></h3>
-            <form action="/update-descripcion" method="POST">
-                <input type="hidden" name="asesorId" value="<%= asesorId %>">
-                <textarea name="nuevaDescripcion" placeholder="Nueva descripción"><%= descripcion %></textarea>
-                <button type="submit">Actualizar Descripción</button>
-            </form>
+        <div class="containerinfo">
+            <div class="asesorbox">
+                <img src="https://2356021.fs1.hubspotusercontent-na1.net/hubfs/2356021/Cortes%20de%20pelo%20para%20cara%20cuadrada%20de%20hombre%206.webp" alt="">
+                <h2><%= nombreUsuario %></h2>
+                <div class="starsc">
+                    <i id="star" class="fa fa-star"></i>
+                    <i id="star" class="fa fa-star"></i>
+                    <i id="star" class="fa fa-star"></i>
+                    <i id="star" class="fa fa-star"></i>
+                    <i id="star" class="fa fa-star-o"></i>
+                </div>
+                <h3>Carrera: <span class="carrera"><%= carrera %></span></h3>
+                <button type="button" class="btn btn-primary" id="openModal">
+                    Editar
+                </button>
+            </div>
+            <div class="description">
+                <h3><%= descripcion %></h3>
+            </div>
+            <div class="tarifa">
+                <h2>$<%= tarifa %></h2>
+                <h3>Tarifa por hora</h3>
+            </div>
+            <div class="horario">
+                <h2>Horario de disponibilidad</h2>
+                <h2><%= disponibilidad %></h2>
+            </div>
         </div>
-        <div class="tarifa">
-            <h2>$<%= tarifa %></h2>
-            <h3>Tarifa por hora</h3>
-        </div>
-        <div class="horario">
-            <h2>Horario de disponibilidad</h2>
-            <h2><%= disponibilidad %></h2>
-        </div>
-    </div>
 
-    <!-- Modal -->
-    <div id="updateModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Actualizar Asesor</h5>
-                <span class="modal-close">&times;</span>
-            </div>
-            <div class="modal-body">
-                <form action="/update-asesor" method="POST">
-                    <input type="hidden" name="asesorId" value="<%= asesorId %>">
-                    <div class="form-group">
-                        <label for="nuevoNombre">Nombre</label>
-                        <input type="text" class="form-control" id="nuevoNombre" name="nuevoNombre" placeholder="Nuevo nombre" value="<%= nombreUsuario %>">
-                    </div>
-                    <div class="form-group">
-                        <label for="nuevaCarrera">Carrera</label>
-                        <select id="nuevaCarrera" name="nuevaCarrera" class="form-control">
-                            <!-- Opciones serán llenadas por JavaScript -->
-                        </select>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Actualizar</button>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary modal-close">Cerrar</button>
+        <!-- Modal -->
+        <div id="updateModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Actualizar Asesor</h5>
+    
+                </div>
+                <div class="modal-body">
+                    <form action="/update-asesor" method="POST">
+                        <input type="hidden" name="asesorId" value="<%= asesorId %>">
+                        
+                        <!-- Fila para Nombre y Descripción -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="nuevoNombre">Nombre</label>
+                                <input type="text" class="form-control" id="nuevoNombre" name="nuevoNombre" placeholder="Nuevo nombre" value="<%= nombreUsuario %>">
+                            </div>
+                            <div class="form-group">
+                                <label for="NuevaDescripcion">Descripción</label>
+                                <textarea name="nuevaDescripcion" id="descriptionedit" class="form-control" placeholder="Nueva descripción" style="height: 50px;"><%= descripcion %></textarea>
+
+                            </div>
+                        </div>
+        
+                        <!-- Fila para Precio y Disponibilidad -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="NuevoPrecio">Precio</label>
+                                <input type="text" class="form-control" id="NuevoPrecio" name="NuevoPrecio" placeholder="Nuevo Precio" value="<%= tarifa %>">
+                            </div>
+                            <div class="form-group">
+                                <label for="NuevaDisponibilidad">Disponibilidad</label>
+                                <input type="text" class="form-control" id="NuevaDisponibilidad" name="NuevaDisponibilidad" placeholder="Nuevo horario" value="<%= disponibilidad %>">
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                    </form>                     
+                </div>
             </div>
         </div>
-    </div>
+        
 
+        <div class="footer">
+            <div class="section">
+                <img src="img/Logo.png" alt="">
+                <h2 id="alcance">Al alcance de tu mano</h2>
+            </div>
+            <div class="section">
+                <h2>Informacion</h2>
+                <h3>Misión</h3>
+                <h3>Visión</h3>
+                <h3>Justificacion</h3>
+            </div>
+            <div class="section">
+                <h2>Ayuda</h2>
+                <h3>Servicios</h3>
+                <h3>Soporte</h3>
+                <h3>Politica de privacidad</h3>
+            </div>
+            <div class="section">
+                <h2>Menu</h2>
+                <a href="/asesor-home"><h3>Home</h3></a>
+                <a href="/asesor-admin"><h3>Perfil</h3></a>
+                <a href="/asesor-admin/"><h3>Crear Asesoria</h3></a>
+            </div>
+            <div class="section">
+                <h2>Redes Sociales</h2>
+                <div class="facebook">
+                    <a href="https://www.facebook.com/share/kdBcQETc9FZBoLnc/?mibextid=LQQJ4d"><i class="fa fa-facebook"></i></a>
+                    <a href="https://www.facebook.com/share/kdBcQETc9FZBoLnc/?mibextid=LQQJ4d"><h3>Facebook</h3></a>
+                </div>
+                <div class="instagram">
+                <a href="https://www.instagram.com/wittyasesorias?igsh=d3RzYWdpZW03ZTho"><i class="fa fa-instagram"></i></a>
+                <a href="https://www.instagram.com/wittyasesorias?igsh=d3RzYWdpZW03ZTho"><h3>Instagram</h3></a>
+            </div>
+            </div>  
+        </div>
+        <div class="foot">
+        <hr>
+            <h2>2024 @ Copyright | Witty</h2>
+        </div>
+        <script>
+document.getElementById('menu-toggle').addEventListener('click', function() {
+    var menu = document.querySelector('.menu');
+    var containerinfo = document.querySelector('.containerinfo');
+    var header = document.querySelector('header');
+    menu.classList.toggle('hidden');
+    containerinfo.classList.toggle('menu-visible');
+    header.classList.toggle('menu-visible');
+});
+
+var modal = document.getElementById('updateModal');
+var openModalButton = document.getElementById('openModal');
+var closeModalButtons = document.querySelectorAll('.modal-close');
+
+openModalButton.addEventListener('click', function() {
+    modal.style.display = 'block';
+    // Cargar carreras en el modal cuando se abre
+    fetch('/api/carreras')
+        .then(response => response.json())
+        .then(carreras => {
+            const carreraSelect = document.getElementById('nuevaCarrera');
+            carreraSelect.innerHTML = ''; // Limpiar opciones anteriores
+            carreras.forEach(carrera => {
+                const option = document.createElement('option');
+                option.value = carrera.id_carrera; // Suponiendo que tienes un campo 'id_carrera'
+                option.textContent = carrera.nombre; // Suponiendo que tienes un campo 'nombre'
+                carreraSelect.appendChild(option);
+            });
+        })
+        .catch(error => {
+            console.error('Error al cargar las carreras:', error);
+        });
+});
+
+closeModalButtons.forEach(function(button) {
+    button.addEventListener('click', function() {
+        modal.style.display = 'none';
+    });
+});
+
+window.addEventListener('click', function(event) {
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+});
+
+        </script>
+
+    </script>
     <script>
         document.getElementById('menu-toggle').addEventListener('click', function() {
-            var menu = document.querySelector('.menu');
-            var containerinfo = document.querySelector('.containerinfo');
-            var header = document.querySelector('header');
-            menu.classList.toggle('hidden');
-            containerinfo.classList.toggle('menu-visible');
-            header.classList.toggle('menu-visible');
-        });
+    var menu = document.getElementById('menu');
+    menu.classList.toggle('hidden');
+    });
 
-        var modal = document.getElementById('updateModal');
-        var openModalButton = document.getElementById('openModal');
-        var closeModalButtons = document.querySelectorAll('.modal-close');
-
-        openModalButton.addEventListener('click', function() {
-            modal.style.display = 'block';
-            // Cargar carreras en el modal cuando se abre
-            fetch('/api/carreras')
-                .then(response => response.json())
-                .then(carreras => {
-                    const carreraSelect = document.getElementById('nuevaCarrera');
-                    carreraSelect.innerHTML = ''; // Limpiar opciones anteriores
-                    carreras.forEach(carrera => {
-                        const option = document.createElement('option');
-                        option.value = carrera.id_carrera; // Suponiendo que tienes un campo 'id_carrera'
-                        option.textContent = carrera.nombre; // Suponiendo que tienes un campo 'nombre'
-                        carreraSelect.appendChild(option);
-                    });
-                })
-                .catch(error => {
-                    console.error('Error al cargar las carreras:', error);
-                });
-        });
-
-        closeModalButtons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                modal.style.display = 'none';
-            });
-        });
-
-        window.addEventListener('click', function(event) {
-            if (event.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
     </script>
-</body>
-</html>
+    </body>
+    </html>
