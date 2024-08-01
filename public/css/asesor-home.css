@@ -149,7 +149,7 @@ header h2 {
     box-sizing: border-box;
     width: 100%;
     transition: margin-left 0.3s ease; /* Transición suave */
-    background-image: url('https://blog.orange.es/wp-content/uploads/sites/4/2024/03/fondos-de-pantalla-3d-paisaje.jpg');
+    background-image: url('https://i.imgur.com/G66M89T.png');
     background-size: 100% 350px;
     background-repeat: no-repeat;
 }
@@ -574,3 +574,6 @@ header a{
     margin: 0;
     padding-left: 10px;
 }
+
+
+

@@ -28,21 +28,57 @@
         <div class="menu hidden">
             <a class="opc1" href="/asesor-home"><i class="fa fa-home"></i> Inicio</a>
             <a class="opc2" href=""><i class="fa fa-user"></i> Perfil</a>
-            <a class="opc3" href=""><i class="fa fa-pencil"></i> Crear</a>
+            <a class="opc3" href="/agregar-asesoria"><i class="fa fa-pencil"></i> Crear</a>
+            <a class="opc4" href="/logout"><i class="fa fa-close"></i> Cerrar sesion</a>
+        </div>
+
+        <div id="modal-crear" class="modal hidden">
+            <div class="modal-content">
+                <span class="modal-close">&times;</span>
+                <link rel="stylesheet" href="css/diseño.css">
+
+<div class="asesor-container">
+    <h2>Crear nueva asesoría</h2>
+    <form id="nueva-asesoria-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="carrera">Carrera</label>
+          <input type="text" id="carrera" name="carrera" required>
+        </div>
+        <div class="form-group">
+          <label for="disponibilidad">Disponibilidad</label>
+          <input type="text" id="disponibilidad" name="disponibilidad" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="cuatrimestre">Cuatrimestre</label>
+          <input type="text" id="cuatrimestre" name="cuatrimestre" required>
+        </div>
+        <div class="form-group">
+          <label for="precio">Precio</label>
+          <input type="text" id="precio" name="precio" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="materia">Materia</label>
+          <input type="text" id="materia" name="materia" required>
+        </div>
+      </div>
+      <button type="submit" class="btn-crear">Crear</button>
+      <script src="formu.js"></script> 
+      <!-- NO ENCONTRADO EL FORMU.JS -->
+    </form>
+  </div>
+            </div>
         </div>
 
         
         <div class="containerinfo">
             <div class="asesorbox">
-                <img src="https://2356021.fs1.hubspotusercontent-na1.net/hubfs/2356021/Cortes%20de%20pelo%20para%20cara%20cuadrada%20de%20hombre%206.webp" alt="">
+                <img src="img/sergio.jpg" alt="">
                 <h2><%= nombreUsuario %></h2>
-                <div class="starsc">
-                    <i id="star" class="fa fa-star"></i>
-                    <i id="star" class="fa fa-star"></i>
-                    <i id="star" class="fa fa-star"></i>
-                    <i id="star" class="fa fa-star"></i>
-                    <i id="star" class="fa fa-star-o"></i>
-                </div>
                 <h3>Carrera: <span class="carrera"><%= carrera %></span></h3>
                 <button type="button" class="btn btn-primary" id="openModal">
                     Editar
@@ -111,9 +147,9 @@
             </div>
             <div class="section">
                 <h2>Informacion</h2>
-                <h3>Misión</h3>
-                <h3>Visión</h3>
-                <h3>Justificacion</h3>
+                <a href="/informacion"><h3>Misión</h3></a>
+                <a href="/informacion"><h3>Visión</h3></a>
+                <a href="/informacion"><h3>Justificación</h3></a>
             </div>
             <div class="section">
                 <h2>Ayuda</h2>
@@ -199,5 +235,32 @@ window.addEventListener('click', function(event) {
     });
 
     </script>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    var modal = document.getElementById('modal-crear');
+    var btn = document.getElementById('crear-asesoria');
+    var span = document.getElementsByClassName('modal-close')[0];
+
+    // Abrir el modal cuando se hace clic en el enlace
+    btn.onclick = function() {
+        modal.classList.remove('hidden');
+    }
+
+    // Cerrar el modal cuando se hace clic en el botón de cerrar (×)
+    span.onclick = function() {
+        modal.classList.add('hidden');
+    }
+
+    // Cerrar el modal cuando se hace clic fuera del contenido del modal
+    window.onclick = function(event) {
+        if (event.target === modal) {
+            modal.classList.add('hidden');
+        }
+    }
+});
+
+    </script>
+    
     </body>
     </html>

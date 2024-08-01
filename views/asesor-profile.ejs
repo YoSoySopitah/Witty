@@ -7,11 +7,11 @@
     <link rel="stylesheet" href="/css/asesor-home.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
-<script>
-    Weglot.initialize({
-        api_key: 'wg_c5f1bdd47bbf4ba47b4415c173518fea1'
-    });
-</script>
+    <script>
+        Weglot.initialize({
+            api_key: 'wg_c5f1bdd47bbf4ba47b4415c173518fea1'
+        });
+    </script>
 </head>
 <body>
     <header>
@@ -33,7 +33,7 @@
 
     <div class="containerinfo">
         <div class="asesorbox">
-            <img src="https://wallpapers.com/images/featured/cool-profile-picture-87h46gcobjl5e4xu.jpg" alt="">
+            <img src="https://i.imgur.com/iZr1pDE.jpeg" alt="">
             <h2><%= asesor.nombre_asesor %></h2>
             <div class="starsc">
                 <i id="star" class="fa fa-star"></i>
@@ -42,8 +42,8 @@
                 <i id="star" class="fa fa-star"></i>
                 <i id="star" class="fa fa-star-o"></i>
             </div>
-            <h3>Carrera: <span class="carrera"><%=  asesor.nombre_carrera  %></span></h3>
-            <button type="button" class="btn btn-primary">Contactar</button>
+            <h3>Carrera: <span class="carrera"><%= asesor.nombre_carrera %></span></h3>
+            <a href="mailto:<%= asesor.correoA %>?subject=Consulta sobre asesoría&body=Hola <%= asesor.nombre_asesor %>,%0A%0AEstoy interesado en tus servicios y me gustaria recibir mas informacion.%0A%0AThanks,%0A[Your Name]" class="btn btn-primary">Contactar</a>
         </div>
         <div class="description">
             <h3><%= asesor.descripcion %></h3>
@@ -56,7 +56,6 @@
             <h2>Horario de disponibilidad</h2>
             <h2><%= asesor.disponibilidad %></h2>
         </div>
-        
     </div>
 
     <div class="footer">
@@ -66,9 +65,9 @@
         </div>
         <div class="section">
             <h2>Información</h2>
-            <h3>Misión</h3>
-            <h3>Visión</h3>
-            <h3>Justificación</h3>
+            <a href="/informacion"><h3>Misión</h3></a>
+            <a href="/informacion"><h3>Visión</h3></a>
+            <a href="/informacion"><h3>Justificación</h3></a>
         </div>
         <div class="section">
             <h2>Ayuda</h2>

@@ -5,6 +5,8 @@ const stripe = require('stripe')('sk_test_51PRjxWLDT4L4UaZVi4zxVL3oXLFhZGHWKTcYR
 const connection = require('./database'); // Importar la configuración de la base de datos
 const path = require('path'); // Necesario para manejar rutas
 const multer = require('multer');
+const bcrypt = require('bcrypt');
+
 
 const app = express();
 const port = 3000;
@@ -44,12 +46,15 @@ app.get('/', (req, res) => {
     res.render('index', { user: req.session.user });
 });
 
+
 app.get('/login', (req, res) => {
     if (req.session.user) {
         return res.redirect('/');
     }
     res.render('login');
 });
+
+
 
 app.get('/register', (req, res) => {
     if (req.session.user) {
@@ -88,47 +93,34 @@ app.post('/login', (req, res) => {
 });
 
 app.post('/register', (req, res) => {
-    const { nombre_completo, rusuario, rcontraseña, tipoUsuario, carrera, cuatrimestre, materia, disponibilidad, precio_asesoria } = req.body;
+    console.log(req.body); // Verifica qué datos se están recibiendo
+    const { userType, nombre, rusuario, rcontraseña, fk_carrera, fecha_registro } = req.body;
+    console.log('Tipo de usuario recibido:', userType); // Agrega esta línea para depurar
 
-    // Validar campos requeridos
-    if (!nombre_completo || !rusuario || !rcontraseña || !tipoUsuario) {
-        return res.status(400).send('Todos los campos son requeridos');
-    }
-
-    let query;
+    let sql;
     let values;
 
-    if (tipoUsuario === 'estudiante') {
-        if (!carrera || !materia) {
-            return res.status(400).send('Campos de carrera y materia son requeridos para estudiantes');
-        }
-        query = 'INSERT INTO estudiantes (nombre_estudiante, correo_estudiante, contraseña_estudiante, fk_carrera, fk_materia, fecha_registro) VALUES (?, ?, ?, ?, ?, NOW())';
-        values = [nombre_completo, rusuario, rcontraseña, carrera, materia];
-    } else if (tipoUsuario === 'asesor') {
-        if (!disponibilidad || !precio_asesoria || !carrera || !materia) {
-            return res.status(400).send('Campos de disponibilidad, precio de asesoría, carrera y materia son requeridos para asesores');
-        }
-        query = 'INSERT INTO asesores (nombre_asesor, correoA, contraseña, disponibilidad, precio_asesoria, fk_carrera, fk_materia, fecha_registro) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())';
-        values = [nombre_completo, rusuario, rcontraseña, disponibilidad, precio_asesoria, carrera, materia];
+    if (userType === 'asesor') {
+      sql = `INSERT INTO asesores (nombre_asesor, correoA, contraseña, fk_carrera, fecha_registro)
+             VALUES (?, ?, ?, ?, ?)`;
+      values = [nombre, rusuario, rcontraseña, fk_carrera, fecha_registro];
+    } else if (userType === 'estudiante') {
+      sql = `INSERT INTO estudiantes (nombre_estudiante, correo_estudiante, contraseña_estudiante, fk_carrera, fecha_registro)
+             VALUES (?, ?, ?, ?, ?)`;
+      values = [nombre, rusuario, rcontraseña, fk_carrera, fecha_registro];
     } else {
-        return res.status(400).send('Tipo de usuario no válido');
+      return res.status(400).send('Tipo de usuario no válido');
     }
 
-    connection.query(query, values, (err, results) => {
-        if (err) {
-            return handleError(err, res);
-        }
-
-        // Inicia sesión al usuario después del registro
-        req.session.loggedin = true;
-        req.session.tipoUsuario = tipoUsuario;
-        req.session.nombreUsuario = nombre_completo;
-        req.session.carrera = carrera;
-
-        // Redirige al usuario a la página de elección de asesor
-        res.redirect('/register-info');
+    connection.query(sql, values, (err, result) => {
+      if (err) { 
+        console.error('Error al insertar datos:', err);
+        res.render('login');
+      }
+     res.render('login');
     });
 });
+
 
 // Ruta para registrar info
 app.get('/register-info', (req, res) => {
@@ -136,6 +128,13 @@ app.get('/register-info', (req, res) => {
         return res.redirect('/login');
     }
     res.render('register-info', { nombreUsuario: req.session.user.nombre_estudiante || req.session.user.nombre_asesor });
+});
+
+app.get('/agregar-asesoria', (req, res) => {
+    if (!req.session.user) {
+        return res.redirect('/login');
+    }
+    res.render('agregar-asesoria', { nombreUsuario: req.session.user.nombre_estudiante || req.session.user.nombre_asesor });
 });
     
 app.get('/perfil-asesor', (req, res) => {
@@ -189,29 +188,74 @@ app.get('/api/cuatrimestres', (req, res) => {
     });
 });
 
+// app.js
+
+
+
+// Obtener todas las materias
 app.get('/api/materias', (req, res) => {
-    const { carreraId, cuatrimestre } = req.query;
-    connection.query('SELECT * FROM materias WHERE fk_carrera = ? AND cuatri_materia = ?', [carreraId, cuatrimestre], (err, results) => {
-        if (err) {
-            console.error('Error al cargar las materias:', err);
-            res.status(500).json({ error: 'Internal Server Error' });
-        } else {
-            res.json(results);
-        }
+    connection.query('SELECT * FROM materias', (err, results) => {
+        if (err) return res.status(500).send(err);
+        res.json(results);
     });
 });
 
-// API para obtener los asesores (según se deduce del mensaje de error)
-app.get('/api/asesores', (req, res) => {
-    connection.query('SELECT * FROM asesores', (err, results) => {
+// Obtener todos los cuatrimestres
+
+// Ejemplo de endpoint en Express.js para obtener cuatrimestres
+app.get('/api/cuatrimestres', (req, res) => {
+    // Conéctate a la base de datos y obtén los cuatrimestres
+    connection.query('SELECT * FROM cuatrimestre', (err, results) => {
         if (err) {
-            console.error('Error al cargar los asesores:', err);
-            res.status(500).json({ error: 'Internal Server Error' });
-        } else {
-            res.json(results);
+            res.status(500).json({ error: 'Error al obtener los cuatrimestres' });
+            return;
         }
+        res.json(results);
     });
 });
+
+// Crear una nueva asesoría
+app.post('/api/asesorias', (req, res) => {
+    const { fk_carrera, disponibilidad, fk_cuatrimestre, precio, fk_materia } = req.body;
+
+    connection.query(
+        'INSERT INTO asesorias (fk_materia, fk_cuatrimestre, precio, duracion_asesoria) VALUES (?, ?, ?, ?)',
+        [fk_materia, fk_cuatrimestre, precio, disponibilidad],
+        (err, results) => {
+            if (err) {
+                console.error('Error al crear la asesoría:', err);
+                return res.status(500).json({ error: 'Internal Server Error' });
+            }
+            res.status(201).json({ id_asesoria: results.insertId });
+        }
+    );
+});
+
+
+
+    app.get('/api/materias', (req, res) => {
+        const { carreraId, cuatrimestre } = req.query;
+        connection.query('SELECT * FROM materias WHERE fk_carrera = ? AND cuatri_materia = ?', [carreraId, cuatrimestre], (err, results) => {
+            if (err) {
+                console.error('Error al cargar las materias:', err);
+                res.status(500).json({ error: 'Internal Server Error' });
+            } else {
+                res.json(results);
+            }
+        });
+    });
+
+    // API para obtener los asesores (según se deduce del mensaje de error)
+    app.get('/api/asesores', (req, res) => {
+        connection.query('SELECT * FROM asesores', (err, results) => {
+            if (err) {
+                console.error('Error al cargar los asesores:', err);
+                res.status(500).json({ error: 'Internal Server Error' });
+            } else {
+                res.json(results);
+            }
+        });
+    });
 
 app.get('/searchMaterias', (req, res) => {
     const query = req.query.query;

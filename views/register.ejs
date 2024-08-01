@@ -18,7 +18,7 @@
             display: none;
         }
     </style>
-    <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
+    <script type="module" src="https://cdn.weglot.com/weglot.min.js"></script>
     <script>
         Weglot.initialize({
             api_key: 'wg_c5f1bdd47bbf4ba47b4415c173518fea1'
@@ -34,7 +34,7 @@
         <div class="left-section">
             <img src="img/Logo.png" alt="Logo" class="logo">
             <h2>Bienvenidos!</h2>
-            <form id="registerForm" action="/register" method="POST">
+            <form id="registerForm" action="/login" >
                 <label for="email">Correo</label>
                 <input type="email" placeholder="Ingresa correo o usuario" name="rusuario" id="rusuario" required>
 
@@ -60,7 +60,7 @@
 
                 <p>¿Ya tienes una cuenta? <a href="/login" class="transition-link">¡Iniciar Sesión!</a></p>
 
-                <button type="submit">Crear Cuenta</button>
+                <button>Crear Cuenta</button>
             </form>
         </div>
         <div class="LadoDerecho" id="reg">
@@ -82,7 +82,7 @@
             <div class="logo-container">
                 <img src="img/logo.png" alt="Logo" class="logo-img">
             </div>
-            <form id="userForm">
+            <form id="userForm" >
                 <div class="content" id="nameSection">
                     <div class="illustration">
                         <img id="mainImage" src="img/1.png" alt="Ilustración" class="img-fluid">
@@ -108,10 +108,10 @@
                     <div class="form-container">
                         <h2>Selecciona el tipo de usuario</h2>
                         <div class="button-container">
-                            <button type="button" class="user-type-btn" id="asesorBtn">Asesor</button>
-                            <button type="button" class="user-type-btn" id="asesoradoBtn">Estudiante</button>
+                            <input type="radio" name="userType" value="asesor" class="user-type-btn" id="asesorBtn">Asesor</input>
+                            <input type="radio" name="userType" value="estudiante" class="user-type-btn" id="asesoradoBtn">Estudiante</input>
                         </div>
-                        <input type="hidden" name="userType" id="userTypeInput" value="">
+
                         <div class="error-message" id="userTypeError">Selecciona un tipo de usuario.</div>
                     </div>
                 </div>
@@ -181,9 +181,10 @@ Ofrezco clases y asesorías personalizadas en Programación Orientada a Objetos,
                         </div>
                     </div>
                     <div class="create-user-container">
-                        <button type="submit" id="createUserBtn" class="create-user-btn">Crear Usuario</button>
+                        <a href="/login"><button id="createUserBtn" class="create-user-btn">Crear Usuario</button></a>
                     </div>
                 </div>
+                <input type="hidden" id="userreq" name="rusuario" />
             </form>
             <div class="background">
                 <img src="img/fondo.png" alt="Fondo" class="fondo-img">
@@ -199,102 +200,96 @@ Ofrezco clases y asesorías personalizadas en Programación Orientada a Objetos,
     <script src="js/jsCuenta.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const form = document.querySelector('#registerForm');
-            const password = document.getElementById('rcontraseña');
-            const confirmPassword = document.getElementById('confirm-password');
-            const errorMessage = document.createElement('div');
-            const header = document.getElementById('mainHeader');
-    
-            errorMessage.style.color = 'red';
+    const registerForm = document.querySelector('#registerForm');
+    const password = document.getElementById('rcontraseña');
+    const confirmPassword = document.getElementById('confirm-password');
+    const errorMessage = document.createElement('div');
+    const header = document.getElementById('mainHeader');
+
+    errorMessage.style.color = 'red';
+    errorMessage.style.display = 'none';
+    errorMessage.style.marginTop = '5px';
+    errorMessage.style.fontSize = '0.8em';
+    errorMessage.innerHTML = '<img src="img/Advertencia.png" alt="" style="vertical-align: middle; width: 20px; height: 20px; margin-right: 5px;"> Las contraseñas no coinciden.';
+    confirmPassword.parentNode.insertBefore(errorMessage, confirmPassword.nextSibling);
+
+    registerForm.addEventListener('submit', (event) => {
+        event.preventDefault(); // Previene el envío del formulario
+        
+        if (password.value !== confirmPassword.value) {
+            errorMessage.style.display = 'block'; // Muestra el mensaje de error
+        } else {
+            errorMessage.style.display = 'none'; // Oculta el mensaje de error
+
+            // Cambiar el archivo CSS al enviar el formulario de registro
+            document.getElementById('cssLink').href = 'css/cssCuenta.css';
+
+            // Oculta el encabezado y el formulario de registro
+            header.classList.add('hidden');
+            document.getElementById('registerSection').classList.add('hidden');
+            document.getElementById('userFormSection').classList.remove('hidden');
+        }
+    });
+
+    confirmPassword.addEventListener('input', () => {
+        if (password.value === confirmPassword.value) {
             errorMessage.style.display = 'none';
-            errorMessage.style.marginTop = '5px';
-            errorMessage.style.fontSize = '0.8em';
-            errorMessage.innerHTML = '<img src="img/Advertencia.png" alt="" style="vertical-align: middle; width: 20px; height: 20px; margin-right: 5px;"> Las contraseñas no coinciden.';
-            confirmPassword.parentNode.insertBefore(errorMessage, confirmPassword.nextSibling);
-    
-            form.addEventListener('submit', (event) => {
-                event.preventDefault(); // Previene el envío del formulario
-    
-                if (password.value !== confirmPassword.value) {
-                    errorMessage.style.display = 'block'; // Muestra el mensaje de error
-                } else {
-                    errorMessage.style.display = 'none'; // Oculta el mensaje de error
-    
-                    // Cambiar el archivo CSS al enviar el formulario de registro
-                    document.getElementById('cssLink').href = 'css/cssCuenta.css';
-    
-                    // Oculta el encabezado y el formulario de registro
-                    header.classList.add('hidden');
-                    document.getElementById('registerSection').classList.add('hidden');
-                    document.getElementById('userFormSection').classList.remove('hidden');
-                }
-            });
-    
-            confirmPassword.addEventListener('input', () => {
-                if (password.value === confirmPassword.value) {
-                    errorMessage.style.display = 'none';
-                }
-            });
-        });
-    
-        document.getElementById('toggle-password').addEventListener('change', function() {
-            const passwordField = document.getElementById('confirm-password');
-            passwordField.type = this.checked ? 'text' : 'password';
-        });
+        }
+    });
 
-        // Mostrar u ocultar campos adicionales basados en el tipo de usuario seleccionado
-        document.getElementById('tipoUsuario').addEventListener('change', function() {
-            const asesorFields = document.getElementById('asesorFields');
-            asesorFields.style.display = this.value === 'asesor' ? 'block' : 'none';
-        });
+    document.getElementById('toggle-password').addEventListener('change', function() {
+        const passwordField = document.getElementById('confirm-password');
+        passwordField.type = this.checked ? 'text' : 'password';
+    });
 
-        // Manejo del formulario de nombre
-        document.getElementById('nombreForm').addEventListener('submit', (event) => {
-            event.preventDefault();
-            // Aquí se pueden agregar validaciones adicionales y lógica para enviar los datos al servidor
-            // Por ejemplo, podrías usar fetch() o XMLHttpRequest para enviar los datos al backend
+    document.getElementById('tipoUsuario').addEventListener('change', function() {
+        const asesorFields = document.getElementById('asesorFields');
+        asesorFields.style.display = this.value === 'asesor' ? 'block' : 'none';
+    });
 
-            // Para simular el proceso, ocultamos el formulario actual y mostramos el siguiente
-            document.getElementById('nameSection').classList.add('hidden');
-            document.getElementById('userTypeSection').classList.remove('hidden');
-        });
+    document.getElementById('nombreForm').addEventListener('submit', (event) => {
+        event.preventDefault();
+        document.getElementById('nameSection').classList.add('hidden');
+        document.getElementById('userTypeSection').classList.remove('hidden');
+    });
 
-        // Manejo del tipo de usuario
-        document.getElementById('asesorBtn').addEventListener('click', () => {
-            document.getElementById('userTypeSection').classList.add('hidden');
-            document.getElementById('section3').classList.remove('hidden');
-        });
+    document.getElementById('asesorBtn').addEventListener('click', () => {
+    document.getElementById('userTypeInput').value = 'asesor';
+    document.getElementById('userTypeSection').classList.add('hidden');
+    document.getElementById('section3').classList.remove('hidden');
+});
 
-        document.getElementById('asesoradoBtn').addEventListener('click', () => {
-            document.getElementById('userTypeSection').classList.add('hidden');
-            document.getElementById('section3').classList.remove('hidden');
-        });
+document.getElementById('asesoradoBtn').addEventListener('click', () => {
+    document.getElementById('userTypeInput').value = 'estudiante';
+    document.getElementById('userTypeSection').classList.add('hidden');
+    document.getElementById('section3').classList.remove('hidden');
+});
+ 
 
-        // Manejo del texto de presentación
-        document.getElementById('presentationText').addEventListener('input', () => {
-            // Validar el texto de presentación si es necesario
-        });
 
-        // Manejo de la carga de fotos
-        document.getElementById('uploadButton').addEventListener('click', () => {
-            document.getElementById('photoUpload').click();
-        });
 
-        document.getElementById('photoUpload').addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = () => {
-                    document.getElementById('avatarPreview').src = reader.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
+    document.getElementById('presentationText').addEventListener('input', () => {
+        // Validar el texto de presentación si es necesario
+    });
 
-        // Crear usuario
-        document.getElementById('createUserBtn').addEventListener('click', () => {
-    // Lógica para enviar los datos al backend
-    const formData = new FormData(document.querySelector('#nombreForm'));
+    document.getElementById('uploadButton').addEventListener('click', () => {
+        document.getElementById('photoUpload').click();
+    });
+
+    document.getElementById('photoUpload').addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                document.getElementById('avatarPreview').src = reader.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    document.getElementById('createUserBtn').addEventListener('click', () => {
+    const formData = new FormData(document.querySelector('#userForm'));
+    console.log('Tipo de usuario:', formData.get('userType')); // Agrega esta línea para depurar
 
     fetch('/register', {
         method: 'POST',
@@ -308,6 +303,8 @@ Ofrezco clases y asesorías personalizadas en Programación Orientada a Objetos,
     .catch(error => {
         console.error('Error al crear el usuario:', error);
     });
+});
+
 });
 
     </script>
