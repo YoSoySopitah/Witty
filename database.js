@@ -3,7 +3,7 @@ const connection = mysql.createConnection({
     host: '198.12.235.72' || DB,
     user: 'WittyUser' || User,
     password: 'SergioRamos3' || Password,
-    database: 'WittyDB' || WittyDB
+    database: 'Witty' || WittyDB
 });
 
 connection.connect((err) => {
