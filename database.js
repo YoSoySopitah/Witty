@@ -1,9 +1,9 @@
 const mysql = require('mysql');
 const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'sgame360',
-    database: 'WittyDB'
+    host: '198.12.235.72' || DB,
+    user: 'WittyUser' || User,
+    password: 'SergioRamos3' || Password,
+    database: 'WittyDB' || WittyDB
 });
 
 connection.connect((err) => {
