@@ -1,9 +1,10 @@
 const mysql = require('mysql');
 const connection = mysql.createConnection({
-    host: '198.12.235.72' || DB,
-    user: 'WittyUser' || User,
-    password: 'SergioRamos3' || Password,
-    database: 'Witty' || WittyDB
+    host: '89.116.51.221',
+    user: 'Witty',
+    password: 'sgame360',
+    database: 'Witty',
+    connectTimeout: 20000
 });
 
 connection.connect((err) => {
@@ -15,3 +16,12 @@ connection.connect((err) => {
 });
 
 module.exports = connection;
+
+
+/*const mysql = require('mysql');
+const connection = mysql.createConnection({
+    host: '198.12.235.72' || DB,
+    user: 'WittyUser' || User,
+    password: 'SergioRamos3' || Password,
+    database: 'Witty' || WittyDB
+});*/

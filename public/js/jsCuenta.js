@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const nombreForm = document.getElementById('nombreForm');
+    // Definición de variables
+    const nombreForm = document.getElementById('userForm');
     const nextArrow = document.getElementById('nextArrow');
     const prevArrow = document.getElementById('prevArrow');
     const dots = document.querySelectorAll('.dot');
@@ -16,7 +17,10 @@ document.addEventListener('DOMContentLoaded', function() {
     let cropper;
     let isAsesor = false;
     let coverPhotoSelected = false;
+    let selectedCoverPhoto = null;
+    let formData = new FormData();
 
+    // Funciones de manejo de errores
     function clearErrors() {
         document.querySelectorAll('.error-message').forEach(el => el.style.display = 'none');
     }
@@ -36,7 +40,26 @@ document.addEventListener('DOMContentLoaded', function() {
         if (currentSlide === 0) {
             const nombre = document.getElementById('nombre').value.trim();
             const apellido = document.getElementById('apellido').value.trim();
-            return nombre !== '' && apellido !== '';
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const confirmPassword = document.getElementById('confirmPassword').value.trim();
+
+            let valid = nombre !== '' && apellido !== '' && email !== '' && password !== '' && confirmPassword !== '';
+            
+            if (valid) {
+                valid = password === confirmPassword;
+            }
+            
+            if (!valid) {
+                if (nombre === '') showError('nombreError', 'El nombre es obligatorio.');
+                if (apellido === '') showError('apellidoError', 'El apellido es obligatorio.');
+                if (email === '') showError('emailError', 'El correo electrónico es obligatorio.');
+                if (password === '') showError('passwordError', 'La contraseña es obligatoria.');
+                if (confirmPassword === '') showError('confirmPasswordError', 'La confirmación de la contraseña es obligatoria.');
+                if (password !== confirmPassword) showError('confirmPasswordError', 'Las contraseñas no coinciden.');
+            }
+            
+            return valid;
         } else if (currentSlide === 1) {
             return asesorBtn.classList.contains('selected') || asesoradoBtn.classList.contains('selected');
         } else if (currentSlide === 2 && isAsesor) {
@@ -54,8 +77,16 @@ document.addEventListener('DOMContentLoaded', function() {
         if (currentSlide === 0) {
             const nombre = document.getElementById('nombre').value.trim();
             const apellido = document.getElementById('apellido').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value.trim();
+            const confirmPassword = document.getElementById('confirmPassword').value.trim();
+
             if (nombre === '') showError('nombreError', 'El nombre es obligatorio.');
             if (apellido === '') showError('apellidoError', 'El apellido es obligatorio.');
+            if (email === '') showError('emailError', 'El correo electrónico es obligatorio.');
+            if (password === '') showError('passwordError', 'La contraseña es obligatoria.');
+            if (confirmPassword === '') showError('confirmPasswordError', 'La confirmación de la contraseña es obligatoria.');
+            if (password !== confirmPassword) showError('confirmPasswordError', 'Las contraseñas no coinciden.');
         } else if (currentSlide === 1) {
             if (!(asesorBtn.classList.contains('selected') || asesoradoBtn.classList.contains('selected'))) {
                 showError('userTypeError', 'Selecciona un tipo de usuario.');
@@ -145,15 +176,18 @@ document.addEventListener('DOMContentLoaded', function() {
         asesorBtn.classList.add('selected');
         asesoradoBtn.classList.remove('selected');
         isAsesor = true;
+        document.getElementById('userTypeInput').value = 'asesor';
         updateSlide();
     });
-
+    
     asesoradoBtn.addEventListener('click', function() {
         asesoradoBtn.classList.add('selected');
         asesorBtn.classList.remove('selected');
         isAsesor = false;
+        document.getElementById('userTypeInput').value = 'estudiante';
         updateSlide();
     });
+    
 
     uploadButton.addEventListener('click', function() {
         photoUpload.click();
@@ -164,6 +198,8 @@ document.addEventListener('DOMContentLoaded', function() {
         if (file) {
             const reader = new FileReader();
             reader.onload = function(e) {
+                avatarPreview.src = e.target.result;
+                formData.append('photoUpload', file);
                 showCropperModal(e.target.result);
             };
             reader.readAsDataURL(file);
@@ -172,95 +208,101 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function showCropperModal(imageSrc) {
         const modal = document.createElement('div');
-        modal.style.position = 'fixed';
-        modal.style.top = '0';
-        modal.style.left = '0';
-        modal.style.width = '100%';
-        modal.style.height = '100%';
-        modal.style.backgroundColor = 'rgba(0,0,0,0.5)';
-        modal.style.display = 'flex';
-        modal.style.justifyContent = 'center';
-        modal.style.alignItems = 'center';
-        modal.style.zIndex = '1000';
-
+        modal.classList.add('modal');
+        
         const modalContent = document.createElement('div');
-        modalContent.style.backgroundColor = 'white';
-        modalContent.style.padding = '20px';
-        modalContent.style.borderRadius = '10px';
-        modalContent.style.maxWidth = '90%';
-        modalContent.style.maxHeight = '90%';
-        modalContent.style.overflow = 'auto';
-
+        modalContent.classList.add('modal-content');
+        
         const cropperImage = document.createElement('img');
         cropperImage.src = imageSrc;
-        cropperImage.style.maxWidth = '100%';
-        cropperImage.style.display = 'block';
+        modalContent.appendChild(cropperImage);
 
         const cropButton = document.createElement('button');
-        cropButton.textContent = 'Guardar';
-        cropButton.style.marginTop = '10px';
-        cropButton.style.padding = '10px 20px';
-        cropButton.style.backgroundColor = '#006AD7';
-        cropButton.style.color = 'white';
-        cropButton.style.border = 'none';
-        cropButton.style.borderRadius = '5px';
-        cropButton.style.cursor = 'pointer';
-
-        modalContent.appendChild(cropperImage);
-        modalContent.appendChild(cropButton);
-        modal.appendChild(modalContent);
-        document.body.appendChild(modal);
-
-        cropper = new Cropper(cropperImage, {
-            aspectRatio: 1,
-            viewMode: 1,
-            responsive: true,
-        });
-
+        cropButton.textContent = 'Recortar';
         cropButton.addEventListener('click', function() {
-            const croppedCanvas = cropper.getCroppedCanvas();
-            avatarPreview.src = croppedCanvas.toDataURL('image/jpeg');
-            document.body.removeChild(modal);
-            cropper.destroy();
+            if (cropper) {
+                const canvas = cropper.getCroppedCanvas();
+                canvas.toBlob(function(blob) {
+                    const file = new File([blob], 'avatar.png', { type: 'image/png' });
+                    formData.append('photoUpload', file);
+                    avatarPreview.src = URL.createObjectURL(blob);
+                    modal.remove();
+                });
+            }
+        });
+        modalContent.appendChild(cropButton);
+
+        document.body.appendChild(modal);
+        cropper = new Cropper(cropperImage);
+    }
+
+    function updateCoverPhotoSelection() {
+        galleryItems.forEach(item => {
+            item.addEventListener('click', function() {
+                selectedCoverPhoto = item.querySelector('img').src;
+                coverPhotoSelected = true;
+                galleryItems.forEach(i => i.classList.remove('selected'));
+                item.classList.add('selected');
+            });
         });
     }
 
     createUserBtn.addEventListener('click', function() {
-        if (validateSection()) {
-            console.log('Usuario creado exitosamente');
-            // Aquí puedes agregar la lógica para enviar los datos del formulario
+        // Recopilar datos del formulario y agregarlos a FormData
+        formData.append('userType', isAsesor ? 'asesor' : 'estudiante');
+        formData.append('nombre', document.getElementById('nombre').value.trim());
+        formData.append('apellido', document.getElementById('apellido').value.trim());
+        formData.append('email', document.getElementById('email').value.trim());
+        formData.append('password', document.getElementById('password').value.trim());
+        formData.append('confirmPassword', document.getElementById('confirmPassword').value.trim());
+        formData.append('presentationText', isAsesor ? document.querySelector('textarea').value.trim() : '');
+        formData.append('coverPhoto', selectedCoverPhoto || '');
+        formData.append('fk_carrera', null); // Establecer fk_carrera en null
+        formData.append('fecha_registro', null); // Establecer fecha_registro en null
+    
+        if (avatarPreview.src && !avatarPreview.src.endsWith('Perfil.png')) {
+            fetch(avatarPreview.src)
+                .then(res => res.blob())
+                .then(blob => {
+                    formData.append('photoUpload', blob, 'avatar.png');
+                    return fetch('http://localhost:3000/register', {
+                        method: 'POST',
+                        body: formData
+                    });
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message === 'Usuario creado exitosamente') {
+                        alert('Usuario creado exitosamente.');
+                        window.location.href = '/success';
+                    } else {
+                        alert('Error al crear el usuario: ' + data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al enviar el formulario:', error);
+                    alert('Error en el envío del formulario. Por favor, intente nuevamente.');
+                });
         } else {
-            showSectionErrors();
+            fetch('http://localhost:3000/register', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message === 'Usuario creado exitosamente') {
+                    alert('Usuario creado exitosamente.');
+                    window.location.href = '/success';
+                } else {
+                    alert('Error al crear el usuario: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error al enviar el formulario:', error);
+                alert('Error en el envío del formulario. Por favor, intente nuevamente.');
+            });
         }
     });
-
-    galleryItems.forEach(item => {
-        const radio = item.querySelector('input[type="radio"]');
-        const img = item.querySelector('img');
-
-        img.addEventListener('click', function() {
-            radio.checked = true;
-            coverPhotoSelected = true;
-            updateCoverPhotoSelection();
-        });
-
-        radio.addEventListener('change', function() {
-            coverPhotoSelected = true;
-            updateCoverPhotoSelection();
-        });
-    });
-
-    function updateCoverPhotoSelection() {
-        galleryItems.forEach(item => {
-            const radio = item.querySelector('input[type="radio"]');
-            item.classList.toggle('selected', radio.checked);
-        });
-
-        coverPhotoSelected = Array.from(galleryItems).some(item => item.querySelector('input[type="radio"]').checked);
-
-        nextArrow.style.pointerEvents = coverPhotoSelected ? 'auto' : 'none';
-        nextArrow.style.opacity = coverPhotoSelected ? '1' : '0.5';
-    }
-
+    
     updateSlide();
 });
