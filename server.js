@@ -7,13 +7,19 @@ const path = require('path'); // Necesario para manejar rutas
 const multer = require('multer');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
+const sharp = require('sharp'); 
+const fs = require('fs');
 
 const app = express();
 const port = 3000;
 
 // Inicializar middlewares
 app.use(cors());
+
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -23,10 +29,9 @@ app.use(session({
     saveUninitialized: true
 }));
 
-const upload = multer({ 
-    dest: 'uploads/', // Carpeta donde se guardarán los archivos subidos
+const upload = multer({
+    dest: 'uploads/temp/', // Carpeta temporal para guardar los archivos subidos
 });
-
 // Configurar la carpeta de vistas
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -111,57 +116,37 @@ app.post('/login', (req, res) => {
     });
 });
 
-app.post('/register', upload.fields([{ name: 'photoUpload', maxCount: 1 }]), async (req, res) => {
-    try {
-        console.log('Request body:', req.body);
-        console.log('Files:', req.files);
+app.get('/estudiante-home', (req, res) => {
+    if (req.session.user && req.session.tipoUsuario === 'estudiante') {
+        const estudianteId = req.session.user.id_estudiante;
 
-        const { userType, nombre, apellido, email, password, confirmPassword, presentationText, coverPhoto } = req.body;
-        let hashedPassword;
-        let sql;
-        let values;
-
-        // Verificar campos requeridos
-        if (!userType || !nombre || !email || !password || !confirmPassword || !coverPhoto) {
-            return res.status(400).json({ error: 'Todos los campos obligatorios son requeridos' });
-        }
-
-        // Comparar contraseñas
-        if (password !== confirmPassword) {
-            return res.status(400).json({ error: 'Las contraseñas no coinciden' });
-        }
-
-        // Encriptar la contraseña
-        hashedPassword = await bcrypt.hash(password, 10);
-
-        // Obtener archivo de foto de perfil si existe
-        const fotoPerfil = req.files['photoUpload'] ? req.files['photoUpload'][0].filename : null;
-
-        if (userType === 'estudiante') {
-            // Insertar en la tabla estudiantes
-            sql = `INSERT INTO estudiantes (nombre_estudiante, fk_carrera, correo_estudiante, contraseña_estudiante, fecha_registro, foto_perfil, portada) 
-                   VALUES (?, ?, ?, ?, NOW(), ?, ?)`;
-            values = [nombre, null, email, hashedPassword, fotoPerfil, coverPhoto];
-        } else if (userType === 'asesor') {
-            // Insertar en la tabla asesores
-            sql = `INSERT INTO asesores (nombre_asesor, fk_carrera, correoA, contraseña, fecha_registro, descripcion, foto_perfil, portada) 
-                   VALUES (?, ?, ?, ?, NOW(), ?, ?, ?)`;
-            values = [nombre, null, email, hashedPassword, presentationText, fotoPerfil, coverPhoto];
-        } else {
-            return res.status(400).json({ error: 'Tipo de usuario no válido' });
-        }
-
-        // Ejecutar la consulta
-        connection.query(sql, values, (err, result) => {
+        connection.query(`
+            SELECT nombre_estudiante, correo_estudiante, foto_perfil
+            FROM estudiantes
+            WHERE id_estudiante = ?
+        `, [estudianteId], (err, results) => {
             if (err) {
-                console.error('Error al registrar:', err);
-                return res.status(500).json({ error: 'Error al registrar' });
+                console.error('Error al cargar los datos del estudiante:', err);
+                res.status(500).json({ error: 'Internal Server Error' });
+            } else if (results.length > 0) {
+                const { nombre_estudiante, correo_estudiante, foto_perfil } = results[0];
+                
+                // Verifica el valor de foto_perfil
+                const imagenPerfilPath = foto_perfil && foto_perfil.trim() !== ''
+                    ? `/uploads/${foto_perfil}`
+                    : '/img/user.png';
+
+                res.render('estudiante-home', {
+                    nombreUsuario: nombre_estudiante,
+                    correoUsuario: correo_estudiante,
+                    imagenPerfil: imagenPerfilPath
+                });
+            } else {
+                res.status(404).json({ error: 'Estudiante no encontrado' });
             }
-            res.status(200).json({ message: 'Usuario creado exitosamente' });
         });
-    } catch (err) {
-        console.error('Error en el registro:', err);
-        res.status(500).json({ error: 'Error interno del servidor' });
+    } else {
+        res.redirect('/login');
     }
 });
 
@@ -224,10 +209,14 @@ app.get('/estudiante-home', (req, res) => {
                 res.status(500).json({ error: 'Internal Server Error' });
             } else if (results.length > 0) {
                 const { nombre_estudiante, correo_estudiante, foto_perfil } = results[0];
+                const imagenPerfilPath = foto_perfil && foto_perfil !== 'null'
+                    ? `/uploads/${foto_perfil}`
+                    : '/img/user.png';
+
                 res.render('estudiante-home', {
                     nombreUsuario: nombre_estudiante,
                     correoUsuario: correo_estudiante,
-                    imagenPerfil: foto_perfil ? `/uploads/${foto_perfil}` : '/path/to/default-image.png'
+                    imagenPerfil: imagenPerfilPath
                 });
             } else {
                 res.status(404).json({ error: 'Estudiante no encontrado' });
@@ -237,6 +226,7 @@ app.get('/estudiante-home', (req, res) => {
         res.redirect('/login');
     }
 });
+
 
 
 
