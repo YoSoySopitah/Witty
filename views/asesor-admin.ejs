@@ -12,6 +12,17 @@
         api_key: 'wg_c5f1bdd47bbf4ba47b4415c173518fea1'
     });
 </script>
+    <style>
+        .containerinfo {
+    flex: 1; /* Permite que el contenedor se expanda y ocupe el espacio restante */
+    box-sizing: border-box;
+    width: 100%;
+    transition: margin-left 0.3s ease; /* Transición suave */
+    background-image: url('<%= portada %>');
+    background-size: 100% 350px;
+    background-repeat: no-repeat;
+}
+    </style>
     </head>
     <body>
         <header>
@@ -77,7 +88,7 @@
         
         <div class="containerinfo">
             <div class="asesorbox">
-                <img src="img/sergio.jpg" alt="">
+                <img src="/uploads/<%= fotoPerfil %>    " alt="">
                 <h2><%= nombreUsuario %></h2>
                 <h3>Carrera: <span class="carrera"><%= carrera %></span></h3>
                 <button type="button" class="btn btn-primary" id="openModal">
@@ -93,7 +104,7 @@
             </div>
             <div class="horario">
                 <h2>Horario de disponibilidad</h2>
-                <h2><%= disponibilidad %></h2>
+                <h3><%= disponibilidad %></h3>
             </div>
         </div>
 

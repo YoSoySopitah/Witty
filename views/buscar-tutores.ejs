@@ -6,13 +6,12 @@
     <title>Lista Asesores</title>
     <link rel="stylesheet" href="css/csstutores.css">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+Bhaina+2:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
-<script>
-    Weglot.initialize({
-        api_key: 'wg_c5f1bdd47bbf4ba47b4415c173518fea1'
-    });
-</script>
+    <script>
+        Weglot.initialize({
+            api_key: 'wg_c5f1bdd47bbf4ba47b4415c173518fea1'
+        });
+    </script>
 </head>
 <body>
     <header>
@@ -69,9 +68,9 @@
                             asesoresContainer.innerHTML = asesores.map(asesor => `
                                 <div class="asesor-card">
                                     <h3>${asesor.nombre_asesor}</h3>
+                                    <img src="/uploads/${asesor.foto_perfil}" alt="Foto de ${asesor.nombre_asesor}" class="asesor-photo">
                                     <p>${asesor.descripcion}</p>
                                     <p>Disponibilidad: ${asesor.disponibilidad}</p>
-                                    <p>Correo: ${asesor.correoA}</p>
                                     <a href="/ver-perfil-asesor/${asesor.id_asesores}"><h2>Ver perfil</h2></a>
                                 </div>
                             `).join('');

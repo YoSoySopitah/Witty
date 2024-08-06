@@ -383,7 +383,7 @@ app.get('/asesor-home', (req, res) => {
 
         connection.query(`
             SELECT asesores.nombre_asesor AS nombre, asesores.correoA AS correo, asesores.disponibilidad AS disponibilidad, 
-                   carrera.nombre_carrera AS carrera
+                   carrera.nombre_carrera AS carrera, asesores.foto_perfil AS fotoPerfil
             FROM asesores
             JOIN carrera ON asesores.fk_carrera = carrera.id_carrera
             WHERE asesores.id_asesores = ?
@@ -392,14 +392,19 @@ app.get('/asesor-home', (req, res) => {
                 console.error('Error al cargar los datos del asesor:', err);
                 res.status(500).json({ error: 'Internal Server Error' });
             } else {
-                const { nombre, correo, disponibilidad, carrera } = results[0];
-                res.render('asesor-home', { nombreUsuario: nombre, correo, disponibilidad, carrera, asesorId });
+                if (results.length > 0) {
+                    const { nombre, correo, disponibilidad, carrera, fotoPerfil } = results[0];
+                    res.render('asesor-home', { nombreUsuario: nombre, correo, disponibilidad, carrera, fotoPerfil, asesorId });
+                } else {
+                    res.status(404).json({ error: 'Asesor no encontrado' });
+                }
             }
         });
     } else {
         res.redirect('/login');
     }
 });
+
 
 app.get('/asesor-admin', (req, res) => {
     if (req.session.user && req.session.tipoUsuario === 'asesor') {
@@ -408,7 +413,7 @@ app.get('/asesor-admin', (req, res) => {
         connection.query(`
             SELECT asesores.nombre_asesor AS nombre, asesores.correoA AS correo, asesores.disponibilidad AS disponibilidad, 
                    carrera.nombre_carrera AS carrera, asesores.descripcion AS descripcion, asesores.precio_asesoria AS tarifa,
-                   materias.nombre_materia AS materia1
+                   materias.nombre_materia AS materia1, asesores.portada AS portada, asesores.foto_perfil AS fotoPerfil
             FROM asesores
             JOIN carrera ON asesores.fk_carrera = carrera.id_carrera
             LEFT JOIN asesorias ON asesores.id_asesores = asesorias.fk_asesor
@@ -419,8 +424,8 @@ app.get('/asesor-admin', (req, res) => {
                 console.error('Error al cargar los datos del asesor:', err);
                 res.status(500).json({ error: 'Internal Server Error' });
             } else {
-                const { nombre, correo, disponibilidad, carrera, descripcion, tarifa, materia1 } = results[0];
-                res.render('asesor-admin', { nombreUsuario: nombre, correo, disponibilidad, carrera, descripcion, tarifa, materia1, asesorId });
+                const { nombre, correo, disponibilidad, carrera, descripcion, tarifa, materia1, portada, fotoPerfil } = results[0];
+                res.render('asesor-admin', { nombreUsuario: nombre, correo, disponibilidad, carrera, descripcion, tarifa, materia1, portada, fotoPerfil, asesorId });
             }
         });
     } else {
@@ -428,10 +433,11 @@ app.get('/asesor-admin', (req, res) => {
     }
 });
 
+
 app.get('/ver-perfil-asesor/:id', (req, res) => {
     const asesorId = req.params.id;
     const sql = `
-    SELECT a.id_asesores, a.nombre_asesor, a.descripcion, a.disponibilidad, a.correoA, a.precio_asesoria, c.nombre_carrera
+    SELECT a.id_asesores, a.nombre_asesor, a.descripcion, a.disponibilidad, a.correoA, a.precio_asesoria, c.nombre_carrera, a.foto_perfil, a.portada
     FROM asesores a
     JOIN carrera c ON a.fk_carrera = c.id_carrera
     WHERE a.id_asesores = ?;
@@ -451,6 +457,7 @@ app.get('/ver-perfil-asesor/:id', (req, res) => {
         }
     });
 });
+
 
 app.get('/logout', (req, res) => {
     req.session.destroy(err => {
@@ -565,6 +572,49 @@ app.get('/asesores-por-materia/:id', (req, res) => {
             return res.status(500).json({ error: 'Error interno del servidor' });
         }
         res.json(results);
+    });
+});
+
+app.post('/asesoria', (req, res) => {
+    const { fk_materia, fk_asesor, fk_cuatrimestre, fecha_asesoria, precio, duracion_asesoria } = req.body;
+  
+    // Validación básica de datos
+    if (!fk_materia || !fk_asesor || !fk_cuatrimestre || !fecha_asesoria || !precio || !duracion_asesoria) {
+      return res.status(400).json({ message: 'Todos los campos son obligatorios' });
+    }
+  
+    // Construir la consulta SQL
+    const query = 'INSERT INTO asesorias (fk_materia, fk_asesor, fk_cuatrimestre, fecha_asesoria, precio, duracion_asesoria) VALUES (?, ?, ?, ?, ?, ?)';
+    
+    // Ejecutar la consulta
+    db.query(query, [fk_materia, fk_asesor, fk_cuatrimestre, fecha_asesoria, precio, duracion_asesoria], (err, result) => {
+      if (err) {
+        return res.status(500).json({ message: 'Error al agregar la asesoría', error: err });
+      }
+      res.status(201).json({ message: 'Asesoría agregada con éxito', id_asesoria: result.insertId });
+    });
+  });
+
+app.post('/update-asesor', (req, res) => {
+    const { asesorId, nuevoNombre, nuevaDescripcion, NuevoPrecio, NuevaDisponibilidad } = req.body;
+
+    // Validar y sanitizar los datos de entrada aquí si es necesario
+
+    // Consulta SQL para actualizar el asesor
+    const query = `
+        UPDATE asesores
+        SET nombre_asesor = ?, descripcion = ?, precio_asesoria = ?, disponibilidad = ?
+        WHERE id_asesores = ?
+    `;
+
+    connection.query(query, [nuevoNombre, nuevaDescripcion, NuevoPrecio, NuevaDisponibilidad, asesorId], (err, result) => {
+        if (err) {
+            console.error('Error al actualizar el asesor:', err);
+            res.status(500).json({ error: 'Internal Server Error' });
+        } else {
+            // Redirigir o enviar una respuesta de éxito
+            res.redirect('/asesor-admin'); // O puedes redirigir a otra página si lo prefieres
+        }
     });
 });
 

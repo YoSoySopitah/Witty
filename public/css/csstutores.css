@@ -178,35 +178,47 @@ header h1 {
 
 /* Estilo para el contenedor de búsqueda */
 .search-container {
-    margin: 20px 0;
+    margin: 20px auto;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+#search-container input[type="text"]{
+    width: 500px;
+}
+
 /* Estilo para el campo de búsqueda */
 #materia-search {
-    width: 100%;
-    max-width: 400px;
+    width: 400px;
+    height: 30px;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
     font-size: 16px;
-    outline: none;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+.asesor-card img {
+    width: 100px; /* Ajusta el tamaño según tus necesidades */
+    height: 100px;
+    border-radius: 50%; /* Hacer que la imagen sea circular */
+    object-fit: cover; /* Asegura que la imagen no se deforme */
+    margin-bottom: 10px;
+}
+
 
 /* Estilo para el contenedor de resultados de búsqueda */
 #search-results {
     margin-top: 10px;
     width: 100%;
     max-width: 400px;
-    border: 1px solid #ddd;
     border-radius: 5px;
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     position: absolute;
     z-index: 1000;
+    margin-top: 50px;
 }
 
 /* Estilo para cada resultado de búsqueda */
@@ -247,7 +259,22 @@ header h1 {
     padding: 20px;
     width: 300px;
     text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    display: flex;
 }
+
+.asesor-card a h2{
+    background-color: #0c4a8c;
+    color: white;
+    border-radius: 20px;
+    width: 200px;
+    text-align: center;
+    text-decoration: 0;
+}
+
 
 /* Estilo para los campos dentro de la tarjeta */
 .asesor-card h3 {
@@ -257,7 +284,13 @@ header h1 {
 
 .asesor-card p {
     margin: 5px 0;
+    overflow: hidden; /* Oculta el texto que exceda el área */
+    text-overflow: ellipsis; /* Muestra puntos suspensivos si hay desbordamiento */
+    display: -webkit-box;
+    -webkit-line-clamp: 4; /* Limita a 4 líneas */
+    -webkit-box-orient: vertical;
 }
+
 
 .header a h2{
     text-decoration: none;

@@ -12,6 +12,18 @@
             api_key: 'wg_c5f1bdd47bbf4ba47b4415c173518fea1'
         });
     </script>
+
+<style>
+    .containerinfo {
+flex: 1; /* Permite que el contenedor se expanda y ocupe el espacio restante */
+box-sizing: border-box;
+width: 100%;
+transition: margin-left 0.3s ease; /* Transición suave */
+background-image: url('<%= asesor.portada %>');
+background-size: 100% 350px;
+background-repeat: no-repeat;
+}
+</style>
 </head>
 <body>
     <header>
@@ -33,7 +45,7 @@
 
     <div class="containerinfo">
         <div class="asesorbox">
-            <img src="https://i.imgur.com/iZr1pDE.jpeg" alt="">
+            <img src="/uploads/<%= asesor.foto_perfil %>" alt="">
             <h2><%= asesor.nombre_asesor %></h2>
             <div class="starsc">
                 <i id="star" class="fa fa-star"></i>
@@ -43,7 +55,7 @@
                 <i id="star" class="fa fa-star-o"></i>
             </div>
             <h3>Carrera: <span class="carrera"><%= asesor.nombre_carrera %></span></h3>
-            <a href="mailto:<%= asesor.correoA %>?subject=Consulta sobre asesoría&body=Hola <%= asesor.nombre_asesor %>,%0A%0AEstoy interesado en tus servicios y me gustaria recibir mas informacion.%0A%0AThanks,%0A[Your Name]" class="btn btn-primary">Contactar</a>
+            <a href="mailto:<%= asesor.correoA %>?subject=Consulta sobre asesoría&body=Hola <%= asesor.nombre_asesor %>,%0A%0AEstoy interesado en tus servicios y me gustaria recibir mas informacion.%0A%0AThanks,%0A[Your Name]" class="btn btn-primary" target="_blank">Contactar</a>
         </div>
         <div class="description">
             <h3><%= asesor.descripcion %></h3>

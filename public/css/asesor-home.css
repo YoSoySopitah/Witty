@@ -149,7 +149,6 @@ header h2 {
     box-sizing: border-box;
     width: 100%;
     transition: margin-left 0.3s ease; /* Transición suave */
-    background-image: url('https://i.imgur.com/G66M89T.png');
     background-size: 100% 350px;
     background-repeat: no-repeat;
 }
@@ -260,7 +259,7 @@ header h2 {
 
 .description{
     display: flex;
-    width: 70%;
+    width: 60%;
     margin: 0 auto;
     margin-top: -380px;
 }
@@ -313,15 +312,33 @@ header h2 {
     border-radius: 50px;
     margin-left: 800px;
     margin-top: 100px;
+    color: black;
 }
 
 .tarifa h2,h3{
+    color: black;
     margin: 0;
+}
+.tarifa h3{
+    font-weight: 100;
+    color: black;
+}
+
+.description h3{
+    color: #b3b3b3;
+    font-weight: 100;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 .horario h2,h3{
     margin: 0;
+}
 
+.horario h3{
+    color: white;
+}
+.horario h2{
+    font-weight: 100;
 }
 
 .horario{
@@ -348,14 +365,28 @@ header h2 {
     width: 100%;
     height: 100%;
     overflow: auto; /* Habilita el desplazamiento si el contenido es más grande que la ventana */
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+    backdrop-filter: blur(10px); /* Fondo semi-transparente */
     
+}
+
+.asesorbox a{
+    background-color: #004aad;
+    width: 180px;
+    height: 50px;
+    border-radius: 30px;
+    color: white;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 }
 
 /* Contenido del modal */
 .modal-content {
-    background-color: #749ec6;
-    color: #e2e2e2;
+    background-color: #004aad; /* Azul marino */
+
+    color: white;
     margin: 5% auto; /* Ajusta el margen superior para una mejor vista en pantallas grandes */
     padding: 100px;
     border-radius: 10px;
@@ -489,7 +520,7 @@ header h2 {
     display: flex;
     justify-content: center;
     align-items: start;
-    margin-top: 500px;
+    margin-top: 200px;
 }
 
 .footer h3{
