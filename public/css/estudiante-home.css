@@ -26,8 +26,7 @@ header.menu-visible {
     margin-left: 17%; /* Ajusta este valor según el ancho del menú */
 }
 
-header img {
-    height: 100px;
+header img {    
     margin: 5px;
     padding: 10px;
 }
@@ -149,7 +148,6 @@ header h2 {
     box-sizing: border-box;
     width: 100%;
     transition: margin-left 0.3s ease; /* Transición suave */
-    background-image: url('https://blog.orange.es/wp-content/uploads/sites/4/2024/03/fondos-de-pantalla-3d-paisaje.jpg');
     background-size: 100% 250px;
     background-repeat: no-repeat;
 }

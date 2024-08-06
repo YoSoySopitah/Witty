@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Definición de variables
-    const nombreForm = document.getElementById('userForm');
+    const nombreForm = document.getElementById('registro-form'); // Asegúrate de usar el ID correcto
     const nextArrow = document.getElementById('nextArrow');
     const prevArrow = document.getElementById('prevArrow');
     const dots = document.querySelectorAll('.dot');
@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const createUserBtn = document.getElementById('createUserBtn');
     const coverPhotoSection = document.getElementById('coverPhotoSection');
     const galleryItems = coverPhotoSection.querySelectorAll('.gallery-item');
+    const carreraSelect = document.getElementById('carrera'); // Selección de carrera
     let currentSlide = 0;
     let cropper;
     let isAsesor = false;
@@ -187,7 +188,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('userTypeInput').value = 'estudiante';
         updateSlide();
     });
-    
 
     uploadButton.addEventListener('click', function() {
         photoUpload.click();
@@ -247,6 +247,24 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    function loadCarreras() {
+        fetch('/api/carreras')
+            .then(response => response.json())
+            .then(carreras => {
+                carreraSelect.innerHTML = ''; // Limpiar las opciones existentes
+
+                carreras.forEach(carrera => {
+                    const option = document.createElement('option');
+                    option.value = carrera.id_carrera; // Asegúrate de que el campo en tu tabla sea id_carrera
+                    option.textContent = carrera.nombre_carrera; // Asegúrate de que el campo en tu tabla sea nombre_carrera
+                    carreraSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error al cargar las carreras:', error);
+            });
+    }
+
     createUserBtn.addEventListener('click', function() {
         // Recopilar datos del formulario y agregarlos a FormData
         formData.append('userType', isAsesor ? 'asesor' : 'estudiante');
@@ -257,7 +275,7 @@ document.addEventListener('DOMContentLoaded', function() {
         formData.append('confirmPassword', document.getElementById('confirmPassword').value.trim());
         formData.append('presentationText', isAsesor ? document.querySelector('textarea').value.trim() : '');
         formData.append('coverPhoto', selectedCoverPhoto || '');
-        formData.append('fk_carrera', null); // Establecer fk_carrera en null
+        formData.append('fk_carrera', carreraSelect.value || null); // Agregar valor de carrera
         formData.append('fecha_registro', null); // Establecer fecha_registro en null
     
         if (avatarPreview.src && !avatarPreview.src.endsWith('Perfil.png')) {
@@ -303,6 +321,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
-    
+
+    loadCarreras(); // Cargar las carreras cuando el DOM esté listo
     updateSlide();
 });

@@ -12,6 +12,17 @@
         api_key: 'wg_c5f1bdd47bbf4ba47b4415c173518fea1'
     });
 </script>
+
+<style>
+    .containerinfo{
+    flex: 1; /* Permite que el contenedor se expanda y ocupe el espacio restante */
+    box-sizing: border-box;
+    transition: margin-left 0.3s ease; /* Transición suave */
+    background-size: 100% 300px;
+    background-repeat: no-repeat;
+    background-image: url('<%= portada %>');
+    }
+</style>
 </head>
 <body>
     <header>
@@ -31,7 +42,7 @@
     </div>
     <div class="containerinfo">
         <div class="estudiantebox">
-            <img src="https://iphonegr.mural.com.mx/libre/online07/imagetransformer2/ImageTransformer.aspx?img=https://img.gruporeforma.com/imagenes/960x640/5/976/4975884.jpg&imagencompleta=1" alt="">
+            <img src="<%= fotoPerfil %>" alt="">
             <div class="infocont">
                 <h2><%= nombreUsuario %></h2>
                 <div class="info">

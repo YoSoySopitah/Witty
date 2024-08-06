@@ -55,6 +55,71 @@ app.get('/register', (req, res) => {
     res.render('register');
 });
 
+
+app.post('/register', upload.fields([{ name: 'photoUpload', maxCount: 1 }]), async (req, res) => {
+    try {
+        const { userType, nombre, apellido, email, password, confirmPassword, presentationText, coverPhoto, fk_carrera } = req.body;
+        let hashedPassword;
+        let sql;
+        let values;
+
+        // Verificar campos requeridos
+        if (!userType || !nombre || !email || !password || !confirmPassword || !coverPhoto || !fk_carrera) {
+            return res.status(400).json({ error: 'Todos los campos obligatorios son requeridos' });
+        }
+
+        // Comparar contraseñas
+        if (password !== confirmPassword) {
+            return res.status(400).json({ error: 'Las contraseñas no coinciden' });
+        }
+
+        // Encriptar la contraseña
+        hashedPassword = await bcrypt.hash(password, 10);
+
+        // Obtener archivo de foto de perfil si existe
+        const photoUpload = req.files['photoUpload'] ? req.files['photoUpload'][0] : null;
+        let fotoPerfil = null;
+
+        if (photoUpload) {
+            const tempPath = path.join(__dirname, 'uploads/temp', photoUpload.filename);
+            const outputPath = path.join(__dirname, 'uploads', `${photoUpload.filename}.png`);
+
+            // Convertir la imagen a PNG y guardarla
+            await sharp(tempPath).toFile(outputPath);
+
+            // Borrar el archivo temporal
+            fs.unlinkSync(tempPath);
+
+            fotoPerfil = `${photoUpload.filename}.png`;
+        }
+
+        if (userType === 'estudiante') {
+            sql = `INSERT INTO estudiantes (nombre_estudiante, fk_carrera, correo_estudiante, contraseña_estudiante, fecha_registro, foto_perfil, portada) 
+                   VALUES (?, ?, ?, ?, NOW(), ?, ?)`;
+            values = [nombre, fk_carrera, email, hashedPassword, fotoPerfil, coverPhoto];
+        } else if (userType === 'asesor') {
+            sql = `INSERT INTO asesores (nombre_asesor, fk_carrera, correoA, contraseña, fecha_registro, descripcion, foto_perfil, portada) 
+                   VALUES (?, ?, ?, ?, NOW(), ?, ?, ?)`;
+            values = [nombre, fk_carrera, email, hashedPassword, presentationText, fotoPerfil, coverPhoto];
+        } else {
+            return res.status(400).json({ error: 'Tipo de usuario no válido' });
+        }
+
+        // Ejecutar la consulta
+        connection.query(sql, values, (err, result) => {
+            if (err) {
+                console.error('Error al registrar:', err);
+                return res.status(500).json({ error: 'Error al registrar' });
+            }
+            res.redirect('/login');
+        });
+    } catch (err) {
+        console.error('Error en el registro:', err);
+        res.status(500).json({ error: 'Error interno del servidor' });
+    }
+});
+
+
 app.post('/login', (req, res) => {
     const { usuario, contraseña } = req.body;
 
@@ -246,26 +311,38 @@ app.get('/buscar-tutores', (req, res) => {
     }
 });
 
+
 app.get('/estudiante-admin', (req, res) => {
     if (req.session.user && req.session.tipoUsuario === 'estudiante') {
         const estudianteId = req.session.user.id_estudiante;
 
+        console.log('ID del estudiante:', estudianteId);
+
         connection.query(`
-            SELECT estudiantes.nombre_estudiante AS nombre, estudiantes.correo_estudiante AS correo, 
-                   carrera.nombre_carrera AS carrera
-            FROM estudiantes
-            JOIN carrera ON estudiantes.fk_carrera = carrera.id_carrera
-            WHERE estudiantes.id_estudiante = ?
+            SELECT e.nombre_estudiante AS nombre, e.correo_estudiante AS correo, 
+                   c.nombre_carrera AS carrera, e.foto_perfil AS fotoPerfil, e.portada AS portada
+            FROM estudiantes e
+            JOIN carrera c ON e.fk_carrera = c.id_carrera
+            WHERE e.id_estudiante = ?
         `, [estudianteId], (err, estudianteResults) => {
             if (err) {
                 console.error('Error al cargar los datos del estudiante:', err);
-                res.status(500).json({ error: 'Internal Server Error' });
+                return res.status(500).json({ error: 'Internal Server Error' });
             } else {
+                console.log('Resultados de la consulta del estudiante:', estudianteResults);
+                
                 if (estudianteResults.length > 0) {
-                    const { nombre, correo, carrera } = estudianteResults[0];
+                    const { nombre, correo, carrera, fotoPerfil, portada } = estudianteResults[0];
+                    const imagenPerfilPath = fotoPerfil && fotoPerfil.trim() !== ''
+                        ? `/uploads/${fotoPerfil}`
+                        : '/img/user.png';
+                    const portadaPath = portada && portada.trim() !== ''
+                        ? portada  // Ya que la portada está directamente en la base de datos, no se necesita modificar la ruta
+                        : '/img/default-cover.png'; // Cambia esto a una ruta de portada predeterminada si no tienes
 
                     connection.query(`
-                        SELECT ap.fecha_asesoria, ap.duracion_asesoria, c.nombre_carrera, a.nombre_asesor, m.nombre_materia
+                        SELECT ap.fecha_asesoria, ap.duracion_asesoria, c.nombre_carrera AS carrera_asesor, 
+                               a.nombre_asesor, m.nombre_materia
                         FROM asesoriasPendiente ap
                         JOIN materias m ON ap.fk_materia = m.id_materia
                         JOIN asesores a ON ap.fk_asesor = a.id_asesores
@@ -274,17 +351,20 @@ app.get('/estudiante-admin', (req, res) => {
                     `, [estudianteId], (err, asesoriasResults) => {
                         if (err) {
                             console.error('Error al cargar las asesorías pendientes:', err);
-                            res.status(500).json({ error: 'Internal Server Error' });
+                            return res.status(500).json({ error: 'Internal Server Error' });
                         } else {
                             res.render('estudiante-admin', { 
                                 nombreUsuario: nombre, 
                                 correo, 
                                 carrera, 
+                                fotoPerfil: imagenPerfilPath,
+                                portada: portadaPath, // Pasar la portada a la vista
                                 asesorias: asesoriasResults 
                             });
                         }
                     });
                 } else {
+                    console.log('Estudiante con ID', estudianteId, 'no encontrado en la base de datos');
                     res.status(404).json({ error: 'Estudiante no encontrado' });
                 }
             }
@@ -293,6 +373,9 @@ app.get('/estudiante-admin', (req, res) => {
         res.redirect('/login');
     }
 });
+
+
+
 
 app.get('/asesor-home', (req, res) => {
     if (req.session.user && req.session.tipoUsuario === 'asesor') {
@@ -453,6 +536,40 @@ app.get('/ver-perfil-asesor/:id', (req, res) => {
     });
 });
 
+app.get('/buscar-materias', (req, res) => {
+    const query = req.query.q;
+    
+    // SQL para buscar materias por nombre
+    const sql = 'SELECT id_materia, nombre_materia FROM materias WHERE nombre_materia LIKE ?';
+    
+    connection.query(sql, [`%${query}%`], (err, results) => {
+        if (err) {
+            console.error('Error al buscar materias:', err);
+            return res.status(500).json({ error: 'Error interno del servidor' });
+        }
+        res.json(results);
+    });
+});
+
+
+
+app.get('/asesores-por-materia/:id', (req, res) => {
+    const materiaId = req.params.id;
+
+    // SQL para obtener asesores por ID de materia
+    const sql = 'SELECT * FROM asesores WHERE fk_materia = ?';
+
+    connection.query(sql, [materiaId], (err, results) => {
+        if (err) {
+            console.error('Error al buscar asesores:', err);
+            return res.status(500).json({ error: 'Error interno del servidor' });
+        }
+        res.json(results);
+    });
+});
+
+
 app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
 });
+

@@ -55,6 +55,12 @@
                             <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" required>
                             <div class="error-message" id="confirmPasswordError"></div>
                         </div>
+                        <div class="form-group">
+                            <label for="carrera">Carrera:</label>
+                            <select id="carrera" name="fk_carrera" required>
+                                <!-- Las opciones se llenarán dinámicamente con JavaScript -->
+                            </select>
+                        </div>
                     </div>
                 </div>
                 
@@ -91,32 +97,32 @@ Ofrezco clases y asesorías personalizadas en Programación Orientada a Objetos,
                         <h2>Escoge una foto de portada</h2>
                         <div class="cover-photo-grid">
                             <div class="gallery-item">
-                                <input type="radio" id="coverPhoto1" name="coverPhoto" value="Imagenes_Cuenta/Portada1.png">
+                                <input type="radio" id="coverPhoto1" name="coverPhoto" value="https://i.imgur.com/8Lh1Q9z.png">
                                 <label for="coverPhoto1"></label>
                                 <img src="img/Portada1.png" alt="Portada 1" class="cover-photo-option">
                             </div>
                             <div class="gallery-item">
-                                <input type="radio" id="coverPhoto2" name="coverPhoto" value="Imagenes_Cuenta/Portada2.png">
+                                <input type="radio" id="coverPhoto2" name="coverPhoto" value="https://i.imgur.com/I3it5tH.png">
                                 <label for="coverPhoto2"></label>
                                 <img src="img/Portada2.png" alt="Portada 2" class="cover-photo-option">
                             </div>
                             <div class="gallery-item">
-                                <input type="radio" id="coverPhoto3" name="coverPhoto" value="Imagenes_Cuenta/Portada3.png">
+                                <input type="radio" id="coverPhoto3" name="coverPhoto" value="https://i.imgur.com/W0Kph8I.png">
                                 <label for="coverPhoto3"></label>
                                 <img src="img/Portada3.png" alt="Portada 3" class="cover-photo-option">
                             </div>
                             <div class="gallery-item">
-                                <input type="radio" id="coverPhoto4" name="coverPhoto" value="Imagenes_Cuenta/Portada4.png">
+                                <input type="radio" id="coverPhoto4" name="coverPhoto" value="https://i.imgur.com/j9o3gt2.png">
                                 <label for="coverPhoto4"></label>
                                 <img src="img/Portada4.png" alt="Portada 4" class="cover-photo-option">
                             </div>
                             <div class="gallery-item">
-                                <input type="radio" id="coverPhoto5" name="coverPhoto" value="Imagenes_Cuenta/Portada5.png">
+                                <input type="radio" id="coverPhoto5" name="coverPhoto" value="https://i.imgur.com/0DCwtSp.png">
                                 <label for="coverPhoto5"></label>
                                 <img src="img/Portada5.png" alt="Portada 5" class="cover-photo-option">
                             </div>
                             <div class="gallery-item">
-                                <input type="radio" id="coverPhoto6" name="coverPhoto" value="Imagenes_Cuenta/Portada6.png">
+                                <input type="radio" id="coverPhoto6" name="coverPhoto" value="https://i.imgur.com/bz367Vf.png">
                                 <label for="coverPhoto6"></label>
                                 <img src="img/Portada6.png" alt="Portada 6" class="cover-photo-option">
                             </div>
@@ -155,5 +161,27 @@ Ofrezco clases y asesorías personalizadas en Programación Orientada a Objetos,
     </div>
 
     <script src="js/jsCuenta.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('/api/carreras')
+                .then(response => response.json())
+                .then(carreras => {
+                    const select = document.getElementById('carrera');
+                    select.innerHTML = ''; // Limpiar las opciones existentes
+        
+                    carreras.forEach(carrera => {
+                        const option = document.createElement('option');
+                        option.value = carrera.id_carrera; // Asegúrate de que el campo en tu tabla sea id_carrera
+                        option.textContent = carrera.nombre_carrera; // Asegúrate de que el campo en tu tabla sea nombre_carrera
+                        select.appendChild(option);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error al cargar las carreras:', error);
+                });
+        });
+        </script>
+        
 </body>
 </html>
